@@ -37,7 +37,7 @@ body{
 .brand-dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
 .nav-link{color:#fff;text-decoration:none;font-weight:700}
 
-.hero-wrap{padding:36px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.hero-wrap{padding:36px 0;border-bottom:4px solid rgba(255,255,255,.06)}
 .hero{width:min(1100px,92%);margin:0 auto}
 .hero-title{margin:0 0 6px}
 .hero-sub{margin:0 0 10px;color:var(--muted)}
