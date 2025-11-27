@@ -1,17 +1,16 @@
 /* ——————————————————————
    PANEL LATERAL ANIMADO (STEALTH → EXPAND)
-   —————————————————————— */
-
-@media (min-width: 981px) {
+   —————————————————————— *
 
   /* CONTENEDOR PRINCIPAL */
+@media (min-width: 981px) {
   .sidebar-nav {
     position: fixed;
-    top: 460px;                 /* POSICIÓN EXACTA QUE PEDISTE */
-    right: 70px;                /* POSICIÓN EXACTA QUE PEDISTE */
-    width: 260px;               /* espacio total reservado */
+    top: 460px;                 /* posición que ya tenías */
+    right: 70px;                /* posición que ya tenías */
+    width: 260px;
     z-index: 50;
-    pointer-events: none;       /* solo se activan clicks cuando se abre */
+    /* pointer-events: none;  <- ELIMINAR ESTA LÍNEA */
   }
 
   /* BARRA ESTRECHA INICIAL (estado colapsado) */
