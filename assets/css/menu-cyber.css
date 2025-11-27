@@ -4,22 +4,19 @@
 
 @media (min-width: 981px) {
   .sidebar-nav {
-    position: sticky;
-    top: 150px;
-    float: right;
+    position: fixed;
+    top: 160px; /* altura donde debe empezar */
+    right: 48px; /* separación EXACTA profesional del borde */
     width: 230px;
 
-    margin-top: 0;
-    margin-right: 0;
-    margin-left: 60px;  /* ← MUCHO MÁS ESPACIO */
     background: rgba(10, 14, 25, 0.78);
     border: 1px solid rgba(255,255,255,0.07);
     padding: 18px 20px;
     border-radius: 14px;
     box-shadow: 0 18px 45px rgba(0,0,0,0.65);
     backdrop-filter: blur(14px);
+    z-index: 20;
   }
-
   .sidebar-title {
     font-size: 0.75rem;
     font-weight: 700;
