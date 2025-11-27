@@ -5,11 +5,13 @@
 @media (min-width: 981px) {
 .sidebar-nav {
   position: sticky;
-  top: 380px; /* altura ideal debajo del hero */
+  top: 150px;          /* altura: un poco por encima de "Sobre mí" */
+  float: right;
   width: 230px;
 
-  /* ALINEA EL PANEL A LA DERECHA DEL CONTENIDO */
-  margin-left: calc(1100px + 40px);
+  /* mueve el panel un poco hacia la derecha */
+  margin-top: 0;
+  margin-right: -20px;
 
   background: rgba(10, 14, 25, 0.78);
   border: 1px solid rgba(255,255,255,0.07);
