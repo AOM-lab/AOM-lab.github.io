@@ -1,195 +1,117 @@
-/* ===== Menú de secciones (mobile first) ===== */
+/* ——————————————
+   PANEL LATERAL PROFESIONAL
+   —————————————— */
 
-/* Móvil / tablets: barra arriba bajo el hero */
-.cyber-menu {
-  width: 100%;
-  margin: 10px auto 0;
-  max-width: min(100%, 1100px);
-  padding: 0 16px;
-}
-
-.cyber-menu-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  padding-bottom: 8px;
-}
-
-.cyber-link {
-  position: relative;
-  display: inline-block;
-  padding: 4px 0;
-  font-size: 0.86rem;
-  letter-spacing: .06em;
-  color: var(--muted);
-  text-decoration: none;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: color .22s ease;
-}
-
-.cyber-link::before,
-.cyber-link::after {
-  display: none;
-}
-
-.cyber-link:hover,
-.cyber-link:focus {
-  color: var(--accent-soft);
-  outline: none;
-}
-
-.cyber-link.active {
-  color: var(--accent);
-}
-
-/* ===== Escritorio: HUD lateral de secciones ===== */
 @media (min-width: 981px) {
-  .cyber-menu {
-    position: fixed;
-    top: 0; /* el JS sigue fijando la altura real para alinearlo con "Sobre mí" */
-    right: max(32px, 7vw);         /* un poco dentro, cerca del contenido */
-    left: auto;
+  .sidebar-nav {
+    position: sticky;
+    top: 110px; /* alineado con "Sobre mí" */
+    margin-top: 40px;
+    float: right;
     width: 230px;
-    padding: 14px 18px 16px;
-    margin: 0;
-    border-radius: 16px;
-    background: radial-gradient(circle at top left,
-                rgba(255,159,26,.12),
-                rgba(7,10,20,.96));
-    border: 1px solid rgba(255,255,255,.06);
-    box-shadow: 0 20px 45px rgba(0,0,0,.85);
+
+    background: rgba(10, 14, 25, 0.78);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 18px 20px;
+    border-radius: 14px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.65);
     backdrop-filter: blur(14px);
-    z-index: 50;
-    font-size: 0.8rem;
   }
 
-  /* Etiqueta pequeña arriba del panel */
-  .cyber-menu::before {
-    content: "Panel rápido";
-    display: block;
-    margin-bottom: 6px;
-    font-size: 0.7rem;
+  .sidebar-title {
+    font-size: 0.75rem;
+    font-weight: 700;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: rgba(168,178,194,.75);
+    margin-bottom: 10px;
+    color: rgba(170,178,194,.75);
   }
 
-  .cyber-menu-list {
+  .sidebar-group {
+    margin-top: 18px;
+    margin-bottom: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(170,178,194,.55);
+    letter-spacing: .12em;
+  }
+
+  .sidebar-list {
     list-style: none;
-    padding: 10px 0 0;
-    margin: 0;
-    border-top: 1px solid rgba(255,255,255,.06);
+    padding: 0;
+    margin: 0 0 4px;
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
 
-  .cyber-link {
+  .sidebar-link {
     position: relative;
     display: block;
-    padding: 5px 0 5px 26px;   /* hueco para el “led” a la izquierda */
+    padding-left: 22px;
+    color: rgba(198,205,218,.9);
     font-size: 0.82rem;
-    letter-spacing: .06em;
-    color: rgba(185,194,210,.92);
-    text-decoration: none;
     font-weight: 600;
-    white-space: nowrap;
+    text-decoration: none;
+    letter-spacing: .04em;
     transition: color .2s ease;
   }
 
-  /* “Led” a la izquierda de cada item */
-  .cyber-link::before {
+  .sidebar-link::before {
     content: "";
     position: absolute;
     left: 4px;
     top: 50%;
-    width: 7px;
-    height: 7px;
-    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
     border-radius: 999px;
-    background: rgba(148,163,184,.45);
-    box-shadow: 0 0 0 0 rgba(255,159,26,0);
-    display: block;
-    transition:
-      background .2s ease,
-      box-shadow .25s ease;
+    background: rgba(140,150,165,.6);
+    transform: translateY(-50%);
+    transition: background .2s, box-shadow .25s;
   }
 
-  /* Riel vertical muy suave (da sensación de HUD) */
-  .cyber-menu-list::before {
+  .sidebar-link::after {
     content: "";
     position: absolute;
-    /* anclamos el riel dentro del panel */
-  }
-
-  .cyber-menu-list {
-    position: relative;
-  }
-
-  .cyber-menu-list::before {
-    left: 8px;
-    top: 10px;
-    bottom: 8px;
-    width: 1px;
-    background: linear-gradient(
-      to bottom,
-      rgba(148,163,184,.25),
-      rgba(15,23,42,.0),
-      rgba(148,163,184,.18)
-    );
-  }
-
-  /* Subrayado bajo el texto al interactuar */
-  .cyber-link::after {
-    content: "";
-    position: absolute;
-    left: 26px;
-    bottom: -3px;
+    left: 22px;
+    bottom: -4px;
     width: 0;
     height: 2px;
-    border-radius: 999px;
+    border-radius: 2px;
     background: linear-gradient(90deg, var(--accent), var(--accent-soft));
-    box-shadow: 0 6px 18px rgba(255,159,26,.22);
     opacity: 0;
-    transition: width .24s cubic-bezier(.2,.9,.3,1), opacity .16s ease;
+    transition: width .24s cubic-bezier(.2,.9,.3,1), opacity .15s;
   }
 
-  .cyber-link:hover,
-  .cyber-link:focus {
+  .sidebar-link:hover {
     color: var(--accent-soft);
-    outline: none;
+  }
+  .sidebar-link:hover::before {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(255,159,26,.25);
+  }
+  .sidebar-link:hover::after {
+    width: 38px;
+    opacity: 1;
   }
 
-  .cyber-link:hover::before,
-  .cyber-link:focus::before {
-    background: var(--accent-soft);
-    box-shadow: 0 0 0 4px rgba(255,159,26,.22);
-  }
-
-  .cyber-link:hover::after,
-  .cyber-link:focus::after {
-    width: 42px;
-    opacity: .95;
-  }
-
-  /* Estado activo (sección actual) */
-  .cyber-link.active {
+  .sidebar-link.active {
     color: var(--accent);
   }
-
-  .cyber-link.active::before {
+  .sidebar-link.active::before {
     background: var(--accent);
-    box-shadow: 0 0 0 5px rgba(255,159,26,.30);
+    box-shadow: 0 0 0 5px rgba(255,159,26,.32);
   }
-
-  .cyber-link.active::after {
-    width: 54px;
+  .sidebar-link.active::after {
+    width: 50px;
     opacity: 1;
-    box-shadow: 0 10px 24px rgba(255,159,26,.35);
+    box-shadow: 0 8px 22px rgba(255,159,26,.25);
+  }
+}
+
+/* móvil lo oculta (profesional) */
+@media (max-width: 980px) {
+  .sidebar-nav {
+    display: none;
   }
 }
