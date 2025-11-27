@@ -1,90 +1,42 @@
 /* ============================================================
-   MENÚ CYBER-LINE
-   - Scroll suave
-   - Sección activa
-   - Tope superior dinámico alineado con "Sobre mí"
+   PANEL LATERAL ANIMADO (STEALTH → EXPAND)
+   - Aparece como barra fina
+   - Al pasar "Sobre mí" se despliega suavemente
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const menu = document.getElementById("cyberMenu");
-  const links = document.querySelectorAll(".cyber-link");
-  const sections = [...links].map(link => {
-    const id = link.getAttribute("href");
-    return document.querySelector(id);
-  });
+  const panel = document.getElementById("sidebarNav");
+  const triggerSection = document.getElementById("sobre-mi");
 
-  if (!menu || !links.length) return;
+  if (!panel || !triggerSection) return;
 
-  /* ------------------------------
-     Scroll suave al hacer clic
-     ------------------------------ */
-  links.forEach(link => {
-    link.addEventListener("click", e => {
-      const targetId = link.getAttribute("href");
-      const target = document.querySelector(targetId);
-      if (!target) return;
+  // Empezamos en modo "barra colapsada"
+  panel.classList.add("is-collapsed");
 
-      e.preventDefault();
+  // Punto exacto donde el panel debe abrirse
+  const OPEN_OFFSET = 120; // puedes afinarlo (100–160 es lo profesional)
 
-      const headerOffset = 90; // margen para que no se pegue al borde
-      const rect = target.getBoundingClientRect();
-      const offsetPosition = rect.top + window.scrollY - headerOffset;
+  function updatePanel() {
+    const rect = triggerSection.getBoundingClientRect();
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    });
-  });
-
-  /* ------------------------------------------------------
-     Tope superior dinámico: alinea el menú con el título
-     "Sobre mí" en escritorio y nunca sube más de ahí.
-     ------------------------------------------------------ */
-
-  function updateMenuTop() {
-    // Solo aplicamos en escritorio; en móvil manda el CSS
-    if (window.innerWidth < 981) {
-      menu.style.top = "";
-      return;
+    // Cuando la parte superior de "Sobre mí" está suficientemente arriba
+    if (rect.top <= OPEN_OFFSET) {
+      panel.classList.remove("is-collapsed");
+      panel.classList.add("is-open");
+    } else {
+      panel.classList.add("is-collapsed");
+      panel.classList.remove("is-open");
     }
-
-    const title = document.getElementById("sobre-mi-title") || document.querySelector("#sobre-mi h2");
-    if (!title) return;
-
-    const rect = title.getBoundingClientRect();
-    const offset = 0; // píxeles extra por debajo del título si quieres
-    const top = rect.top + offset;
-
-    menu.style.top = `${top}px`;
   }
 
-  window.addEventListener("load", updateMenuTop);
-  window.addEventListener("resize", updateMenuTop);
-  // pequeño timeout por si hay fuentes/cargas que mueven el layout
-  setTimeout(updateMenuTop, 300);
+  // Ejecutar al cargar
+  updatePanel();
 
-
-  /* ------------------------------------------------------
-     Detector de sección actual (IntersectionObserver)
-     ------------------------------------------------------ */
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const id = entry.target.id;
-      if (entry.isIntersecting) {
-        links.forEach(link => link.classList.remove("active"));
-        const activeLink = document.querySelector(`.cyber-link[href="#${id}"]`);
-        if (activeLink) activeLink.classList.add("active");
-      }
-    });
-  }, {
-    root: null,
-    rootMargin: "-45% 0px -45% 0px", // activa cuando la sección está en la zona central
-    threshold: 0,
-  });
-
-  sections.forEach(section => {
-    if (section) observer.observe(section);
-  });
+  // Optimizado con requestAnimationFrame
+  window.addEventListener(
+    "scroll",
+    () => requestAnimationFrame(updatePanel),
+    { passive: true }
+  );
 });
+
