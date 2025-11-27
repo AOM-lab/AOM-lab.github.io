@@ -3,24 +3,15 @@
    —————————————— */
 
 @media (min-width: 981px) {
-.sidebar-nav {
-  position: sticky;
-  top: 150px;          /* altura: un poco por encima de "Sobre mí" */
-  float: right;
-  width: 230px;
+  .sidebar-nav {
+    position: sticky;
+    top: 150px;
+    float: right;
+    width: 230px;
 
-  margin-top: 0;
-  margin-right: 0;      /* ya no lo empujamos hacia dentro */
-  margin-left: 28px;    /* separación entre panel y texto */
-  background: rgba(10, 14, 25, 0.78);
-  border: 1px solid rgba(255,255,255,0.07);
-  padding: 18px 20px;
-  border-radius: 14px;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.65);
-  backdrop-filter: blur(14px);
-}
-
-
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 60px;  /* ← MUCHO MÁS ESPACIO */
     background: rgba(10, 14, 25, 0.78);
     border: 1px solid rgba(255,255,255,0.07);
     padding: 18px 20px;
