@@ -1,0 +1,79 @@
+/* ============================
+   MENÚ CYBER-LINE — Estilo pro
+   ============================ */
+
+.cyber-menu {
+  width: 100%;
+  padding: 26px 0 10px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.cyber-menu-list {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 0;
+  margin: 0;
+}
+
+/* Cyber link */
+.cyber-link {
+  position: relative;
+  padding: 4px 2px 6px;
+  text-decoration: none;
+  color: var(--muted);
+  letter-spacing: .6px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  transition: color .25s ease;
+}
+
+/* Línea horizontal bajo cada item */
+.cyber-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+  box-shadow: 0 6px 18px rgba(255,159,26,.20);
+  border-radius: 2px;
+  transition: width .28s cubic-bezier(.2,.9,.3,1);
+  opacity: 0.92;
+}
+
+/* Hover y focus */
+.cyber-link:hover,
+.cyber-link:focus {
+  color: var(--accent-soft);
+}
+
+.cyber-link:hover::after,
+.cyber-link:focus::after {
+  width: 100%;
+}
+
+/* Estado activo */
+.cyber-link.active {
+  color: var(--accent);
+}
+
+.cyber-link.active::after {
+  width: 100%;
+  box-shadow: 0 10px 22px rgba(255,159,26,.35);
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .cyber-menu-list {
+    gap: 20px;
+  }
+  .cyber-link {
+    font-size: 0.92rem;
+  }
+}
