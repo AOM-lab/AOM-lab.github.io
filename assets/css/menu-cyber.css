@@ -5,8 +5,8 @@
 @media (min-width: 981px) {
   .sidebar-nav {
     position: fixed;
-    top: 160px; /* altura donde debe empezar */
-    right: 48px; /* separación EXACTA profesional del borde */
+    top: 260px; /* altura donde debe empezar */
+    right: 120px; /* separación EXACTA profesional del borde */
     width: 230px;
 
     background: rgba(10, 14, 25, 0.78);
