@@ -6,7 +6,7 @@
   .sidebar-nav {
     position: fixed;
     top: 460px; /* altura donde debe empezar */
-    right: 120px; /* separación EXACTA profesional del borde */
+    right: 90px; /* separación EXACTA profesional del borde */
     width: 230px;
 
     background: rgba(10, 14, 25, 0.78);
