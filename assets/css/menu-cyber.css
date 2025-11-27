@@ -1,56 +1,88 @@
 /* ===============================
-   ESTADO BASE — RASTRO VERTICAL
+   SIDEBAR: RASTRO + APERTURA
    =============================== */
+
 @media (min-width: 981px) {
+
+  /* CONTENEDOR DEL PANEL (posición final del menú) */
   #sidebarNav {
     position: fixed;
-    top: 460px;
-    right: 0;
-    width: 10px;
-    height: 180px;
-    background: rgba(15,20,30,0.85);
-    border-radius: 6px;
-    z-index: 100;
-    overflow: hidden;
-    transition:
-      width 0.45s cubic-bezier(.25,.9,.3,1),
-      right 0.45s cubic-bezier(.25,.9,.3,1),
-      background 0.3s ease;
-  }
-
-  /* Contenido oculto al principio */
-  #sidebarNav .sidebar-inner {
-    opacity: 0;
-    transition: opacity 0.25s ease 0.1s;
-  }
-
-  /* ===============================
-     ETAPA 2 — MOVIMIENTO AL LUGAR
-     =============================== */
-  #sidebarNav.is-moving {
-    right: 70px; /* posición final */
-  }
-
-  /* ===============================
-     ETAPA 3 — EXPANSIÓN A PANEL
-     =============================== */
-  #sidebarNav.is-panel {
+    top: 460px;      /* donde quieres que esté el menú */
+    right: 70px;     /* alineado a la derecha */
     width: 230px;
-    height: auto;
-    background: rgba(10,14,25,0.78);
-    border: 1px solid rgba(255,255,255,0.07);
-    box-shadow: 0 18px 45px rgba(0,0,0,0.65);
-    padding: 18px 20px;
-    border-radius: 14px;
+    z-index: 40;
   }
 
-  #sidebarNav.is-panel .sidebar-inner {
+  /* BARRA / RASTRO (se ve siempre) */
+  #sidebarNav::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -100px;          /* empieza pegado al borde derecho del viewport */
+    width: 140px;           /* largo del “rastro” */
+    height: 4px;            /* fino, horizontal */
+    border-radius: 999px;
+    background: rgba(15,20,30,0.9);
+
+    /* efecto de “rastro” cyber sutil */
+    box-shadow:
+      0 0 10px rgba(0,0,0,0.6),
+      0 0 18px rgba(255,159,26,0.18);
+
+    /* aquí nace vertical (rotada 90º) y desplazada */
+    transform-origin: right center;
+    transform: rotate(90deg);
+    opacity: 0.85;
+
+    transition:
+      right 0.55s cubic-bezier(.25,.9,.3,1),
+      transform 0.55s cubic-bezier(.25,.9,.3,1),
+      opacity 0.35s ease-out;
+  }
+
+  /* Estado ABIERTO: el rastro llega a su sitio y se endereza */
+  #sidebarNav.is-open::before {
+    right: 0;                /* se coloca justo en el borde del panel */
+    transform: rotate(0deg); /* se convierte en barra horizontal arriba del menú */
     opacity: 1;
+  }
+
+  /* CUERPO DEL MENÚ (nace desde la barra y se abre hacia abajo) */
+  #sidebarNav .sidebar-inner {
+    margin-top: 6px;                 /* debajo de la barrita */
+    background: rgba(10, 14, 25, 0.92);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 0 18px;                 /* empezamos “cerrado” en padding vertical */
+    box-shadow: 0 22px 50px rgba(0,0,0,0.65);
+    backdrop-filter: blur(14px);
+
+    overflow: hidden;
+    max-height: 0;                   /* cerrado verticalmente */
+    opacity: 0;
+    transform-origin: top center;
+    transform: translateY(-6px);
+
+    transition:
+      max-height 0.55s cubic-bezier(.25,.9,.3,1),
+      opacity 0.35s ease-out 0.12s,
+      transform 0.45s cubic-bezier(.25,.9,.3,1) 0.12s,
+      padding 0.4s ease-out;
+  }
+
+  /* ABIERTO: panel crece hacia abajo desde la barra */
+  #sidebarNav.is-open .sidebar-inner {
+    max-height: 500px;               /* suficiente para tu contenido */
+    opacity: 1;
+    transform: translateY(0);
+    padding: 14px 18px 18px;
   }
 }
 
-/* Móvil: oculto */
+/* Móvil: no mostramos este panel */
 @media (max-width: 980px) {
-  #sidebarNav { display: none; }
+  #sidebarNav {
+    display: none;
+  }
 }
 
