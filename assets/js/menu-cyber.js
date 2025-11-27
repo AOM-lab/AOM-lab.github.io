@@ -1,48 +1,61 @@
-/*
-   MENÚ CYBER-LINE — JS
-   Detecta sección activa + scroll suave + mejora UX
-*/
+/* ============================================================
+   MENÚ CYBER-LINE LATERAL — Scroll suave + sección activa
+   ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
+
   const links = document.querySelectorAll(".cyber-link");
   const sections = [...links].map(link => {
     const id = link.getAttribute("href");
     return document.querySelector(id);
   });
 
-  /* Scroll suave */
+  /* ------------------------------
+     SCROLL SUAVE AL HACER CLIC
+     ------------------------------ */
   links.forEach(link => {
     link.addEventListener("click", e => {
-      const targetId = link.getAttribute("href");
-      const target = document.querySelector(targetId);
+      e.preventDefault();
+      const id = link.getAttribute("href");
+      const target = document.querySelector(id);
+      if (!target) return;
 
-      if (target) {
-        e.preventDefault();
-        window.scrollTo({
-          top: target.offsetTop - 40,
-          behavior: "smooth",
-        });
-      }
+      /* Ajuste fino para no pegar el título al borde superior */
+      const headerOffset = 90;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     });
   });
 
-  /* Resalta el item activo al hacer scroll */
-  const activateOnScroll = () => {
-    let scrollPos = window.scrollY + 200;
 
-    sections.forEach((section, index) => {
-      if (!section) return;
+  /* ------------------------------------------------------
+     DETECTOR DE SECCIÓN ACTUAL (IntersectionObserver)
+     ------------------------------------------------------ */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
 
-      if (
-        scrollPos >= section.offsetTop &&
-        scrollPos < section.offsetTop + section.offsetHeight
-      ) {
-        links.forEach(l => l.classList.remove("active"));
-        links[index].classList.add("active");
+      if (entry.isIntersecting) {
+        links.forEach(link => link.classList.remove("active"));
+        const activeLink = document.querySelector(`.cyber-link[href="#${id}"]`);
+        if (activeLink) {
+          activeLink.classList.add("active");
+        }
       }
     });
-  };
+  }, {
+    root: null,
+    rootMargin: "-45% 0px -45% 0px",  // detecta la sección cuando entra al centro de la pantalla
+    threshold: 0
+  });
 
-  activateOnScroll();
-  window.addEventListener("scroll", activateOnScroll);
+  sections.forEach(section => {
+    if (section) observer.observe(section);
+  });
+
 });
