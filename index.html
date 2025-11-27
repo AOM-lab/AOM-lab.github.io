@@ -208,24 +208,21 @@
     </div>
   </div>
 
-<!-- MAIN: layout con menú lateral + contenido -->
-<main class="container layout-shell">
-  <!-- COLUMNA IZQUIERDA: MENÚ STICKY -->
-  <aside class="cyber-menu-shell" aria-label="Navegación de secciones">
-    <nav id="cyberMenu" class="cyber-menu">
-      <ul class="cyber-menu-list">
-        <li><a href="#sobre-mi"        class="cyber-link">Sobre mí</a></li>
-        <li><a href="#especialidades" class="cyber-link">Especialidades</a></li>
-        <li><a href="#investigacion"  class="cyber-link">Investigación y trabajo</a></li>
-        <li><a href="#tools"          class="cyber-link">Contenido</a></li>
-        <li><a href="#site-graph"     class="cyber-link">Mapa visual</a></li>
-        <li><a href="#contact"        class="cyber-link">Contacto</a></li>
-      </ul>
-    </nav>
-  </aside>
+<!-- MENÚ FLOTANTE (fuera del flujo del contenido) -->
+<nav id="cyberMenu" class="cyber-menu" aria-label="Navegación de secciones">
+  <ul class="cyber-menu-list">
+    <li><a href="#sobre-mi"        class="cyber-link">Sobre mí</a></li>
+    <li><a href="#especialidades" class="cyber-link">Especialidades</a></li>
+    <li><a href="#investigacion"  class="cyber-link">Investigación y trabajo</a></li>
+    <li><a href="#tools"          class="cyber-link">Contenido</a></li>
+    <li><a href="#site-graph"     class="cyber-link">Mapa visual</a></li>
+    <li><a href="#contact"        class="cyber-link">Contacto</a></li>
+  </ul>
+</nav>
 
-  <!-- COLUMNA DERECHA: TODO EL CONTENIDO -->
-  <div class="content-column">
+<!-- MAIN: contenido centrado -->
+<main class="container">
+
     <!-- SOBRE MÍ -->
     <section id="sobre-mi" class="custom-section reveal" data-reveal="fade-up" aria-labelledby="sobre-mi-title">
       <h2 id="sobre-mi-title" class="section-title">Sobre mí</h2>
@@ -453,7 +450,6 @@
         </div>
       </div>
     </section>
-    </div>
   </main>
 
   <footer>© <span id="y"></span> Alejandro Orcajada Meseguer — Administrador de Sistemas y Ciberseguridad</footer>
