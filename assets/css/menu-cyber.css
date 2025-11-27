@@ -47,94 +47,115 @@
   color: var(--accent);
 }
 
-/* ===== Escritorio: menú flotante derecho, afinado tipo Brittany ===== */
+/* ===== Escritorio: HUD lateral de secciones ===== */
 @media (min-width: 981px) {
   .cyber-menu {
     position: fixed;
-    top: 0; /* lo coloca el JS dinámicamente */
-    right: max(24px, 6vw); /* un poco más cerca del contenido */
+    top: 0; /* el JS sigue fijando la altura real para alinearlo con "Sobre mí" */
+    right: max(32px, 7vw);         /* un poco dentro, cerca del contenido */
     left: auto;
-    width: auto;
+    width: 230px;
+    padding: 14px 18px 16px;
     margin: 0;
-    padding: 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    backdrop-filter: none;
+    border-radius: 16px;
+    background: radial-gradient(circle at top left,
+                rgba(255,159,26,.12),
+                rgba(7,10,20,.96));
+    border: 1px solid rgba(255,255,255,.06);
+    box-shadow: 0 20px 45px rgba(0,0,0,.85);
+    backdrop-filter: blur(14px);
     z-index: 50;
     font-size: 0.8rem;
   }
 
-  /* Etiqueta pequeña arriba ("Secciones") */
+  /* Etiqueta pequeña arriba del panel */
   .cyber-menu::before {
-    content: "Secciones";
+    content: "Panel rápido";
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     font-size: 0.7rem;
-    letter-spacing: .16em;
+    letter-spacing: .18em;
     text-transform: uppercase;
-    color: rgba(168,178,194,.7);
+    color: rgba(168,178,194,.75);
   }
 
   .cyber-menu-list {
+    list-style: none;
+    padding: 10px 0 0;
+    margin: 0;
+    border-top: 1px solid rgba(255,255,255,.06);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    border: 0;
+    gap: 8px;
   }
 
   .cyber-link {
     position: relative;
     display: block;
-    padding: 3px 0 3px 56px;  /* hueco para la línea */
-    font-size: 0.82rem;       /* un poco más pequeño que antes */
-    letter-spacing: .08em;
-    color: rgba(168,178,194,.9);
+    padding: 5px 0 5px 26px;   /* hueco para el “led” a la izquierda */
+    font-size: 0.82rem;
+    letter-spacing: .06em;
+    color: rgba(185,194,210,.92);
     text-decoration: none;
     font-weight: 600;
     white-space: nowrap;
     transition: color .2s ease;
   }
 
-  /* Línea fina a la izquierda */
+  /* “Led” a la izquierda de cada item */
   .cyber-link::before {
     content: "";
     position: absolute;
-    left: 0;
+    left: 4px;
     top: 50%;
-    width: 32px;
-    height: 1.5px;
+    width: 7px;
+    height: 7px;
     transform: translateY(-50%);
-    background: linear-gradient(90deg,
-      rgba(255,255,255,.10),
-      rgba(255,255,255,.02)
-    );
     border-radius: 999px;
-    opacity: .5;
+    background: rgba(148,163,184,.45);
+    box-shadow: 0 0 0 0 rgba(255,159,26,0);
     display: block;
     transition:
-      width .22s cubic-bezier(.2,.9,.3,1),
-      background .18s ease,
-      opacity .18s ease;
+      background .2s ease,
+      box-shadow .25s ease;
   }
 
-  /* Subrayado bajo el texto en hover/activo */
+  /* Riel vertical muy suave (da sensación de HUD) */
+  .cyber-menu-list::before {
+    content: "";
+    position: absolute;
+    /* anclamos el riel dentro del panel */
+  }
+
+  .cyber-menu-list {
+    position: relative;
+  }
+
+  .cyber-menu-list::before {
+    left: 8px;
+    top: 10px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      rgba(148,163,184,.25),
+      rgba(15,23,42,.0),
+      rgba(148,163,184,.18)
+    );
+  }
+
+  /* Subrayado bajo el texto al interactuar */
   .cyber-link::after {
     content: "";
     position: absolute;
-    left: 56px;
-    bottom: -6px;
+    left: 26px;
+    bottom: -3px;
     width: 0;
     height: 2px;
-    border-radius: 2px;
+    border-radius: 999px;
     background: linear-gradient(90deg, var(--accent), var(--accent-soft));
-    box-shadow: 0 4px 14px rgba(255,159,26,.18);
+    box-shadow: 0 6px 18px rgba(255,159,26,.22);
     opacity: 0;
-    display: block;
     transition: width .24s cubic-bezier(.2,.9,.3,1), opacity .16s ease;
   }
 
@@ -146,37 +167,29 @@
 
   .cyber-link:hover::before,
   .cyber-link:focus::before {
-    width: 48px;
-    background: linear-gradient(90deg,
-      rgba(255,159,26,.9),
-      rgba(255,215,154,.75)
-    );
-    opacity: 1;
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 4px rgba(255,159,26,.22);
   }
 
   .cyber-link:hover::after,
   .cyber-link:focus::after {
-    width: 38px;
+    width: 42px;
     opacity: .95;
   }
 
-  /* Activo (sección actual) */
+  /* Estado activo (sección actual) */
   .cyber-link.active {
     color: var(--accent);
   }
 
   .cyber-link.active::before {
-    width: 60px;
-    background: linear-gradient(90deg,
-      rgba(255,159,26,1),
-      rgba(255,215,154,.9)
-    );
-    opacity: 1;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px rgba(255,159,26,.30);
   }
 
   .cyber-link.active::after {
-    width: 50px;
+    width: 54px;
     opacity: 1;
-    box-shadow: 0 8px 22px rgba(255,159,26,.32);
+    box-shadow: 0 10px 24px rgba(255,159,26,.35);
   }
 }
