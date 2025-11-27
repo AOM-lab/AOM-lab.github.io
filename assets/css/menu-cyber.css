@@ -1,83 +1,59 @@
-/* ============ LAYOUT GENERAL: 2 COLUMNAS ============ */
+/* ===== Menú flotante lateral derecho ===== */
 
-.layout-shell {
-  display: grid;
-  grid-template-columns: 230px minmax(0, 1fr);
-  gap: 40px;
-  margin-top: 32px;
-  align-items: flex-start;
+/* Posicionamiento general */
+.cyber-menu {
+  position: fixed;
+  top: 260px;              /* altura aproximada (ajústala si quieres) */
+  right: max(24px, 5vw);   /* separado del borde derecho */
+  z-index: 50;
+  background: rgba(11, 18, 32, 0.94);
+  border-radius: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
 }
 
-/* Columna izquierda (contenedor del menú) */
-.cyber-menu-shell {
-  position: sticky;
-  top: 120px;           /* ajusta si se solapa con el header */
-  height: fit-content;
-}
-
-/* Columna derecha (contenido) */
-.content-column {
-  min-width: 0;
-}
-
-/* ============ MENÚ CYBER-LINE VERTICAL ============ */
-
+/* Lista vertical */
 .cyber-menu-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
+/* Enlaces */
 .cyber-link {
   position: relative;
-  display: inline-block;
-  padding: 6px 0 6px 70px;   /* hueco para la línea a la izquierda */
-  text-decoration: none;
+  display: block;
+  padding: 4px 0 4px 22px;
+  font-size: 0.9rem;
+  letter-spacing: .06em;
   color: var(--muted);
-  font-size: 0.95rem;
-  letter-spacing: .08em;
+  text-decoration: none;
   font-weight: 600;
+  white-space: nowrap;
   transition: color .22s ease;
 }
 
-/* Línea izquierda tipo Brittany */
+/* Rayita a la izquierda de cada item */
 .cyber-link::before {
   content: "";
   position: absolute;
   left: 0;
   top: 50%;
-  width: 52px;
+  width: 14px;
   height: 2px;
   transform: translateY(-50%);
-  background: linear-gradient(90deg,
-    rgba(255,255,255,.08),
-    rgba(255,255,255,.02)
-  );
+  background: rgba(255,255,255,.1);
   border-radius: 999px;
-  opacity: .55;
   transition:
-    width .26s cubic-bezier(.2,.9,.3,1),
+    width .22s cubic-bezier(.2,.9,.3,1),
     background .22s ease,
-    opacity .22s ease,
-    box-shadow .22s ease;
-}
-
-/* Subrayado corto bajo el texto (solo hover/activo) */
-.cyber-link::after {
-  content: "";
-  position: absolute;
-  left: 70px;
-  bottom: -6px;
-  width: 0;
-  height: 3px;
-  border-radius: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-soft));
-  box-shadow: 0 6px 18px rgba(255,159,26,.20);
-  opacity: 0;
-  transition: width .28s cubic-bezier(.2,.9,.3,1), opacity .2s ease;
+    opacity .22s ease;
+  opacity: .6;
 }
 
 /* Hover / focus */
@@ -89,19 +65,9 @@
 
 .cyber-link:hover::before,
 .cyber-link:focus::before {
-  width: 70px;
-  background: linear-gradient(90deg,
-    rgba(255,159,26,.95),
-    rgba(255,215,154,.8)
-  );
+  width: 20px;
+  background: var(--accent);
   opacity: 1;
-  box-shadow: 0 8px 22px rgba(0,0,0,.75);
-}
-
-.cyber-link:hover::after,
-.cyber-link:focus::after {
-  width: 54px;
-  opacity: .96;
 }
 
 /* Activo (sección actual) */
@@ -110,58 +76,44 @@
 }
 
 .cyber-link.active::before {
-  width: 82px;
-  background: linear-gradient(90deg,
-    rgba(255,159,26,1),
-    rgba(255,215,154,.9)
-  );
+  width: 24px;
+  background: var(--accent);
   opacity: 1;
-  box-shadow: 0 12px 30px rgba(0,0,0,.9);
 }
 
-.cyber-link.active::after {
-  width: 72px;
-  opacity: 1;
-  box-shadow: 0 12px 28px rgba(255,159,26,.35);
-}
-
-/* ============ RESPONSIVE: EN MÓVIL PASA A BARRA ============ */
+/* ===== Responsive: en móvil lo ponemos arriba y ocupando ancho ===== */
 
 @media (max-width: 980px) {
-  .layout-shell {
-    grid-template-columns: 1fr;
-    margin-top: 26px;
-  }
-
-  .cyber-menu-shell {
+  .cyber-menu {
     position: static;
-    margin-bottom: 16px;
+    margin: 10px auto 0;
+    max-width: min(100%, 1100px);
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0 16px;
   }
 
   .cyber-menu-list {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 22px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 8px;
   }
 
   .cyber-link {
     padding: 4px 0;
-    font-size: 0.9rem;
+    font-size: 0.86rem;
   }
 
   .cyber-link::before {
     display: none;
   }
-
-  .cyber-link::after {
-    left: 0;
-  }
 }
 
-/* Respeto a usuarios con reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  .cyber-link::before,
-  .cyber-link::after {
+  .cyber-link::before {
     transition: none !important;
   }
 }
