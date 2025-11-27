@@ -117,3 +117,48 @@
     transition: none !important;
   }
 }
+/* ===== Overrides para menú flotante a la DERECHA en escritorio ===== */
+@media (min-width: 981px) {
+  .cyber-menu {
+    position: fixed;
+    top: 260px;                      /* ajusta la altura si quieres */
+    right: max(24px, 5vw);           /* lo pega al lado derecho */
+    left: auto;
+    width: auto;
+    padding: 10px 14px;
+    margin: 0;
+    display: block;
+    background: rgba(11,18,32,0.94);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    z-index: 50;
+  }
+
+  .cyber-menu-list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .cyber-link {
+    padding: 4px 0 4px 22px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .cyber-link::before {
+    left: 0;
+    width: 14px;
+  }
+
+  .cyber-link:hover::before,
+  .cyber-link:focus::before {
+    width: 20px;
+  }
+
+  .cyber-link.active::before {
+    width: 24px;
+  }
+}
