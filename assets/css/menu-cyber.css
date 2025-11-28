@@ -39,6 +39,7 @@
 
   /* ESTADO ABIERTO: el rectángulo se desplaza + se convierte en panel */
   #sidebarNav.is-open {
+     top: 430px;      /* POSICIÓN FINAL MÁS ARRIBA */
     right: 70px;                    /* posición final pro */
     width: 230px;                   /* ancho del panel */
     height: auto;
