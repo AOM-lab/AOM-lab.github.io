@@ -1,85 +1,63 @@
-/* ===============================
-   SIDEBAR: RASTRO + APERTURA
-   =============================== */
+/* ==========================================
+   SIDEBAR: RASTRO VERTICAL → PANEL DESDE ARRIBA
+   ========================================== */
 
 @media (min-width: 981px) {
 
-  /* CONTENEDOR DEL PANEL (posición final del menú) */
+  /* CONTENEDOR DEL SIDEBAR */
   #sidebarNav {
     position: fixed;
-    top: 460px;      /* donde quieres que esté el menú */
-    right: 70px;     /* alineado a la derecha */
-    width: 230px;
-    z-index: 40;
-  }
-
-  /* BARRA / RASTRO (se ve siempre) */
-  #sidebarNav::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -100px;          /* empieza pegado al borde derecho del viewport */
-    width: 140px;           /* largo del “rastro” */
-    height: 4px;            /* fino, horizontal */
-    border-radius: 999px;
+    top: 460px;       /* altura del menú */
+    right: 0;         /* empieza pegado al borde derecho */
+    width: 10px;      /* rastro fino */
+    height: 180px;    /* alto aproximado del menú */
     background: rgba(15,20,30,0.9);
+    border-radius: 999px;
+    box-shadow: 0 0 14px rgba(0,0,0,0.7);
+    overflow: hidden;
+    z-index: 40;
 
-    /* efecto de “rastro” cyber sutil */
-    box-shadow:
-      0 0 10px rgba(0,0,0,0.6),
-      0 0 18px rgba(255,159,26,0.18);
-
-    /* aquí nace vertical (rotada 90º) y desplazada */
-    transform-origin: right center;
-    transform: rotate(90deg);
-    opacity: 0.85;
-
+    /* animación: se desplaza y se ensancha */
     transition:
       right 0.55s cubic-bezier(.25,.9,.3,1),
-      transform 0.55s cubic-bezier(.25,.9,.3,1),
-      opacity 0.35s ease-out;
+      width 0.55s cubic-bezier(.25,.9,.3,1),
+      background 0.3s ease;
   }
 
-  /* Estado ABIERTO: el rastro llega a su sitio y se endereza */
-  #sidebarNav.is-open::before {
-    right: 0;                /* se coloca justo en el borde del panel */
-    transform: rotate(0deg); /* se convierte en barra horizontal arriba del menú */
-    opacity: 1;
-  }
-
-  /* CUERPO DEL MENÚ (nace desde la barra y se abre hacia abajo) */
+  /* CONTENIDO DEL MENÚ (panel completo) */
   #sidebarNav .sidebar-inner {
-    margin-top: 6px;                 /* debajo de la barrita */
-    background: rgba(10, 14, 25, 0.92);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 14px;
-    padding: 0 18px;                 /* empezamos “cerrado” en padding vertical */
-    box-shadow: 0 22px 50px rgba(0,0,0,0.65);
-    backdrop-filter: blur(14px);
-
-    overflow: hidden;
-    max-height: 0;                   /* cerrado verticalmente */
     opacity: 0;
-    transform-origin: top center;
-    transform: translateY(-6px);
-
+    max-height: 0;
+    padding: 0 16px;                /* sin padding vertical al inicio */
+    transform: translateY(-8px);    /* un pelín hacia arriba */
     transition:
       max-height 0.55s cubic-bezier(.25,.9,.3,1),
-      opacity 0.35s ease-out 0.12s,
-      transform 0.45s cubic-bezier(.25,.9,.3,1) 0.12s,
-      padding 0.4s ease-out;
+      opacity 0.3s ease-out 0.12s,
+      transform 0.4s cubic-bezier(.25,.9,.3,1) 0.12s,
+      padding 0.35s ease-out;
   }
 
-  /* ABIERTO: panel crece hacia abajo desde la barra */
+  /* ESTADO ABIERTO: el rectángulo se desplaza + se convierte en panel */
+  #sidebarNav.is-open {
+    right: 70px;                    /* posición final pro */
+    width: 230px;                   /* ancho del panel */
+    height: auto;
+    background: rgba(10,14,25,0.92);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    box-shadow: 0 22px 50px rgba(0,0,0,0.65);
+  }
+
+  /* El panel se abre de ARRIBA HACIA ABAJO desde ese techo */
   #sidebarNav.is-open .sidebar-inner {
-    max-height: 500px;               /* suficiente para tu contenido */
     opacity: 1;
+    max-height: 500px;              /* suficiente para todo el menú */
     transform: translateY(0);
-    padding: 14px 18px 18px;
+    padding: 14px 16px 18px;        /* ahora sí padding vertical completo */
   }
 }
 
-/* Móvil: no mostramos este panel */
+/* MÓVIL: lo ocultamos */
 @media (max-width: 980px) {
   #sidebarNav {
     display: none;
