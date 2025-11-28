@@ -1,5 +1,5 @@
 /* ============================================================
-   SIDEBAR: RASTRO → BARRA → PANEL (VERTICAL → HORIZONTAL → MENÚ)
+   SIDEBAR: RASTRO VERTICAL → SLIDE + PANEL HACIA ABAJO
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -8,28 +8,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!panel || !triggerSection) return;
 
-  // Punto donde quieres que empiece a abrirse el menú
-  const OPEN_OFFSET = 140; // píxeles desde la parte superior del viewport
+  const OPEN_OFFSET = 140; // punto en el que quieres que se abra
 
   function updatePanel() {
     const rect = triggerSection.getBoundingClientRect();
 
     if (rect.top <= OPEN_OFFSET) {
-      // Hemos bajado lo suficiente: el rastro se coloca y se abre el panel
+      // Hemos bajado lo suficiente -> deslizar + abrir
       panel.classList.add("is-open");
     } else {
-      // Volvemos arriba: sólo se ve el rastro vertical
+      // Estamos por encima de "Sobre mí" -> solo rastro fino
       panel.classList.remove("is-open");
     }
   }
 
-  // Ejecutar al cargar (por si entras ya scrolleado)
+  // Ejecutar al cargar por si entras ya scrolleado
   updatePanel();
 
   // Actualizar en scroll (optimizado)
   window.addEventListener(
     "scroll",
-    () => window.requestAnimationFrame(updatePanel),
+    () => requestAnimationFrame(updatePanel),
     { passive: true }
   );
 });
