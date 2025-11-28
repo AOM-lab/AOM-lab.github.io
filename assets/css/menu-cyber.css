@@ -63,6 +63,124 @@
   #sidebarNav {
     display: none;
   }
+  /* ================================
+   ESTILO INTERNO DEL PANEL (PRO)
+   ================================ */
+
+  #sidebarNav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #sidebarNav .sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(220,226,238,.92);
+  }
+
+  .sidebar-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: .20em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: rgba(170,178,194,.80);
+  }
+
+  .sidebar-group {
+    margin-top: 16px;
+    margin-bottom: 4px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: rgba(170,178,194,.70);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sidebar-link {
+    position: relative;
+    display: inline-block;
+    padding-left: 18px;
+    color: rgba(226,232,245,.95);
+    font-size: 0.84rem;
+    font-weight: 500;
+    letter-spacing: .03em;
+    transition: color .2s ease;
+  }
+
+  .sidebar-link::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(140,150,165,.75);
+    transform: translateY(-50%);
+    transition:
+      background .2s ease,
+      box-shadow .25s ease,
+      transform .2s ease;
+  }
+
+  .sidebar-link::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+    opacity: 0;
+    transition:
+      width .24s cubic-bezier(.2,.9,.3,1),
+      opacity .15s ease;
+  }
+
+  .sidebar-link:hover {
+    color: var(--accent-soft);
+  }
+
+  .sidebar-link:hover::before {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(255,159,26,.25);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .sidebar-link:hover::after {
+    width: 38px;
+    opacity: 1;
+  }
+
+  .sidebar-link.active {
+    color: var(--accent);
+  }
+
+  .sidebar-link.active::before {
+    background: var(--accent);
+    box-shadow: 0 0 0 5px rgba(255,159,26,.32);
+    transform: translateY(-50%) scale(1.15);
+  }
+
+  .sidebar-link.active::after {
+    width: 52px;
+    opacity: 1;
+    box-shadow: 0 8px 22px rgba(255,159,26,.25);
+  }
 }
 
 
