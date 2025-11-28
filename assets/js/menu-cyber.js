@@ -31,4 +31,33 @@ document.addEventListener("DOMContentLoaded", () => {
     () => requestAnimationFrame(updatePanel),
     { passive: true }
   );
+   /* ============================================
+   SCROLL SUAVE GLOBAL PARA ENLACES #anchor
+   ============================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const smoothLinks = document.querySelectorAll('a[href^="#"]');
+
+  smoothLinks.forEach(link => {
+    link.addEventListener("click", e => {
+      const targetId = link.getAttribute("href");
+      const target = document.querySelector(targetId);
+
+      if (!target) return;
+
+      e.preventDefault();
+
+      // Distancia desde el borde superior (ajústalo si tienes header fijo)
+      const offset = -20;
+
+      const top = target.getBoundingClientRect().top + window.scrollY + offset;
+
+      window.scrollTo({
+        top,
+        behavior: "smooth"
+      });
+    });
+  });
+});
+
 });
