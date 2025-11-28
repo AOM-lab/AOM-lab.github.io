@@ -1,41 +1,42 @@
 /* ============================================================
    SIDEBAR: RASTRO VERTICAL → SLIDE + PANEL HACIA ABAJO
+   + SCROLL SUAVE PARA ENLACES #anchor
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
+  /* --------- LÓGICA DEL PANEL LATERAL ---------- */
+
   const panel = document.getElementById("sidebarNav");
   const triggerSection = document.getElementById("sobre-mi");
 
-  if (!panel || !triggerSection) return;
+  if (panel && triggerSection) {
+    const OPEN_OFFSET = 140; // punto en el que quieres que se abra
 
-  const OPEN_OFFSET = 140; // punto en el que quieres que se abra
+    function updatePanel() {
+      const rect = triggerSection.getBoundingClientRect();
 
-  function updatePanel() {
-    const rect = triggerSection.getBoundingClientRect();
-
-    if (rect.top <= OPEN_OFFSET) {
-      // Hemos bajado lo suficiente -> deslizar + abrir
-      panel.classList.add("is-open");
-    } else {
-      // Estamos por encima de "Sobre mí" -> solo rastro fino
-      panel.classList.remove("is-open");
+      if (rect.top <= OPEN_OFFSET) {
+        // Hemos bajado lo suficiente -> deslizar + abrir
+        panel.classList.add("is-open");
+      } else {
+        // Estamos por encima de "Sobre mí" -> solo rastro fino
+        panel.classList.remove("is-open");
+      }
     }
+
+    // Ejecutar al cargar por si entras ya scrolleado
+    updatePanel();
+
+    // Actualizar en scroll (optimizado)
+    window.addEventListener(
+      "scroll",
+      () => requestAnimationFrame(updatePanel),
+      { passive: true }
+    );
   }
 
-  // Ejecutar al cargar por si entras ya scrolleado
-  updatePanel();
+  /* --------- SCROLL SUAVE GLOBAL ---------- */
 
-  // Actualizar en scroll (optimizado)
-  window.addEventListener(
-    "scroll",
-    () => requestAnimationFrame(updatePanel),
-    { passive: true }
-  );
-   /* ============================================
-   SCROLL SUAVE GLOBAL PARA ENLACES #anchor
-   ============================================ */
-
-document.addEventListener("DOMContentLoaded", () => {
   const smoothLinks = document.querySelectorAll('a[href^="#"]');
 
   smoothLinks.forEach(link => {
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       e.preventDefault();
 
-      // Distancia desde el borde superior (ajústalo si tienes header fijo)
+      // Distancia desde el borde superior (ajústalo si hace falta)
       const offset = -20;
 
       const top = target.getBoundingClientRect().top + window.scrollY + offset;
@@ -58,6 +59,4 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
-});
-
 });
