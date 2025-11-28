@@ -1,10 +1,14 @@
+/* ===============================
+   PANEL LATERAL — ESCRITORIO SOLO
+   =============================== */
+
+/* Estado base: rastro vertical pegado a la derecha */
 @media (min-width: 981px) {
 
-  /* Estado base: rastro vertical a la derecha */
   #sidebarNav {
     position: fixed;
-    top: 440px;          /* ALTURA GLOBAL del componente */
-    right: 0;
+    top: 440px;        /* altura global; súbelo/bájalo a tu gusto */
+    right: 0;          /* pegado al borde al inicio */
     width: 10px;
     height: 180px;
     background: rgba(15,20,30,0.9);
@@ -13,7 +17,7 @@
     overflow: hidden;
     z-index: 40;
 
-    /* un pelín más abajo cuando está cerrado */
+    /* cae un pelín hacia abajo cuando está cerrado */
     transform: translateY(16px);
     transition:
       right 0.55s cubic-bezier(.25,.9,.3,1),
@@ -22,7 +26,7 @@
       transform 0.45s cubic-bezier(.25,.9,.3,1);
   }
 
-  /* Contenido del panel, nace cerrado */
+  /* Contenido del panel: comienza colapsado */
   #sidebarNav .sidebar-inner {
     opacity: 0;
     max-height: 0;
@@ -35,18 +39,18 @@
       padding 0.35s ease-out;
   }
 
-  /* Estado abierto: se desplaza hacia dentro + sube un poco + se ensancha */
+  /* Estado abierto: se desplaza hacia dentro, sube un poco y se ensancha */
   #sidebarNav.is-open {
-    top: 130px;
-    right: 70px;           /* donde debe quedar horizontalmente */
-    width: 230px;          /* ancho panel */
+    top: 130px;        /* ALTURA FINAL cuando está abierto */
+    right: 70px;       /* donde debe quedar horizontalmente */
+    width: 230px;      /* ancho del panel */
     height: auto;
     background: rgba(10,14,25,0.92);
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 14px;
     box-shadow: 0 22px 50px rgba(0,0,0,0.65);
 
-    transform: translateY(0);  /* SUBE respecto al estado cerrado */
+    transform: translateY(0);
   }
 
   /* El panel se abre de arriba hacia abajo */
@@ -58,129 +62,131 @@
   }
 }
 
-/* Móvil: oculto */
-@media (max-width: 980px) {
-  #sidebarNav {
-    display: none;
-  }
-  /* ================================
-   ESTILO INTERNO DEL PANEL (PRO)
-   ================================ */
+/* ===============================
+   ESTILO INTERNO “BONITO” DEL PANEL
+   (se aplica siempre, pero solo se ve en escritorio)
+   =============================== */
 
-  #sidebarNav a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  #sidebarNav .sidebar-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: rgba(220,226,238,.92);
-  }
-
-  .sidebar-title {
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: .20em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    color: rgba(170,178,194,.80);
-  }
-
-  .sidebar-group {
-    margin-top: 16px;
-    margin-bottom: 4px;
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: rgba(170,178,194,.70);
-    letter-spacing: .14em;
-    text-transform: uppercase;
-  }
-
-  .sidebar-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .sidebar-link {
-    position: relative;
-    display: inline-block;
-    padding-left: 18px;
-    color: rgba(226,232,245,.95);
-    font-size: 0.84rem;
-    font-weight: 500;
-    letter-spacing: .03em;
-    transition: color .2s ease;
-  }
-
-  .sidebar-link::before {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 50%;
-    width: 5px;
-    height: 5px;
-    border-radius: 999px;
-    background: rgba(140,150,165,.75);
-    transform: translateY(-50%);
-    transition:
-      background .2s ease,
-      box-shadow .25s ease,
-      transform .2s ease;
-  }
-
-  .sidebar-link::after {
-    content: "";
-    position: absolute;
-    left: 18px;
-    bottom: -3px;
-    width: 0;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
-    opacity: 0;
-    transition:
-      width .24s cubic-bezier(.2,.9,.3,1),
-      opacity .15s ease;
-  }
-
-  .sidebar-link:hover {
-    color: var(--accent-soft);
-  }
-
-  .sidebar-link:hover::before {
-    background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(255,159,26,.25);
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .sidebar-link:hover::after {
-    width: 38px;
-    opacity: 1;
-  }
-
-  .sidebar-link.active {
-    color: var(--accent);
-  }
-
-  .sidebar-link.active::before {
-    background: var(--accent);
-    box-shadow: 0 0 0 5px rgba(255,159,26,.32);
-    transform: translateY(-50%) scale(1.15);
-  }
-
-  .sidebar-link.active::after {
-    width: 52px;
-    opacity: 1;
-    box-shadow: 0 8px 22px rgba(255,159,26,.25);
-  }
+#sidebarNav a {
+  color: inherit;
+  text-decoration: none;
 }
 
+#sidebarNav .sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(220,226,238,.92);
+}
+
+/* Título “Panel rápido” */
+.sidebar-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: rgba(170,178,194,.80);
+}
+
+/* Subtítulos “Perfil / Contenido” */
+.sidebar-group {
+  margin-top: 16px;
+  margin-bottom: 4px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgba(170,178,194,.70);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* Listas sin bullets feos */
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Enlaces del panel */
+.sidebar-link {
+  position: relative;
+  display: inline-block;
+  padding-left: 18px;
+  color: rgba(226,232,245,.95);
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: .03em;
+  transition: color .2s ease;
+}
+
+/* Punto luminoso a la izquierda */
+.sidebar-link::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(140,150,165,.75);
+  transform: translateY(-50%);
+  transition:
+    background .2s ease,
+    box-shadow .25s ease,
+    transform .2s ease;
+}
+
+/* Subrayado corto animado */
+.sidebar-link::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+  opacity: 0;
+  transition:
+    width .24s cubic-bezier(.2,.9,.3,1),
+    opacity .15s ease;
+}
+
+/* Hover: texto ámbar suave + punto iluminado + subrayado */
+.sidebar-link:hover {
+  color: var(--accent-soft);
+}
+
+.sidebar-link:hover::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255,159,26,.25);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.sidebar-link:hover::after {
+  width: 38px;
+  opacity: 1;
+}
+
+/* Activo (sección actual) */
+.sidebar-link.active {
+  color: var(--accent);
+}
+
+.sidebar-link.active::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 5px rgba(255,159,26,.32);
+  transform: translateY(-50%) scale(1.15);
+}
+
+.sidebar-link.active::after {
+  width: 52px;
+  opacity: 1;
+  box-shadow: 0 8px 22px rgba(255,159,26,.25);
+}
 
