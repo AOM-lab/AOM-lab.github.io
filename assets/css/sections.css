@@ -158,6 +158,11 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 16px;
+   
+  min-height: 460px; 
+  
+
+  align-content: start; 
 }
 
 /* Estilo individual de la Tarjeta */
