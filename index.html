@@ -22,7 +22,9 @@
   <link rel="stylesheet" href="assets/css/menu-cyber.css">
   
   <link rel="stylesheet" href="assets/css/Atecnico.css"> 
-  <link rel="stylesheet" href="assets/css/especialidades.css"> <style>
+  <link rel="stylesheet" href="assets/css/Aespecialidades.css"> 
+
+  <style>
     /* ===== Variables base (global) ===== */
     :root{
       --bg:#0b1220; --panel:#111a2d; --text:#e9eef6; --muted:#a8b2c2;
@@ -59,8 +61,6 @@
     .custom-section{padding:32px 0;border-top:1px solid rgba(255,255,255,.06)}
     .custom-section .section-title{color:var(--accent);text-shadow:0 0 8px rgba(255,159,26,.25)}
     .custom-section .card{background:linear-gradient(180deg,color-mix(in oklab,var(--panel) 94%,#0f1422 6%),var(--panel));border:1px solid rgba(255,255,255,.05)}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .specialty h3{margin:0 0 8px;font-size:18px;color:#ffe2b0}
     
     /* OVERRIDE solo para Investigación */
     #investigacion .card{
@@ -106,7 +106,7 @@
     <section id="especialidades" class="custom-section reveal" data-reveal="fade-up">
       <h2 class="section-title">Especialidades</h2>
       
-      <p class="spec-intro-text">
+      <p class="spec-intro-text" style="color:#cbd5e1; border-left:3px solid #ff9f1a; padding-left:16px; margin-bottom:30px;">
         Combino seguridad en la nube, análisis ofensivo, administración de datos y hardening de sistemas para cubrir el ciclo completo de protección de la infraestructura. Cada especialidad se traduce en prácticas concretas en proyectos reales.
       </p>
 
@@ -114,7 +114,7 @@
         
         <article class="spec-card-pro">
           <div class="spec-content">
-            <div class="spec-icon-wrapper">
+            <div class="spec-icon-box">
               <img src="https://unpkg.com/lucide-static@latest/icons/cloud-cog.svg" class="spec-icon-img" alt="Cloud Security">
             </div>
             <h3 class="spec-title">Seguridad en la Nube</h3>
@@ -126,7 +126,7 @@
 
         <article class="spec-card-pro">
           <div class="spec-content">
-            <div class="spec-icon-wrapper">
+            <div class="spec-icon-box">
               <img src="https://unpkg.com/lucide-static@latest/icons/crosshair.svg" class="spec-icon-img" alt="Red Team">
             </div>
             <h3 class="spec-title">Red Team &amp; Vulnerabilidades</h3>
@@ -138,7 +138,7 @@
 
         <article class="spec-card-pro">
           <div class="spec-content">
-            <div class="spec-icon-wrapper">
+            <div class="spec-icon-box">
               <img src="https://unpkg.com/lucide-static@latest/icons/database.svg" class="spec-icon-img" alt="Database Ops">
             </div>
             <h3 class="spec-title">Admin. de Bases de Datos</h3>
@@ -150,7 +150,7 @@
 
         <article class="spec-card-pro">
           <div class="spec-content">
-            <div class="spec-icon-wrapper">
+            <div class="spec-icon-box">
               <img src="https://unpkg.com/lucide-static@latest/icons/shield-check.svg" class="spec-icon-img" alt="Hardening">
             </div>
             <h3 class="spec-title">Hardening de Sistemas</h3>
@@ -429,8 +429,5 @@
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
   <script defer src="assets/js/menu-cyber.js"></script>
   
-  <script defer src="assets/js/tools.js"></script>
-  <script defer src="assets/js/Atecnico.js"></script>
-  <script defer src="assets/js/especialidades.js"></script>
-</body>
+  <script defer src="assets/js/tools.js"></script>           <script defer src="assets/js/Atecnico.js"></script>        <script defer src="assets/js/Aespecialidades.js"></script> </body>
 </html>
