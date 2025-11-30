@@ -1,1 +1,255 @@
+/* --- ESTILOS SECCIÓN DOMINIO TÉCNICO (Atecnicos.css) --- */
 
+/* Variables locales para esta sección */
+#dominio-tecnico {
+  --bg-card-tech: #0b1022;
+  --bg-card-hover-tech: #0f162b;
+  --accent-primary: #ff9f1a; /* Coincide con tu variable --accent global */
+  --text-secondary: #94a3b8;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --radius-tech: 12px;
+}
+
+/* Cabecera específica de esta sección */
+#dominio-tecnico .tech-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+#dominio-tecnico .tech-icon {
+  color: var(--accent-primary);
+  width: 32px;
+  height: 32px;
+}
+
+/* Controles y Filtros */
+#dominio-tecnico .controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+#dominio-tecnico .filter-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#dominio-tecnico .filter-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 8px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+#dominio-tecnico .filter-btn:hover {
+  border-color: var(--accent-primary);
+  color: #fff;
+  background: rgba(255, 159, 26, 0.05);
+}
+
+#dominio-tecnico .filter-btn.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(255, 159, 26, 0.4);
+}
+
+#dominio-tecnico .load-more-btn {
+  background: transparent;
+  border: 1px dashed var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.8rem;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#dominio-tecnico .load-more-btn:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: rgba(255, 159, 26, 0.05);
+}
+
+#dominio-tecnico .load-more-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  border-style: solid;
+  border-color: transparent;
+}
+
+/* GRID PRINCIPAL */
+#tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  position: relative;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#tech-grid.changing {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+/* TARJETAS (Tech Cards) */
+.tech-card {
+  background: var(--bg-card-tech);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-tech);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s, box-shadow 0.3s;
+  will-change: transform;
+  opacity: 0; /* Inicialmente oculto para animación */
+}
+
+.tech-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.tech-icon-box {
+  width: 44px; height: 44px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+}
+
+.tech-card h3 {
+  color: #f1f5f9;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.tech-role-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-primary);
+  margin-bottom: 14px;
+  display: inline-block;
+  opacity: 0.9;
+}
+
+.tech-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 22px;
+  flex-grow: 1;
+}
+
+.tech-description strong {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+/* TAGS */
+.tech-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.tech-tag {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.7rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s;
+  background: #000; /* Fallback */
+}
+
+/* Colores de Tags */
+.tag-green { background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: rgba(16, 185, 129, 0.2); }
+.tag-blue { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border-color: rgba(56, 189, 248, 0.2); }
+.tag-orange { background: rgba(255, 159, 28, 0.1); color: #ff9f1c; border-color: rgba(255, 159, 28, 0.2); }
+
+.tech-tag:hover { filter: brightness(1.2); transform: translateY(-1px); }
+
+/* HOVER & SPOTLIGHT */
+.tech-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 159, 26, 0.4);
+  background: var(--bg-card-hover-tech);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.tech-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: var(--radius-tech);
+  padding: 1px;
+  background: radial-gradient(
+    600px circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 159, 26, 0.15),
+    transparent 40%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+#tech-grid:hover .tech-card::before { opacity: 1; }
+
+/* ANIMACIONES (TURBO MODE) */
+.tech-card.visible {
+  animation: techFadeInUp 0.35s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.tech-card.hidden { display: none; }
+
+@keyframes techFadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  #dominio-tecnico .controls-bar { flex-direction: column; align-items: stretch; gap: 15px; }
+  #dominio-tecnico .filter-nav { overflow-x: auto; padding-bottom: 5px; justify-content: flex-start; }
+}
