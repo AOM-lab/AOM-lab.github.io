@@ -1,55 +1,49 @@
 /* ============================================================
    MENÚ BRAZO MECÁNICO — PREMIUM FINAL
-   - Botón integrado en el módulo de pared
-   - Se cierra automáticamente cuando el hero es visible
-   - Se abre automáticamente cuando el hero sale de pantalla
+   - Botón integrado en el brazo 1
+   - Se CIERRA cuando scroll está arriba (scrollY < 100)
+   - Se ABRE cuando bajas y el hero desaparece
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Solo escritorio
   if (window.innerWidth < 981) return;
 
-  // ===== HTML DEL SISTEMA =====
+  // ===== HTML =====
   const armHTML = `
     <div class="arm-system" id="armSystem">
       
-      <!-- Módulo de pared con botón integrado -->
       <div class="wall-mount">
         <div class="mount-indicators">
           <div class="indicator"></div>
           <div class="indicator"></div>
           <div class="indicator"></div>
         </div>
-        
-        <button class="arm-toggle-btn" id="armToggleBtn" aria-label="Menú de navegación">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
-        </button>
-        
-        <div class="mount-line"></div>
-        
-        <span class="arm-hint"><kbd>M</kbd></span>
       </div>
 
-      <!-- Brazo 1 -->
       <div class="arm-1" id="arm1">
         <div class="energy-line" id="energy1"></div>
+        
+        <!-- Botón integrado en el brazo -->
+        <button class="arm-toggle-btn" id="armToggleBtn" aria-label="Toggle menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          <span class="btn-status"></span>
+        </button>
+        
         <div class="joint" id="joint">
-          <!-- Brazo 2 -->
           <div class="arm-2" id="arm2">
             <div class="energy-line" id="energy2"></div>
             <div class="projector" id="projector">
               <div class="beam" id="beam"></div>
               
-              <!-- Panel del menú -->
-              <nav class="menu-panel" id="menuPanel" aria-label="Navegación rápida">
+              <nav class="menu-panel" id="menuPanel">
                 <div class="panel-header">
                   <div class="status-dot"></div>
                   <div class="header-text">
                     <div class="header-title">Panel rápido</div>
-                    <div class="header-subtitle">Navegación del sitio</div>
+                    <div class="header-subtitle">Navegación</div>
                   </div>
                 </div>
 
@@ -128,17 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const footerTime = document.getElementById('footerTime');
   const menuItems = document.querySelectorAll('.menu-panel .menu-item');
 
-  // ===== DETECTAR HERO =====
-  // Buscar el contenedor hero-wrap o el h1 del título
-  const heroElement = document.querySelector('.hero-wrap') || 
-                      document.querySelector('.hero') || 
-                      document.querySelector('#home') ||
-                      document.querySelector('h1');
+  // Hero element para detectar cuándo sale de pantalla
+  const heroWrap = document.querySelector('.hero-wrap') || document.querySelector('.hero') || document.querySelector('#home');
 
   let isOpen = false;
   let isAnimating = false;
-  let lastHeroVisible = true;
-  let manualOverride = false; // Para controlar si el usuario ha interactuado manualmente
+  let wasAtTop = true; // Track si estábamos arriba
 
   // ===== UTILIDADES =====
   const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -156,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateTime, 1000);
   updateTime();
 
-  // ===== ANIMACIÓN DESPLIEGUE =====
+  // ===== DESPLIEGUE =====
   async function deploy() {
     if (isAnimating || isOpen) return;
     isAnimating = true;
@@ -164,53 +153,45 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleBtn.classList.add('active');
     armSystem.classList.add('deployed');
 
-    // Brazo 1 se despliega
-    arm1.style.transition = 'transform 1.1s cubic-bezier(0.22, 1, 0.36, 1)';
+    arm1.style.transition = 'transform 1s cubic-bezier(0.22, 1, 0.36, 1)';
     arm1.style.transform = 'translateY(-50%) rotate(0deg)';
 
-    await sleep(550);
+    await sleep(500);
     
-    // Pulso de energía en brazo 1
-    energy1.style.transition = 'width 0.9s cubic-bezier(0.22, 1, 0.36, 1)';
-    energy1.style.width = 'calc(100% - 30px)';
+    energy1.style.transition = 'width 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+    energy1.style.width = 'calc(100% - 45px)';
 
-    await sleep(450);
+    await sleep(400);
 
-    // Joint se activa
     joint.classList.add('active');
+
+    await sleep(200);
+
+    arm2.style.transition = 'transform 1.1s cubic-bezier(0.22, 1, 0.36, 1)';
+    arm2.style.transform = 'translateY(-50%) rotate(0deg)';
+
+    await sleep(600);
+    
+    energy2.style.transition = 'width 0.7s cubic-bezier(0.22, 1, 0.36, 1)';
+    energy2.style.width = 'calc(100% - 26px)';
+
+    await sleep(500);
+
+    projector.classList.add('active');
+
+    await sleep(400);
+
+    beam.style.height = '20px';
 
     await sleep(250);
 
-    // Brazo 2 se despliega
-    arm2.style.transition = 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
-    arm2.style.transform = 'translateY(-50%) rotate(0deg)';
-
-    await sleep(650);
-    
-    // Pulso de energía en brazo 2
-    energy2.style.transition = 'width 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
-    energy2.style.width = 'calc(100% - 30px)';
-
-    await sleep(600);
-
-    // Proyector aparece
-    projector.classList.add('active');
-
-    await sleep(450);
-
-    // Haz de proyección
-    beam.style.height = '25px';
-
-    await sleep(300);
-
-    // Menú aparece
     menuPanel.classList.add('active');
 
-    await sleep(500);
+    await sleep(400);
     isAnimating = false;
   }
 
-  // ===== ANIMACIÓN RETRACCIÓN =====
+  // ===== RETRACCIÓN =====
   async function retract() {
     if (isAnimating || !isOpen) return;
     isAnimating = true;
@@ -218,61 +199,46 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleBtn.classList.remove('active');
     armSystem.classList.remove('deployed');
 
-    // Menú desaparece
-    menuPanel.style.transition = 'all 0.35s cubic-bezier(0.55, 0, 1, 0.45)';
+    menuPanel.style.transition = 'all 0.3s cubic-bezier(0.55, 0, 1, 0.45)';
     menuPanel.classList.remove('active');
-
-    await sleep(280);
-
-    // Haz se retrae
-    beam.style.height = '0';
-
-    await sleep(200);
-
-    // Proyector desaparece
-    projector.classList.remove('active');
-
-    await sleep(280);
-
-    // Energía brazo 2 se apaga
-    energy2.style.transition = 'width 0.4s ease-out';
-    energy2.style.width = '0';
 
     await sleep(250);
 
-    // Brazo 2 se pliega hacia ARRIBA
-    arm2.style.transition = 'transform 0.9s cubic-bezier(0.55, 0, 1, 0.45)';
+    beam.style.height = '0';
+
+    await sleep(180);
+
+    projector.classList.remove('active');
+
+    await sleep(250);
+
+    energy2.style.transition = 'width 0.35s ease-out';
+    energy2.style.width = '0';
+
+    await sleep(220);
+
+    arm2.style.transition = 'transform 0.8s cubic-bezier(0.55, 0, 1, 0.45)';
     arm2.style.transform = 'translateY(-50%) rotate(90deg)';
 
-    await sleep(500);
+    await sleep(450);
 
-    // Joint se desactiva
     joint.classList.remove('active');
 
-    // Energía brazo 1 se apaga
-    energy1.style.transition = 'width 0.4s ease-out';
+    energy1.style.transition = 'width 0.35s ease-out';
     energy1.style.width = '0';
 
-    await sleep(300);
+    await sleep(280);
 
-    // Brazo 1 se pliega
-    arm1.style.transition = 'transform 0.9s cubic-bezier(0.55, 0, 1, 0.45)';
+    arm1.style.transition = 'transform 0.8s cubic-bezier(0.55, 0, 1, 0.45)';
     arm1.style.transform = 'translateY(-50%) rotate(90deg)';
 
-    await sleep(850);
+    await sleep(750);
     
     menuPanel.style.transition = '';
     isAnimating = false;
   }
 
   function toggle() {
-    manualOverride = true; // El usuario ha interactuado manualmente
-    
-    // Resetear el override después de 3 segundos para volver al comportamiento automático
-    setTimeout(() => {
-      manualOverride = false;
-    }, 3000);
-    
     if (isOpen) {
       retract();
     } else {
@@ -281,7 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===== EVENTOS =====
-  toggleBtn.addEventListener('click', toggle);
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggle();
+  });
 
   document.addEventListener('keydown', (e) => {
     if (e.code === 'KeyM' && !e.ctrlKey && !e.altKey && !e.metaKey) {
@@ -337,41 +306,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== LÓGICA APERTURA/CIERRE AUTOMÁTICO =====
-  function checkHeroVisibility() {
-    if (!heroElement || manualOverride) return;
-
-    const rect = heroElement.getBoundingClientRect();
+  // ===== LÓGICA AUTO OPEN/CLOSE =====
+  function checkScrollPosition() {
+    const scrollY = window.scrollY;
+    const isAtTop = scrollY < 150; // Estamos "arriba" si scroll < 150px
     
-    // El hero está "fuera de cámara" cuando su parte inferior está por encima del viewport
-    // Usamos un pequeño margen para que se active un poco antes
-    const heroIsVisible = rect.bottom > 50;
+    // Detectar si el hero ya salió de pantalla
+    let heroIsOut = false;
+    if (heroWrap) {
+      const rect = heroWrap.getBoundingClientRect();
+      heroIsOut = rect.bottom < 0; // El hero ya no se ve
+    } else {
+      heroIsOut = scrollY > 400; // Fallback si no encuentra hero
+    }
 
-    // Solo actuar si cambió el estado
-    if (heroIsVisible !== lastHeroVisible) {
-      lastHeroVisible = heroIsVisible;
-
-      if (heroIsVisible) {
-        // El hero es visible → cerrar menú automáticamente
-        if (isOpen && !isAnimating) {
-          retract();
-        }
-      } else {
-        // El hero ya no es visible (salió arriba) → abrir menú automáticamente
-        if (!isOpen && !isAnimating) {
-          deploy();
-        }
-      }
+    // Si estamos arriba y el menú está abierto → CERRAR
+    if (isAtTop && isOpen && !isAnimating) {
+      retract();
+      wasAtTop = true;
+    }
+    // Si bajamos (hero fuera de pantalla) y estábamos arriba → ABRIR
+    else if (heroIsOut && !isOpen && !isAnimating && wasAtTop) {
+      deploy();
+      wasAtTop = false;
+    }
+    // Si volvemos arriba, marcar que estamos arriba
+    else if (isAtTop) {
+      wasAtTop = true;
     }
   }
 
-  // ===== INICIALIZACIÓN =====
-  if (heroElement) {
-    const rect = heroElement.getBoundingClientRect();
-    lastHeroVisible = rect.bottom > 50;
+  // ===== INIT =====
+  const initialScrollY = window.scrollY;
+  wasAtTop = initialScrollY < 150;
+  
+  // Si al cargar ya estamos abajo, abrir
+  if (!wasAtTop) {
+    let heroIsOut = false;
+    if (heroWrap) {
+      const rect = heroWrap.getBoundingClientRect();
+      heroIsOut = rect.bottom < 0;
+    } else {
+      heroIsOut = initialScrollY > 400;
+    }
     
-    // Si al cargar ya estamos debajo del hero, abrir el menú
-    if (!lastHeroVisible) {
+    if (heroIsOut) {
       setTimeout(deploy, 500);
     }
   }
@@ -383,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        checkHeroVisibility();
+        checkScrollPosition();
         updateActiveSection();
         ticking = false;
       });
