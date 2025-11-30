@@ -1,116 +1,110 @@
-/* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Versión Premium con Profundidad) --- */
+/* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Versión Compacta & Técnica) --- */
 
 #especialidades {
   --sp-bg-base: #0b1022;
+  --sp-card-bg: rgba(255, 255, 255, 0.02); /* Fondo más sutil */
+  --sp-border: rgba(255, 255, 255, 0.06);
   --sp-accent: #ff9f1a;
   --sp-text: #94a3b8;
-  --sp-title: #f1f5f9;
+  --sp-title: #e2e8f0;
 }
 
-/* Intro Text */
+/* Intro Text (Ajustado) */
 #especialidades .spec-intro-text {
   max-width: 800px;
-  margin-bottom: 40px;
+  margin-bottom: 30px; /* Menos margen */
   color: #cbd5e1;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  border-left: 3px solid var(--sp-accent);
-  padding-left: 20px;
+  font-size: 1rem;     /* Fuente un pelín más pequeña */
+  line-height: 1.6;
+  border-left: 2px solid var(--sp-accent);
+  padding-left: 16px;
 }
 
-/* GRID 2x2 */
+/* GRID 2x2 (Más ajustado) */
 #spec-grid-pro {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 16px; /* Gap reducido de 24px a 16px */
 }
 
-/* TARJETA (Aquí está la magia) */
+/* TARJETA COMPACTA */
 .spec-card-pro {
-  /* 1. Degradado sutil en lugar de color plano para dar volumen */
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background: var(--sp-card-bg);
+  border: 1px solid var(--sp-border);
+  border-radius: 8px; /* Bordes menos redondeados (más técnico) */
+  padding: 20px;      /* REDUCCIÓN DRÁSTICA: De 36px a 20px */
   
-  /* 2. Borde sutil */
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  
-  /* 3. Sombra suave para separarla del fondo */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  
-  border-radius: 16px; /* Bordes un poco más redondeados */
-  padding: 36px 32px;
   display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
+  flex-direction: column; /* Icono arriba, texto abajo */
+  align-items: flex-start;
+  
+  transition: all 0.2s ease;
   position: relative;
   height: 100%;
 }
 
-/* Hover: Se ilumina el borde y sube */
+/* Hover: Sutil y rápido */
 .spec-card-pro:hover {
-  transform: translateY(-5px);
-  /* Borde naranja brillante */
-  border-color: rgba(255, 159, 26, 0.6); 
-  /* Fondo un pelín más claro */
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
-  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5);
+  transform: translateY(-3px); /* Movimiento más corto */
+  border-color: rgba(255, 159, 26, 0.5);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* CAJA DEL ICONO (Mejorada) */
+/* CONTENIDO DE LA TARJETA (Flex para alinear mejor) */
+.spec-content {
+  width: 100%;
+}
+
+/* ICONO (Más pequeño y discreto) */
 .spec-icon-box {
-  width: 52px; height: 52px;
-  /* Fondo oscuro para contrastar con la tarjeta */
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
+  width: 40px; height: 40px; /* Reducido de 54px a 40px */
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 24px;
-  /* Borde muy fino apenas visible */
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s;
+  margin-bottom: 14px; /* Menos espacio debajo */
+  transition: all 0.2s;
 }
 
-/* Al hover, el icono se enciende */
 .spec-card-pro:hover .spec-icon-box {
-  background: rgba(255, 159, 26, 0.15); /* Fondo naranja brillante */
-  border-color: rgba(255, 159, 26, 0.3);
+  border-color: var(--sp-accent);
+  background: rgba(255, 159, 26, 0.1);
 }
 
 .spec-icon-img {
-  width: 28px; height: 28px;
-  filter: invert(1) brightness(2); /* Blanco puro */
-  transition: filter 0.3s;
-  opacity: 0.9;
+  width: 20px; height: 20px; /* Icono más fino */
+  filter: invert(1) brightness(1.5);
+  opacity: 0.8;
+  transition: 0.2s;
 }
 
 .spec-card-pro:hover .spec-icon-img {
-  /* Se vuelve naranja intenso */
-  filter: sepia(1) saturate(10) hue-rotate(-20deg) brightness(1.1); 
+  filter: sepia(1) saturate(5) hue-rotate(-20deg);
   opacity: 1;
 }
 
-/* TÍTULOS */
+/* TÍTULOS (Más compactos) */
 .spec-title {
   font-family: 'Inter', sans-serif;
-  color: #fff; /* Blanco puro */
-  font-size: 1.35rem; /* Más grande y legible */
-  font-weight: 700;
-  margin-bottom: 14px;
-  letter-spacing: -0.02em;
+  color: var(--sp-title);
+  font-size: 1.05rem; /* Reducido de 1.35rem a 1.05rem */
+  font-weight: 600;
+  margin-bottom: 8px; /* Pegado al texto */
+  letter-spacing: -0.01em;
 }
 
-/* TEXTO */
+/* TEXTO (Más denso) */
 .spec-body {
-  color: var(--sp-text); /* Gris azulado */
-  font-size: 0.95rem;
-  line-height: 1.7;
-  font-weight: 400;
+  color: var(--sp-text);
+  font-size: 0.85rem; /* Letra más pequeña tipo interfaz */
+  line-height: 1.5;   /* Menos altura de línea */
+  margin: 0;
 }
 
 /* RESPONSIVE */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   #spec-grid-pro {
-    grid-template-columns: 1fr;
-  }
-  .spec-card-pro {
-    padding: 28px;
+    grid-template-columns: 1fr; /* 1 columna en móvil */
   }
 }
