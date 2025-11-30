@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="assets/css/cubes.css"/>
   <link rel="stylesheet" href="assets/css/sections.css"/>
   <link rel="stylesheet" href="assets/css/menu-cyber.css">
+  <link rel="stylesheet" href="assets/css/Atecnicos.css">
   <style>
     /* ===== Variables base (global) ===== */
     :root{
@@ -289,7 +290,194 @@
         </div>
       </div>
     </section>
+  <section id="dominio-tecnico" class="custom-section reveal" data-reveal="fade-up">
+      <div class="tech-header">
+         <svg class="tech-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+         <h2 class="section-title" style="margin:0">Dominio Técnico & Producción</h2>
+      </div>
+      <p class="kicker" style="border-left: 2px solid var(--accent); padding-left: 12px; margin-bottom: 25px;">
+        Diseño e implementación de soluciones robustas en entornos críticos. Mi enfoque combina profundidad técnica con impacto directo en el negocio.
+      </p>
 
+      <div class="controls-bar">
+          <nav class="filter-nav">
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="security">Ciberseguridad</button>
+            <button class="filter-btn" data-filter="systems">Sistemas & Cloud</button>
+            <button class="filter-btn" data-filter="devops">DevOps</button>
+          </nav>
+          
+          <button id="load-more-tech-btn" class="load-more-btn">
+              <span>Mostrar todo</span>
+              <span id="remaining-tech-count" style="margin-left:8px; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; font-size: 0.7em;"></span>
+          </button>
+      </div>
+
+      <div id="tech-grid">
+        <article class="tech-card" data-category="security">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+          </div>
+          <h3>Pentesting Ofensivo</h3>
+          <span class="tech-role-label">Red Team Operations</span>
+          <p class="tech-description">
+            Ejecución de <strong>simulación de adversarios</strong> para validar la resiliencia. Explotación controlada de vulnerabilidades con reportes de impacto real al negocio.
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-orange">Burp Suite</span>
+            <span class="tech-tag tag-blue">Active Directory</span>
+            <span class="tech-tag tag-green">Python</span>
+          </div>
+        </article>
+
+        <article class="tech-card" data-category="systems">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+          </div>
+          <h3>Infraestructura Crítica</h3>
+          <span class="tech-role-label">SysAdmin Senior</span>
+          <p class="tech-description">
+            Diseño de arquitecturas de <strong>Alta Disponibilidad (HA)</strong>. Optimización de kernels Linux y gestión de almacenamiento SAN/NAS para servicios de misión crítica.
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-green">RHEL / Debian</span>
+            <span class="tech-tag tag-blue">Windows Server</span>
+            <span class="tech-tag tag-orange">VMware</span>
+          </div>
+        </article>
+
+        <article class="tech-card" data-category="security">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+          </div>
+          <h3>Hardening & Defensa</h3>
+          <span class="tech-role-label">Blue Team</span>
+          <p class="tech-description">
+            Reducción de superficie de ataque mediante <strong>CIS Benchmarks</strong>. Implementación de microsegmentación y políticas Zero Trust en entornos híbridos.
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-blue">CIS / STIG</span>
+            <span class="tech-tag tag-orange">Firewalls</span>
+            <span class="tech-tag tag-green">SELinux</span>
+          </div>
+        </article>
+
+        <article class="tech-card" data-category="devops">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+          </div>
+          <h3>IaC & Pipelines</h3>
+          <span class="tech-role-label">DevSecOps</span>
+          <p class="tech-description">
+            Infraestructura inmutable con <strong>Terraform</strong>. Pipelines CI/CD con escaneo de vulnerabilidades (SAST/DAST) automatizado antes del despliegue.
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-blue">Docker</span>
+            <span class="tech-tag tag-orange">GitLab CI</span>
+            <span class="tech-tag tag-green">Ansible</span>
+          </div>
+        </article>
+        
+        <article class="tech-card" data-category="systems">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+            </div>
+          </div>
+          <h3>Gestión de Datos</h3>
+          <span class="tech-role-label">DBA Operations</span>
+          <p class="tech-description">
+            Tuning de consultas SQL y estrategias de <strong>Disaster Recovery</strong>. Garantizo integridad de datos y tiempos de respuesta (RTO/RPO) mínimos.
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-orange">SQL</span>
+            <span class="tech-tag tag-blue">PostgreSQL</span>
+            <span class="tech-tag tag-green">Backup Ops</span>
+          </div>
+        </article>
+
+        <article class="tech-card" data-category="security">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+            </div>
+          </div>
+          <h3>Respuesta a Incidentes</h3>
+          <span class="tech-role-label">SOC Operations</span>
+          <p class="tech-description">
+            Gestión de crisis y análisis forense digital. Creación de <strong>Playbooks</strong> para contención rápida, erradicación de amenazas y recuperación de servicios.
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-orange">Splunk / ELK</span>
+            <span class="tech-tag tag-green">Volatility</span>
+            <span class="tech-tag tag-blue">IR Workflow</span>
+          </div>
+        </article>
+        
+        <article class="tech-card" data-category="devops">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h2"></path><path d="M18 9h-4a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1z"></path><path d="M12 11h-2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h2"></path></svg>
+            </div>
+          </div>
+          <h3>Cloud Deployment</h3>
+          <span class="tech-role-label">Cloud Engineer</span>
+          <p class="tech-description">
+            Arquitectura Cloud Native en <strong>AWS y Azure</strong>. Gestión de costes (FinOps), redes virtuales seguras y computación Serverless eficiente.
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-orange">AWS / Azure</span>
+            <span class="tech-tag tag-blue">Terraform</span>
+            <span class="tech-tag tag-green">Serverless</span>
+          </div>
+        </article>
+
+        <article class="tech-card" data-category="systems">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 0 1 9-9 9 9 0 0 1 9 9v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V11zM12 17v-4"></path></svg>
+            </div>
+          </div>
+          <h3>Contenedores & K8s</h3>
+          <span class="tech-role-label">Platform Engineering</span>
+          <p class="tech-description">
+            Orquestación de microservicios con <strong>Kubernetes</strong>. Gestión de Ingress Controllers, almacenamiento persistente y mallas de servicio (Service Mesh).
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-blue">Kubernetes</span>
+            <span class="tech-tag tag-orange">Proxmox</span>
+            <span class="tech-tag tag-green">Helm</span>
+          </div>
+        </article>
+        
+        <article class="tech-card" data-category="devops">
+          <div class="tech-card-header">
+            <div class="tech-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26a1 1 0 0 0-.74.32l-2.09 2.08a1 1 0 0 0-.25.86V15a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1zm-6 0h-4a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1z"/></svg>
+            </div>
+          </div>
+          <h3>Observabilidad</h3>
+          <span class="tech-role-label">NOC/SOC Analyst</span>
+          <p class="tech-description">
+            Monitorización 360º con Prometheus y Grafana. Creación de dashboards personalizados para detectar <strong>anomalías</strong> en tiempo real.
+          </p>
+          <div class="tech-card-footer">
+            <span class="tech-tag tag-orange">Prometheus</span>
+            <span class="tech-tag tag-green">Grafana</span>
+            <span class="tech-tag tag-blue">ELK Stack</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  
     <!-- HERRAMIENTAS Y LENGUAJES -->
     <section id="tools" class="reveal" data-reveal="fade-up" aria-labelledby="tools-title">
       <div id="tools-pro">
@@ -452,5 +640,6 @@
   <script defer src="assets/js/tools.js"></script>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
   <script defer src="assets/js/menu-cyber.js"></script>
+  <script defer src="assets/js/Atecnicos.js"></script>
 </body>
 </html>
