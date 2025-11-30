@@ -5,7 +5,6 @@
 /* ===== SISTEMA DEL BRAZO - Solo escritorio ===== */
 @media (min-width: 981px) {
 
-  /* Ocultar en móvil el aside original si existe */
   .arm-system {
     position: fixed;
     right: 0;
@@ -13,6 +12,12 @@
     transform: translateY(-50%);
     z-index: 1000;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .arm-system.visible {
+    opacity: 1;
   }
 
   .arm-system * {
@@ -133,9 +138,11 @@
     opacity: 1;
   }
 
-  /* ===== BRAZO 2 ===== */
+  /* ===== BRAZO 2 - Dentro del joint ===== */
   .arm-2 {
-    position: fixed;
+    position: absolute;
+    right: 13px;
+    top: 50%;
     width: 140px;
     height: 14px;
     background: linear-gradient(180deg, #3d4654 0%, #2a3341 50%, #1e2430 100%);
@@ -144,7 +151,6 @@
     transform-origin: right center;
     transform: translateY(-50%) rotate(-90deg);
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    pointer-events: none;
   }
 
   .arm-2::before {
@@ -174,9 +180,9 @@
   /* ===== PROYECTOR ===== */
   .projector {
     position: absolute;
-    left: 50%;
+    left: 10px;
     top: 50%;
-    transform: translate(-50%, -50%) scale(0.6);
+    transform: translateY(-50%) scale(0.6);
     width: 20px;
     height: 20px;
     background: radial-gradient(circle at 35% 35%, #4a5568 0%, #2a3341 60%, #1e2430 100%);
@@ -190,7 +196,7 @@
 
   .projector.active {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translateY(-50%) scale(1);
     border-color: var(--accent, #ff9f1a);
   }
 
@@ -447,6 +453,13 @@
     color: var(--muted, #a8b2c2);
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     z-index: 1001;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .arm-toggle-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .arm-toggle-btn:hover {
@@ -479,8 +492,14 @@
     bottom: 34px;
     font-size: 11px;
     color: var(--muted, #a8b2c2);
-    opacity: 0.6;
+    opacity: 0;
     z-index: 1001;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .arm-hint.visible {
+    opacity: 0.6;
   }
 
   .arm-hint kbd {
@@ -503,9 +522,4 @@
   .arm-hint {
     display: none !important;
   }
-}
-
-/* ===== Ocultar el sidebar original ===== */
-#sidebarNav {
-  display: none !important;
 }
