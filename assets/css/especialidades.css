@@ -1,113 +1,97 @@
 /* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Aespecialidades.css) --- */
 
 #especialidades {
-  --sp-bg: #0b1022;
-  --sp-border: rgba(255, 255, 255, 0.06);
-  --sp-accent: #ff9f1a;
-  --sp-text: #94a3b8;
-  --sp-glow: rgba(255, 159, 26, 0.15);
+  --sp-bg: #0b1022; /* Fondo oscuro base */
+  --sp-border: rgba(255, 255, 255, 0.08); /* Borde sutil */
+  --sp-accent: #ff9f1a; /* Tu naranja */
+  --sp-text: #94a3b8; /* Texto gris azulado */
 }
 
-/* Intro Text más limpio */
-#especialidades .spec-intro {
+/* Intro Text */
+#especialidades .spec-intro-text {
   max-width: 800px;
   margin-bottom: 40px;
   color: #cbd5e1;
   font-size: 1.05rem;
-  line-height: 1.6;
+  line-height: 1.7;
   border-left: 3px solid var(--sp-accent);
   padding-left: 20px;
 }
 
-/* GRID INTELEGENTE (Soporta 4, 6, 8...) */
+/* GRID */
 #spec-grid-pro {
   display: grid;
-  /* Crea columnas de mínimo 300px. Se ajusta solo al ancho */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
-  position: relative;
 }
 
-/* TARJETA PRO */
+/* TARJETA (Clean Tech Style) */
 .spec-card-pro {
   background: var(--sp-bg);
   border: 1px solid var(--sp-border);
   border-radius: 12px;
-  padding: 30px 24px;
+  padding: 32px 28px;
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s;
+  transition: all 0.3s ease; /* Transición suave para todo */
   height: 100%;
 }
 
-/* Hover Efectos */
+/* Hover: Borde Naranja + Leve Subida + Sombra sutil */
 .spec-card-pro:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 159, 26, 0.5);
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  border-color: var(--sp-accent); /* Borde naranja sólido */
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6); /* Sombra elegante */
 }
 
-/* Spotlight (Luz de fondo) */
-.spec-card-pro::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 12px;
-  background: radial-gradient(
-    800px circle at var(--mouse-x) var(--mouse-y),
-    var(--sp-glow),
-    transparent 40%
-  );
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-  z-index: 0;
-}
-#spec-grid-pro:hover .spec-card-pro::before { opacity: 1; }
-
-/* Contenido (para estar encima de la luz) */
-.spec-content { position: relative; z-index: 1; }
-
-/* Icono con Halo */
+/* Icono Box */
 .spec-icon-box {
   width: 54px; height: 54px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   transition: 0.3s;
 }
 
+/* Al hacer hover en la tarjeta, el icono también reacciona */
 .spec-card-pro:hover .spec-icon-box {
-  background: rgba(255, 159, 26, 0.1);
-  border-color: var(--sp-accent);
-  box-shadow: 0 0 15px rgba(255, 159, 26, 0.2);
+  background: rgba(255, 159, 26, 0.1); /* Fondo naranja muy suave */
+  border-color: rgba(255, 159, 26, 0.4);
 }
 
 .spec-icon-img {
   width: 28px; height: 28px;
-  filter: invert(1) brightness(2); /* Blanco puro */
+  filter: invert(1) brightness(2); /* Blanco */
   transition: 0.3s;
 }
+
 .spec-card-pro:hover .spec-icon-img {
-  /* Se vuelve naranja al hover */
-  filter: sepia(1) saturate(5) hue-rotate(-20deg) brightness(1.2); 
+  /* Se tiñe de naranja al hacer hover */
+  filter: sepia(1) saturate(5) hue-rotate(-20deg) brightness(1.1); 
 }
 
-/* Tipografía */
+/* Títulos */
 .spec-title {
   font-family: 'Inter', sans-serif;
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
 }
 
+/* Texto del cuerpo */
 .spec-body {
   color: var(--sp-text);
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.65; /* Un poco más de aire para leer mejor */
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  #spec-grid-pro { grid-template-columns: 1fr; }
+  .spec-card-pro { padding: 24px; }
 }
