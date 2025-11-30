@@ -25,7 +25,7 @@
     pointer-events: auto;
   }
 
-  /* ===== MÓDULO DE PARED — Refinado ===== */
+  /* ===== MÓDULO DE PARED ===== */
   .wall-mount {
     position: absolute;
     right: 0;
@@ -76,12 +76,12 @@
     50% { opacity: 1; transform: scale(1); }
   }
 
-  /* ===== BRAZO 1 — Principal (MÁS CORTO) ===== */
+  /* ===== BRAZO 1 — Principal ===== */
   .arm-1 {
     position: absolute;
     right: 6px;
     top: 50%;
-    width: 95px; /* Reducido de 120px */
+    width: 95px;
     height: 14px;
     background: linear-gradient(180deg, 
       color-mix(in srgb, var(--panel, #111a2d) 70%, #2a3a55) 0%,
@@ -97,6 +97,7 @@
       0 4px 20px rgba(0, 0, 0, 0.5),
       inset 0 1px 0 rgba(255, 255, 255, 0.05),
       inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    z-index: 2; /* Brazo 1 por encima del brazo 2 */
   }
 
   /* Canal interno */
@@ -127,7 +128,7 @@
     filter: blur(0.5px);
   }
 
-  /* Detalles mecánicos */
+  /* Detalle mecánico */
   .arm-1::after {
     content: '';
     position: absolute;
@@ -207,12 +208,12 @@
     opacity: 1;
   }
 
-  /* ===== BRAZO 2 — Secundario (MÁS CORTO) ===== */
+  /* ===== BRAZO 2 — Se pliega HACIA ARRIBA (90deg) ===== */
   .arm-2 {
     position: absolute;
     right: 11px;
     top: 50%;
-    width: 100px; /* Reducido de 130px */
+    width: 100px;
     height: 11px;
     background: linear-gradient(180deg, 
       color-mix(in srgb, var(--panel, #111a2d) 70%, #2a3a55) 0%,
@@ -222,10 +223,12 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     transform-origin: right center;
-    transform: translateY(-50%) rotate(-90deg);
+    /* Estado inicial: plegado hacia ARRIBA, paralelo al brazo 1 */
+    transform: translateY(-50%) rotate(90deg);
     box-shadow: 
       0 3px 16px rgba(0, 0, 0, 0.5),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    z-index: 1; /* Por debajo del brazo 1 */
   }
 
   .arm-2::before {
@@ -325,14 +328,14 @@
     transition: height 0.5s ease;
   }
 
-  /* ===== PANEL DEL MENÚ — MÁS SEPARADO ===== */
+  /* ===== PANEL DEL MENÚ ===== */
   .menu-panel {
     position: absolute;
-    top: calc(100% + 25px); /* Aumentado de 20px */
+    top: calc(100% + 25px);
     left: 50%;
     transform: translateX(-50%) scaleY(0) translateY(-10px);
     transform-origin: top center;
-    width: 200px; /* Reducido de 220px */
+    width: 200px;
     background: linear-gradient(180deg, 
       color-mix(in srgb, var(--panel, #111a2d) 95%, #1a2540) 0%,
       var(--panel, #111a2d) 100%
