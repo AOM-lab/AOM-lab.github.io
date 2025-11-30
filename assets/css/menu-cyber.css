@@ -1,6 +1,6 @@
 /* ===============================
    MENÚ BRAZO MECÁNICO — PREMIUM FINAL
-   Con interruptor mecánico y partículas
+   Posición dinámica: centrado → arriba al desplegar
    =============================== */
 
 @media (min-width: 981px) {
@@ -13,6 +13,14 @@
     transform: translateY(-50%);
     z-index: 1000;
     pointer-events: none;
+    /* Transición suave para el movimiento vertical */
+    transition: top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Cuando está desplegado, sube arriba */
+  .arm-system.deployed {
+    top: 140px;
+    transform: translateY(0);
   }
 
   .arm-system * {
@@ -142,7 +150,6 @@
       0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
-  /* Carril del switch */
   .switch-track {
     position: absolute;
     inset: 2px;
@@ -154,7 +161,6 @@
     overflow: hidden;
   }
 
-  /* Marcas en el carril */
   .switch-track::before {
     content: '';
     position: absolute;
@@ -192,7 +198,6 @@
     box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
   }
 
-  /* Palanca del switch */
   .switch-knob {
     position: absolute;
     left: 3px;
@@ -214,7 +219,6 @@
       inset 0 -1px 0 rgba(0, 0, 0, 0.2);
   }
 
-  /* Textura de la palanca */
   .switch-knob::before {
     content: '';
     position: absolute;
@@ -229,7 +233,6 @@
     );
   }
 
-  /* Líneas de grip */
   .switch-knob::after {
     content: '';
     position: absolute;
@@ -332,7 +335,7 @@
     opacity: 1;
   }
 
-  /* ===== CONTENEDOR DE PARTÍCULAS ===== */
+  /* ===== PARTÍCULAS ===== */
   .particles-container {
     position: absolute;
     top: 50%;
@@ -356,93 +359,37 @@
       0 0 12px rgba(255, 159, 26, 0.5);
   }
 
-  /* Animaciones de partículas */
   @keyframes spark-1 {
-    0% { 
-      opacity: 1; 
-      transform: translate(0, 0) scale(1);
-    }
-    100% { 
-      opacity: 0; 
-      transform: translate(-25px, -20px) scale(0);
-    }
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(-25px, -20px) scale(0); }
   }
-
   @keyframes spark-2 {
-    0% { 
-      opacity: 1; 
-      transform: translate(0, 0) scale(1);
-    }
-    100% { 
-      opacity: 0; 
-      transform: translate(20px, -25px) scale(0);
-    }
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(20px, -25px) scale(0); }
   }
-
   @keyframes spark-3 {
-    0% { 
-      opacity: 1; 
-      transform: translate(0, 0) scale(1);
-    }
-    100% { 
-      opacity: 0; 
-      transform: translate(-30px, 10px) scale(0);
-    }
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(-30px, 10px) scale(0); }
   }
-
   @keyframes spark-4 {
-    0% { 
-      opacity: 1; 
-      transform: translate(0, 0) scale(1);
-    }
-    100% { 
-      opacity: 0; 
-      transform: translate(25px, 15px) scale(0);
-    }
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(25px, 15px) scale(0); }
   }
-
   @keyframes spark-5 {
-    0% { 
-      opacity: 1; 
-      transform: translate(0, 0) scale(1);
-    }
-    100% { 
-      opacity: 0; 
-      transform: translate(-15px, 25px) scale(0);
-    }
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(-15px, 25px) scale(0); }
   }
-
   @keyframes spark-6 {
-    0% { 
-      opacity: 1; 
-      transform: translate(0, 0) scale(1);
-    }
-    100% { 
-      opacity: 0; 
-      transform: translate(30px, -10px) scale(0);
-    }
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(30px, -10px) scale(0); }
   }
-
   @keyframes spark-7 {
-    0% { 
-      opacity: 1; 
-      transform: translate(0, 0) scale(1.2);
-    }
-    100% { 
-      opacity: 0; 
-      transform: translate(-20px, -30px) scale(0);
-    }
+    0% { opacity: 1; transform: translate(0, 0) scale(1.2); }
+    100% { opacity: 0; transform: translate(-20px, -30px) scale(0); }
   }
-
   @keyframes spark-8 {
-    0% { 
-      opacity: 1; 
-      transform: translate(0, 0) scale(0.8);
-    }
-    100% { 
-      opacity: 0; 
-      transform: translate(15px, 30px) scale(0);
-    }
+    0% { opacity: 1; transform: translate(0, 0) scale(0.8); }
+    100% { opacity: 0; transform: translate(15px, 30px) scale(0); }
   }
 
   .spark:nth-child(1) { left: 50%; top: 50%; }
