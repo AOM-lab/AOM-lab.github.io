@@ -73,6 +73,7 @@ body {
   grid-template-columns: 2.2fr 1fr; /* Izquierda grande, derecha compacta */
   gap: 30px;
   align-items: start;
+  width: 100%;
 }
 
 @media (max-width: 900px) {
@@ -154,34 +155,29 @@ body {
 }
 
 /* Grid de Tarjetas (Nano-Cards) CON FONDO TÉCNICO */
-/* Grid de Tarjetas con FONDO SUTIL y ALTURA FIJA */
 #tools-pro .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 16px;
   
   /* --- 1. ALTURA ANTISALTOS --- */
-  /* Reservamos espacio para 3 filas (aprox 135px * 3 + gaps) */
-  /* Esto garantiza que el footer NO se mueva al filtrar */
   min-height: 460px; 
   align-content: start; 
 
   /* --- 2. FONDO "GHOST" (Muy sutil) --- */
-  /* Fondo oscuro muy leve */
   background-color: rgba(0, 0, 0, 0.1);
   
-  /* Líneas casi invisibles (0.015 de opacidad) */
   background-image: 
       linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
   
   background-size: 30px 30px; 
   
-  /* Borde apenas visible para delimitar la zona */
   border: 1px dashed rgba(255, 255, 255, 0.04);
   border-radius: 12px;
   padding: 16px;
 }
+
 /* Estilo individual de la Tarjeta */
 #tools-pro .tool-card {
   background: var(--card-bg);
@@ -244,11 +240,11 @@ body {
 /* PANEL DERECHO PEGAJOSO */
 #tools-pro .right-panel {
   position: sticky;
-  top: 90px; /* Ajuste para que no choque con el menú superior */
+  top: 90px;
   height: fit-content;
 }
 #tools-pro .stack-panel {
-  background: #0f141f; /* Un poco más oscuro que el fondo */
+  background: #0f141f; 
   border: 1px solid var(--card-border);
   border-radius: 14px;
   padding: 24px;
