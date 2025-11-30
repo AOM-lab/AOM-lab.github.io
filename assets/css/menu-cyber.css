@@ -1,85 +1,166 @@
 /* ===============================
-   MENÚ BRAZO MECÁNICO — PREMIUM
-   Estilo adaptado al tema del sitio
+   MENÚ BRAZO MECÁNICO — PREMIUM FINAL
+   Botón integrado en el módulo de pared
+   Sistema siempre visible, solo se pliega/despliega
    =============================== */
 
 @media (min-width: 981px) {
 
-  /* ===== SISTEMA PRINCIPAL ===== */
+  /* ===== SISTEMA PRINCIPAL — Siempre visible ===== */
   .arm-system {
     position: fixed;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
     z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.5s ease;
     pointer-events: none;
   }
 
-  .arm-system.visible {
-    opacity: 1;
-  }
-
-  .arm-system.visible * {
+  .arm-system * {
     pointer-events: auto;
   }
 
-  /* ===== MÓDULO DE PARED ===== */
+  /* ===== MÓDULO DE PARED CON BOTÓN INTEGRADO ===== */
   .wall-mount {
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 6px;
-    height: 90px;
+    width: 32px;
+    height: 110px;
     background: linear-gradient(180deg, 
       transparent 0%, 
-      var(--panel, #111a2d) 15%, 
-      color-mix(in srgb, var(--panel, #111a2d) 80%, #1a2540) 50%,
-      var(--panel, #111a2d) 85%, 
+      color-mix(in srgb, var(--panel, #111a2d) 95%, #1a2540) 10%,
+      var(--panel, #111a2d) 50%,
+      color-mix(in srgb, var(--panel, #111a2d) 95%, #1a2540) 90%,
       transparent 100%
     );
-    border-left: 1px solid rgba(255, 159, 26, 0.15);
-    border-radius: 3px 0 0 3px;
-  }
-
-  .mount-indicators {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px 0 0 8px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 
+      -4px 0 20px rgba(0, 0, 0, 0.4),
+      inset 1px 0 0 rgba(255, 255, 255, 0.03);
+  }
+
+  /* Indicadores superiores */
+  .mount-indicators {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
   .indicator {
-    width: 3px;
-    height: 3px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     background: var(--accent, #ff9f1a);
-    box-shadow: 0 0 6px var(--accent, #ff9f1a), 0 0 12px rgba(255, 159, 26, 0.3);
-    animation: indicator-pulse 3s ease-in-out infinite;
+    box-shadow: 0 0 6px var(--accent, #ff9f1a);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .arm-system.deployed .indicator {
+    opacity: 1;
+    animation: indicator-pulse 2s ease-in-out infinite;
   }
 
   .indicator:nth-child(2) {
-    animation-delay: 1s;
+    animation-delay: 0.3s;
   }
 
   .indicator:nth-child(3) {
-    animation-delay: 2s;
+    animation-delay: 0.6s;
   }
 
   @keyframes indicator-pulse {
-    0%, 100% { opacity: 0.4; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1); }
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
   }
 
-  /* ===== BRAZO 1 — Principal ===== */
+  /* ===== BOTÓN TOGGLE INTEGRADO ===== */
+  .arm-toggle-btn {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    background: linear-gradient(135deg, 
+      rgba(255, 159, 26, 0.08) 0%,
+      rgba(255, 159, 26, 0.03) 100%
+    );
+    border: 1px solid rgba(255, 159, 26, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    color: var(--muted, #a8b2c2);
+    margin-top: 20px;
+  }
+
+  .arm-toggle-btn:hover {
+    background: linear-gradient(135deg, 
+      rgba(255, 159, 26, 0.15) 0%,
+      rgba(255, 159, 26, 0.08) 100%
+    );
+    border-color: rgba(255, 159, 26, 0.4);
+    color: var(--accent, #ff9f1a);
+    transform: scale(1.08);
+  }
+
+  .arm-toggle-btn.active {
+    background: linear-gradient(135deg, 
+      rgba(255, 159, 26, 0.2) 0%,
+      rgba(255, 159, 26, 0.1) 100%
+    );
+    border-color: var(--accent, #ff9f1a);
+    color: var(--accent, #ff9f1a);
+    box-shadow: 0 0 12px rgba(255, 159, 26, 0.3);
+  }
+
+  .arm-toggle-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .arm-toggle-btn.active svg {
+    transform: rotate(180deg);
+  }
+
+  /* Línea decorativa bajo el botón */
+  .mount-line {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(180deg, 
+      rgba(255, 159, 26, 0.3) 0%,
+      transparent 100%
+    );
+    border-radius: 1px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .arm-system.deployed .mount-line {
+    opacity: 1;
+  }
+
+  /* ===== BRAZO 1 ===== */
   .arm-1 {
     position: absolute;
-    right: 6px;
+    right: 32px;
     top: 50%;
     width: 95px;
     height: 14px;
@@ -97,10 +178,9 @@
       0 4px 20px rgba(0, 0, 0, 0.5),
       inset 0 1px 0 rgba(255, 255, 255, 0.05),
       inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-    z-index: 2; /* Brazo 1 por encima del brazo 2 */
+    z-index: 2;
   }
 
-  /* Canal interno */
   .arm-1::before {
     content: '';
     position: absolute;
@@ -114,7 +194,6 @@
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
-  /* Línea de energía */
   .arm-1 .energy-line {
     position: absolute;
     right: 18px;
@@ -125,10 +204,8 @@
     background: linear-gradient(270deg, var(--accent, #ff9f1a), var(--accent-soft, #ffd79a), transparent);
     border-radius: 1px;
     box-shadow: 0 0 8px var(--accent, #ff9f1a), 0 0 16px rgba(255, 159, 26, 0.4);
-    filter: blur(0.5px);
   }
 
-  /* Detalle mecánico */
   .arm-1::after {
     content: '';
     position: absolute;
@@ -142,7 +219,7 @@
     border-radius: 50%;
   }
 
-  /* ===== JOINT — Articulación ===== */
+  /* ===== JOINT ===== */
   .joint {
     position: absolute;
     left: -11px;
@@ -166,7 +243,6 @@
     transition: all 0.5s ease;
   }
 
-  /* Núcleo del joint */
   .joint::before {
     content: '';
     position: absolute;
@@ -180,7 +256,6 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  /* Luz del joint */
   .joint::after {
     content: '';
     position: absolute;
@@ -200,15 +275,14 @@
     border-color: rgba(255, 159, 26, 0.3);
     box-shadow: 
       0 4px 16px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(255, 159, 26, 0.15),
-      inset 0 2px 4px rgba(255, 255, 255, 0.05);
+      0 0 20px rgba(255, 159, 26, 0.15);
   }
 
   .joint.active::after {
     opacity: 1;
   }
 
-  /* ===== BRAZO 2 — Se pliega HACIA ARRIBA (90deg) ===== */
+  /* ===== BRAZO 2 ===== */
   .arm-2 {
     position: absolute;
     right: 11px;
@@ -223,12 +297,11 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     transform-origin: right center;
-    /* Estado inicial: plegado hacia ARRIBA, paralelo al brazo 1 */
     transform: translateY(-50%) rotate(90deg);
     box-shadow: 
       0 3px 16px rgba(0, 0, 0, 0.5),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    z-index: 1; /* Por debajo del brazo 1 */
+    z-index: 1;
   }
 
   .arm-2::before {
@@ -241,7 +314,6 @@
     height: 3px;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 2px;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
   }
 
   .arm-2 .energy-line {
@@ -254,7 +326,6 @@
     background: linear-gradient(270deg, var(--accent, #ff9f1a), var(--accent-soft, #ffd79a), transparent);
     border-radius: 1px;
     box-shadow: 0 0 8px var(--accent, #ff9f1a), 0 0 16px rgba(255, 159, 26, 0.4);
-    filter: blur(0.5px);
   }
 
   /* ===== PROYECTOR ===== */
@@ -311,7 +382,7 @@
     50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
   }
 
-  /* ===== HAZ DE PROYECCIÓN ===== */
+  /* ===== HAZ ===== */
   .beam {
     position: absolute;
     top: 100%;
@@ -328,7 +399,7 @@
     transition: height 0.5s ease;
   }
 
-  /* ===== PANEL DEL MENÚ ===== */
+  /* ===== PANEL MENÚ ===== */
   .menu-panel {
     position: absolute;
     top: calc(100% + 25px);
@@ -358,7 +429,6 @@
     pointer-events: auto;
   }
 
-  /* Línea superior animada */
   .menu-panel::before {
     content: '';
     position: absolute;
@@ -399,8 +469,8 @@
   }
 
   @keyframes status-pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(34, 197, 94, 0.6); }
-    50% { opacity: 0.6; box-shadow: 0 0 4px rgba(34, 197, 94, 0.3); }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 
   .header-text {
@@ -411,7 +481,6 @@
     font-size: 12px;
     font-weight: 600;
     color: var(--text, #e9eef6);
-    letter-spacing: -0.01em;
   }
 
   .header-subtitle {
@@ -511,7 +580,6 @@
     flex: 1;
   }
 
-  /* Estado activo */
   .menu-item.active {
     background: rgba(255, 159, 26, 0.08);
   }
@@ -564,94 +632,26 @@
     opacity: 0.6;
   }
 
-  /* ===== BOTÓN TOGGLE ===== */
-  .arm-toggle-btn {
-    position: fixed;
-    right: 24px;
-    bottom: 24px;
-    width: 46px;
-    height: 46px;
-    background: linear-gradient(180deg, 
-      color-mix(in srgb, var(--panel, #111a2d) 90%, #1a2540) 0%,
-      var(--panel, #111a2d) 100%
-    );
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    color: var(--muted, #a8b2c2);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    z-index: 1001;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .arm-toggle-btn.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .arm-toggle-btn:hover {
-    background: linear-gradient(180deg, 
-      color-mix(in srgb, var(--panel, #111a2d) 80%, #2a3a55) 0%,
-      var(--panel, #111a2d) 100%
-    );
-    border-color: rgba(255, 159, 26, 0.2);
-    color: var(--text, #e9eef6);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-  }
-
-  .arm-toggle-btn.active {
-    background: linear-gradient(180deg, 
-      rgba(255, 159, 26, 0.12) 0%,
-      rgba(255, 159, 26, 0.06) 100%
-    );
-    border-color: rgba(255, 159, 26, 0.3);
-    color: var(--accent, #ff9f1a);
-    box-shadow: 
-      0 8px 24px rgba(0, 0, 0, 0.4),
-      0 0 20px rgba(255, 159, 26, 0.1);
-  }
-
-  .arm-toggle-btn svg {
-    width: 18px;
-    height: 18px;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .arm-toggle-btn.active svg {
-    transform: rotate(180deg);
-  }
-
-  /* Hint */
+  /* ===== HINT TECLADO ===== */
   .arm-hint {
-    position: fixed;
-    right: 82px;
-    bottom: 36px;
-    font-size: 11px;
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
     color: var(--muted, #a8b2c2);
-    opacity: 0;
-    z-index: 1001;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-  }
-
-  .arm-hint.visible {
     opacity: 0.5;
+    white-space: nowrap;
+    pointer-events: none;
   }
 
   .arm-hint kbd {
-    padding: 3px 7px;
-    background: var(--panel, #111a2d);
+    padding: 2px 5px;
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    font-size: 10px;
-    color: var(--muted, #a8b2c2);
-    margin-left: 5px;
+    border-radius: 3px;
+    font-size: 8px;
+    margin-left: 3px;
     font-family: inherit;
   }
 
@@ -659,9 +659,7 @@
 
 /* ===== MÓVIL ===== */
 @media (max-width: 980px) {
-  .arm-system,
-  .arm-toggle-btn,
-  .arm-hint {
+  .arm-system {
     display: none !important;
   }
 }
