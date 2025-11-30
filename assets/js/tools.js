@@ -96,12 +96,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Delay escalonado para efecto visual chulo
                 card.style.animationDelay = `${index * 0.05}s`;
                 
+                let tagClass = '';
+                if (tool.cat === 'linux') tagClass = 'tag-green';
+                else if (tool.cat === 'windows') tagClass = 'tag-blue';
+                else tagClass = 'tag-orange'; // multi
+
+                // 2. Insertamos el HTML usando esa clase nueva
                 card.innerHTML = `
                     <i class="${tool.icon} tool-icon"></i>
                     <span class="tool-name">${tool.name}</span>
-                    <span class="tool-tag">${tool.cat}</span>
+                    <span class="tool-tag ${tagClass}">${tool.cat}</span>
                 `;
-                gridContainer.appendChild(card);
             }
         });
 
