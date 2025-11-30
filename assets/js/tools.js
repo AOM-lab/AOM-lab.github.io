@@ -1,178 +1,163 @@
-/* Tabla "Ultra PRO v4" — encapsulada, no rompe nada más del sitio */
-(function(){
-  const root = document.getElementById('tools-pro');
-  if(!root) return;
+/* Generador del ARSENAL TECNOLÓGICO 
+   Convierte el contenedor #tools-pro en un Dashboard Interactivo
+*/
 
-  /* ===== Datos ===== */
-  const tools = [
-    { name:"Ansible",     os:"linux",   icon:"fa-brands fa-redhat" },
-    { name:"Docker",      os:"multi",   icon:"fa-brands fa-docker" },
-    { name:"Kali / Nmap", os:"linux",   icon:"fa-solid fa-magnifying-glass" },
-    { name:"Burp Suite",  os:"windows", icon:"fa-solid fa-bug" },
-    { name:"Metasploit",  os:"linux",   icon:"fa-solid fa-skull-crossbones" },
-    { name:"OpenVAS",     os:"linux",   icon:"fa-solid fa-shield-halved" },
-    { name:"Wireshark",   os:"windows", icon:"fa-solid fa-wave-square" },
-    { name:"pfSense",     os:"linux",   icon:"fa-solid fa-network-wired" },
-    { name:"ZAP",         os:"multi",   icon:"fa-solid fa-bolt" },
-    { name:"Terraform",   os:"linux",   icon:"fa-solid fa-cubes" },
-    { name:"Podman",      os:"linux",   icon:"fa-solid fa-boxes-stacked" },
-    { name:"Nessus",      os:"windows", icon:"fa-solid fa-spider" }
-  ];
+document.addEventListener('DOMContentLoaded', () => {
+    const root = document.getElementById('tools-pro');
+    if (!root) return;
 
-  /* ===== Estado / refs ===== */
-  const state = {
-    page: 0,
-    perPage: root.querySelectorAll('#langsBody .row').length,
-    query: '',
-    os: new Set(),
-    selected: new Set()
-  };
+    /* --- BASE DE DATOS DE HERRAMIENTAS --- */
+    // Puedes añadir más aquí fácilmente
+    const tools = [
+        { name: "Ansible",   cat: "linux",   icon: "fa-brands fa-redhat" },
+        { name: "Docker",    cat: "multi",   icon: "fa-brands fa-docker" },
+        { name: "Kali",      cat: "linux",   icon: "fa-solid fa-terminal" },
+        { name: "Burp Suite",cat: "windows", icon: "fa-solid fa-bug" },
+        { name: "Metasploit",cat: "linux",   icon: "fa-solid fa-skull-crossbones" },
+        { name: "OpenVAS",   cat: "linux",   icon: "fa-solid fa-shield-halved" },
+        { name: "Wireshark", cat: "windows", icon: "fa-solid fa-wave-square" },
+        { name: "pfSense",   cat: "linux",   icon: "fa-solid fa-network-wired" },
+        { name: "ZAP Proxy", cat: "multi",   icon: "fa-solid fa-bolt" },
+        { name: "Terraform", cat: "linux",   icon: "fa-solid fa-cubes" },
+        { name: "Nessus",    cat: "windows", icon: "fa-solid fa-spider" },
+        { name: "Git",       cat: "multi",   icon: "fa-brands fa-git-alt" }
+    ];
 
-  const list = root.querySelector('#toolsListNew');
-  const dots = root.querySelector('#pagerDots');
-  const counter = root.querySelector('#pageCounter');
-  const prevBtn = root.querySelector('#prevBtn');
-  const nextBtn = root.querySelector('#nextBtn');
-  const toolsCard = root.querySelector('#toolsCard');
-  const langsCard = root.querySelector('#langsCard');
-  const resultCount = root.querySelector('#resultCount');
-  const searchBox = root.querySelector('#searchBox');
-  const searchInput = root.querySelector('#searchInput');
-  const clearBtn = root.querySelector('#clearBtn');
+    /* --- BASE DE DATOS DE LENGUAJES --- */
+    // Nivel del 1 al 3 (donde 3 es experto)
+    const languages = [
+        { name: "Python",     icon: "fa-brands fa-python", level: 3 },
+        { name: "Bash",       icon: "fa-solid fa-terminal", level: 3 },
+        { name: "PowerShell", icon: "fa-brands fa-windows", level: 2 },
+        { name: "SQL",        icon: "fa-solid fa-database", level: 2 },
+        { name: "JavaScript", icon: "fa-brands fa-js",     level: 1 },
+        { name: "HTML/CSS",   icon: "fa-solid fa-code",    level: 2 }
+    ];
 
-  /* ===== Filtros ===== */
-  let searchTimer = null;
-  searchInput.addEventListener('input', e=>{
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(()=>{
-      state.query = e.target.value.trim().toLowerCase();
-      searchBox.classList.toggle('has-text', !!state.query);
-      state.page = 0; render(true);
-    }, 120);
-  });
-  clearBtn.addEventListener('click', ()=>{
-    searchInput.value=''; state.query=''; searchBox.classList.remove('has-text'); state.page=0; render(true);
-  });
+    /* --- CONSTRUCCIÓN DE LA INTERFAZ (HTML) --- */
+    root.innerHTML = `
+        <h2 class="section-title">
+           <i class="fa-solid fa-microchip"></i> Herramientas y Stack
+        </h2>
+        
+        <div class="tech-layout">
+            <div class="left-panel">
+                
+                <div class="search-bar-wrapper">
+                    <span class="terminal-prompt">root@lab:~/tools# grep</span>
+                    <input type="text" id="tech-search" class="search-input" placeholder="buscar..." autocomplete="off">
+                </div>
 
-  root.querySelectorAll('.tag').forEach(tag=>{
-    tag.addEventListener('click', ()=>{
-      const val = tag.dataset.os;
-      if(tag.classList.toggle('on')) state.os.add(val);
-      else state.os.delete(val);
-      state.page = 0; render(true);
-    });
-  });
+                <div class="filters-row">
+                    <button class="filter-chip active" data-filter="all">ALL</button>
+                    <button class="filter-chip" data-filter="linux">LINUX</button>
+                    <button class="filter-chip" data-filter="windows">WINDOWS</button>
+                    <button class="filter-chip" data-filter="multi">MULTI</button>
+                </div>
 
-  function chip(os){
-    const map = {
-      linux:   { cls:'chip linux',   label:'Linux',   icon:'fa-brands fa-linux', tip:'Disponible en Linux' },
-      windows: { cls:'chip windows', label:'Windows', icon:'fa-brands fa-windows', tip:'Disponible en Windows' },
-      multi:   { cls:'chip multi',   label:'Multi',   icon:'fa-solid fa-layer-group', tip:'Disponible en varios sistemas' }
-    };
-    const d = map[os] || map.multi;
-    return `<span class="${d.cls}" data-tooltip="${d.tip}"><i class="${d.icon}"></i>${d.label}</span>`;
-  }
+                <div class="tools-grid" id="tools-grid-container">
+                    </div>
+            </div>
 
-  function applyFilters(items){
-    let out = items;
-    if(state.query){ out = out.filter(t => t.name.toLowerCase().includes(state.query)); }
-    if(state.os.size){ out = out.filter(t => state.os.has(t.os)); }
-    return out;
-  }
+            <aside class="right-panel">
+                <div class="stack-panel">
+                    <div class="panel-title">
+                        <i class="fa-solid fa-code"></i> Core Stack
+                    </div>
+                    <div class="lang-list" id="lang-list-container">
+                        </div>
+                </div>
+            </aside>
+        </div>
+    `;
 
-  // Selección + pulso
-  function bindSelectableRows(scope=root){
-    scope.querySelectorAll('.row[role="button"]').forEach(row=>{
-      const pulseOnce = ()=>{
-        row.classList.add('pulse');
-        const handler = ()=>{ row.classList.remove('pulse'); row.removeEventListener('animationend', handler); };
-        row.addEventListener('animationend', handler);
-      };
-      row.addEventListener('click', ()=>{
-        const id = row.dataset.id;
-        if(state.selected.has(id)) state.selected.delete(id); else state.selected.add(id);
-        row.classList.toggle('active');
-        row.setAttribute('aria-pressed', state.selected.has(id) ? 'true' : 'false');
-        pulseOnce();
-      });
-      row.addEventListener('keydown', (e)=>{
-        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); row.click(); }
-      });
-    });
-  }
+    /* --- REFERENCIAS --- */
+    const gridContainer = document.getElementById('tools-grid-container');
+    const langContainer = document.getElementById('lang-list-container');
+    const searchInput = document.getElementById('tech-search');
+    const filterChips = document.querySelectorAll('.filter-chip');
 
-  // ===== Altura estable =====
-  let lockedHeight = 0;
-  function lockHeights(){
-    toolsCard.style.setProperty('--locked-card-height','auto');
-    langsCard.style.setProperty('--locked-card-height','auto');
-    const h = Math.max(toolsCard.offsetHeight, langsCard.offsetHeight);
-    lockedHeight = Math.max(lockedHeight, h);
-    toolsCard.style.setProperty('--locked-card-height', lockedHeight + 'px');
-    langsCard.style.setProperty('--locked-card-height', lockedHeight + 'px');
-  }
-  function resetLock(){
-    lockedHeight = 0;
-    toolsCard.style.setProperty('--locked-card-height','auto');
-    langsCard.style.setProperty('--locked-card-height','auto');
-  }
+    let currentFilter = 'all';
 
-  function render(withEntrance=false){
-    const filtered = applyFilters(tools);
-    const totalPages = Math.max(1, Math.ceil(filtered.length / state.perPage));
-    state.page = Math.min(state.page, totalPages-1);
+    /* --- FUNCIÓN RENDER HERRAMIENTAS --- */
+    function renderTools(searchTerm = '') {
+        gridContainer.innerHTML = ''; // Limpiar
+        
+        const term = searchTerm.toLowerCase();
 
-    const start = state.page * state.perPage;
-    const items = filtered.slice(start, start + state.perPage);
+        tools.forEach((tool, index) => {
+            // Lógica de filtrado
+            const matchesFilter = currentFilter === 'all' || tool.cat === currentFilter;
+            const matchesSearch = tool.name.toLowerCase().includes(term);
 
-    list.innerHTML = items.map(t => {
-      const active = state.selected.has(t.name) ? 'active' : '';
-      return `
-      <div class="row ${active}" data-id="${t.name}" role="button" aria-pressed="${!!active}" tabindex="0" title="${t.name}">
-        <div class="left"><i class="${t.icon}"></i> ${t.name}</div>
-        <div class="right">${chip(t.os)}</div>
-      </div>`;
-    }).join('');
+            if (matchesFilter && matchesSearch) {
+                const card = document.createElement('div');
+                card.className = 'tool-card animate-in';
+                // Delay escalonado para efecto visual chulo
+                card.style.animationDelay = `${index * 0.05}s`;
+                
+                card.innerHTML = `
+                    <i class="${tool.icon} tool-icon"></i>
+                    <span class="tool-name">${tool.name}</span>
+                    <span class="tool-tag">${tool.cat}</span>
+                `;
+                gridContainer.appendChild(card);
+            }
+        });
 
-    dots.innerHTML = Array.from({length: totalPages}, (_,i)=>`<span class="dot ${i===state.page?'active':''}"></span>`).join('');
-    counter.textContent = `${state.page+1}/${totalPages}`;
-    resultCount.textContent = filtered.length;
-
-    prevBtn.disabled = state.page===0;
-    nextBtn.disabled = state.page===totalPages-1;
-
-    bindSelectableRows(list);
-
-    if(withEntrance){
-      const rows = list.querySelectorAll('.row');
-      rows.forEach((row, i)=>{
-        row.classList.add('page-enter');
-        row.style.animationDelay = `${i*40}ms`;
-        row.addEventListener('animationend', ()=>{ row.classList.remove('page-enter'); row.style.animationDelay=''; }, {once:true});
-      });
+        // Mensaje si no hay resultados
+        if (gridContainer.children.length === 0) {
+            gridContainer.innerHTML = `
+                <div style="grid-column:1/-1; text-align:center; padding:20px; color:#64748b; font-family:'Source Code Pro'">
+                    // No matches found
+                </div>`;
+        }
     }
 
-    lockHeights();
-  }
+    /* --- FUNCIÓN RENDER LENGUAJES --- */
+    function renderLanguages() {
+        langContainer.innerHTML = languages.map(lang => {
+            // Generar los 3 puntos de nivel
+            let dotsHTML = '';
+            for(let i=1; i<=3; i++) {
+                const isActive = i <= lang.level ? 'active' : '';
+                dotsHTML += `<span class="dot ${isActive}"></span>`;
+            }
 
-  // Recalcular lock cuando cambien filtros o tamaño de ventana
-  function refitAfterChange(action){
-    resetLock(); action();
-    requestAnimationFrame(()=> lockHeights());
-  }
+            return `
+                <div class="lang-row">
+                    <div class="lang-info">
+                        <i class="${lang.icon}"></i> ${lang.name}
+                    </div>
+                    <div class="level-dots" title="Nivel ${lang.level}/3">
+                        ${dotsHTML}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
 
-  prevBtn.addEventListener('click', ()=>{ if(state.page>0){ state.page--; render(true); }});
-  nextBtn.addEventListener('click', ()=>{
-    const filtered = applyFilters(tools);
-    const tp = Math.max(1, Math.ceil(filtered.length/state.perPage));
-    if(state.page<tp-1){ state.page++; render(true); }
-  });
+    /* --- EVENTOS --- */
+    
+    // 1. Buscador
+    searchInput.addEventListener('input', (e) => {
+        renderTools(e.target.value);
+    });
 
-  window.addEventListener('resize', ()=> refitAfterChange(()=>render(false)));
+    // 2. Filtros
+    filterChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            // UI
+            filterChips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            
+            // Lógica
+            currentFilter = chip.dataset.filter;
+            renderTools(searchInput.value);
+        });
+    });
 
-  // Primera carga
-  window.addEventListener('load', ()=>{
-    render(true);
-    requestAnimationFrame(()=> lockHeights());
-  });
-})();
+    /* --- INICIALIZACIÓN --- */
+    renderTools();
+    renderLanguages();
+});
