@@ -1,6 +1,6 @@
 /* ===============================
    MENÚ BRAZO MECÁNICO — PREMIUM FINAL
-   Botón integrado en el brazo como elemento mecánico
+   Con interruptor mecánico y partículas
    =============================== */
 
 @media (min-width: 981px) {
@@ -71,7 +71,7 @@
     50% { opacity: 1; }
   }
 
-  /* ===== BRAZO 1 CON BOTÓN INTEGRADO ===== */
+  /* ===== BRAZO 1 ===== */
   .arm-1 {
     position: absolute;
     right: 10px;
@@ -98,7 +98,7 @@
   .arm-1::before {
     content: '';
     position: absolute;
-    left: 40px;
+    left: 50px;
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
@@ -120,97 +120,157 @@
     box-shadow: 0 0 8px var(--accent, #ff9f1a), 0 0 16px rgba(255, 159, 26, 0.4);
   }
 
-  /* ===== BOTÓN TOGGLE EN EL BRAZO ===== */
+  /* ===== INTERRUPTOR MECÁNICO ===== */
   .arm-toggle-btn {
     position: absolute;
-    left: 8px;
+    left: 6px;
     top: 50%;
     transform: translateY(-50%);
-    width: 28px;
+    width: 38px;
     height: 14px;
     background: linear-gradient(180deg,
-      rgba(255, 159, 26, 0.12) 0%,
-      rgba(255, 159, 26, 0.05) 100%
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.3) 100%
     );
-    border: 1px solid rgba(255, 159, 26, 0.25);
-    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 7px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    color: var(--accent, #ff9f1a);
+    padding: 0;
+    overflow: visible;
+    box-shadow: 
+      inset 0 2px 4px rgba(0, 0, 0, 0.5),
+      0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Carril del switch */
+  .switch-track {
+    position: absolute;
+    inset: 2px;
+    background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(20, 30, 50, 0.6) 100%
+    );
+    border-radius: 5px;
     overflow: hidden;
   }
 
-  .arm-toggle-btn::before {
+  /* Marcas en el carril */
+  .switch-track::before {
     content: '';
     position: absolute;
-    inset: 2px;
-    background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(255, 159, 26, 0.1) 50%,
-      transparent 100%
-    );
-    border-radius: 2px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .arm-toggle-btn:hover {
-    background: linear-gradient(180deg,
-      rgba(255, 159, 26, 0.2) 0%,
-      rgba(255, 159, 26, 0.1) 100%
-    );
-    border-color: rgba(255, 159, 26, 0.5);
-    box-shadow: 0 0 12px rgba(255, 159, 26, 0.3);
-  }
-
-  .arm-toggle-btn:hover::before {
-    opacity: 1;
-  }
-
-  .arm-toggle-btn.active {
-    background: linear-gradient(180deg,
-      rgba(255, 159, 26, 0.25) 0%,
-      rgba(255, 159, 26, 0.15) 100%
-    );
-    border-color: var(--accent, #ff9f1a);
-    box-shadow: 
-      0 0 15px rgba(255, 159, 26, 0.4),
-      inset 0 0 10px rgba(255, 159, 26, 0.1);
-  }
-
-  .arm-toggle-btn svg {
-    width: 10px;
-    height: 10px;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    filter: drop-shadow(0 0 2px rgba(255, 159, 26, 0.5));
-  }
-
-  .arm-toggle-btn.active svg {
-    transform: rotate(180deg);
-  }
-
-  /* Indicador de estado en el botón */
-  .btn-status {
-    position: absolute;
-    right: 3px;
+    left: 4px;
     top: 50%;
     transform: translateY(-50%);
-    width: 4px;
-    height: 4px;
-    background: rgba(255, 159, 26, 0.4);
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 100, 100, 0.4);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(255, 100, 100, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .switch-track::after {
+    content: '';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 3px;
+    background: rgba(100, 255, 150, 0.3);
     border-radius: 50%;
     transition: all 0.3s ease;
   }
 
-  .arm-toggle-btn.active .btn-status {
-    background: var(--accent, #ff9f1a);
-    box-shadow: 0 0 6px var(--accent, #ff9f1a);
+  .arm-toggle-btn.active .switch-track::before {
+    background: rgba(255, 100, 100, 0.2);
+    box-shadow: none;
   }
 
-  /* ===== JOINT ===== */
+  .arm-toggle-btn.active .switch-track::after {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+  }
+
+  /* Palanca del switch */
+  .switch-knob {
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 10px;
+    background: linear-gradient(180deg,
+      #4a5568 0%,
+      #2d3748 50%,
+      #1a202c 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  /* Textura de la palanca */
+  .switch-knob::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 2px;
+    bottom: 2px;
+    width: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+  }
+
+  /* Líneas de grip */
+  .switch-knob::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 4px;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 1px,
+      rgba(0, 0, 0, 0.3) 1px,
+      rgba(0, 0, 0, 0.3) 2px
+    );
+  }
+
+  .arm-toggle-btn:hover .switch-knob {
+    background: linear-gradient(180deg,
+      #5a6578 0%,
+      #3d4758 50%,
+      #2a303c 100%
+    );
+    border-color: rgba(255, 159, 26, 0.3);
+  }
+
+  .arm-toggle-btn.active .switch-knob {
+    left: calc(100% - 17px);
+    background: linear-gradient(180deg,
+      #5a6578 0%,
+      #3d4758 50%,
+      #2a303c 100%
+    );
+    border-color: rgba(255, 159, 26, 0.5);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.5),
+      0 0 10px rgba(255, 159, 26, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* ===== JOINT CON PARTÍCULAS ===== */
   .joint {
     position: absolute;
     left: -11px;
@@ -271,6 +331,137 @@
   .joint.active::after {
     opacity: 1;
   }
+
+  /* ===== CONTENEDOR DE PARTÍCULAS ===== */
+  .particles-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  .spark {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--accent, #ff9f1a);
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow: 
+      0 0 6px var(--accent, #ff9f1a),
+      0 0 12px rgba(255, 159, 26, 0.5);
+  }
+
+  /* Animaciones de partículas */
+  @keyframes spark-1 {
+    0% { 
+      opacity: 1; 
+      transform: translate(0, 0) scale(1);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(-25px, -20px) scale(0);
+    }
+  }
+
+  @keyframes spark-2 {
+    0% { 
+      opacity: 1; 
+      transform: translate(0, 0) scale(1);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(20px, -25px) scale(0);
+    }
+  }
+
+  @keyframes spark-3 {
+    0% { 
+      opacity: 1; 
+      transform: translate(0, 0) scale(1);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(-30px, 10px) scale(0);
+    }
+  }
+
+  @keyframes spark-4 {
+    0% { 
+      opacity: 1; 
+      transform: translate(0, 0) scale(1);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(25px, 15px) scale(0);
+    }
+  }
+
+  @keyframes spark-5 {
+    0% { 
+      opacity: 1; 
+      transform: translate(0, 0) scale(1);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(-15px, 25px) scale(0);
+    }
+  }
+
+  @keyframes spark-6 {
+    0% { 
+      opacity: 1; 
+      transform: translate(0, 0) scale(1);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(30px, -10px) scale(0);
+    }
+  }
+
+  @keyframes spark-7 {
+    0% { 
+      opacity: 1; 
+      transform: translate(0, 0) scale(1.2);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(-20px, -30px) scale(0);
+    }
+  }
+
+  @keyframes spark-8 {
+    0% { 
+      opacity: 1; 
+      transform: translate(0, 0) scale(0.8);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(15px, 30px) scale(0);
+    }
+  }
+
+  .spark:nth-child(1) { left: 50%; top: 50%; }
+  .spark:nth-child(2) { left: 50%; top: 50%; }
+  .spark:nth-child(3) { left: 50%; top: 50%; }
+  .spark:nth-child(4) { left: 50%; top: 50%; }
+  .spark:nth-child(5) { left: 50%; top: 50%; }
+  .spark:nth-child(6) { left: 50%; top: 50%; }
+  .spark:nth-child(7) { left: 50%; top: 50%; background: var(--accent-soft, #ffd79a); }
+  .spark:nth-child(8) { left: 50%; top: 50%; background: #fff; width: 2px; height: 2px; }
+
+  .joint.sparking .spark:nth-child(1) { animation: spark-1 0.6s ease-out forwards; }
+  .joint.sparking .spark:nth-child(2) { animation: spark-2 0.5s ease-out 0.05s forwards; }
+  .joint.sparking .spark:nth-child(3) { animation: spark-3 0.55s ease-out 0.1s forwards; }
+  .joint.sparking .spark:nth-child(4) { animation: spark-4 0.5s ease-out 0.08s forwards; }
+  .joint.sparking .spark:nth-child(5) { animation: spark-5 0.6s ease-out 0.12s forwards; }
+  .joint.sparking .spark:nth-child(6) { animation: spark-6 0.45s ease-out 0.06s forwards; }
+  .joint.sparking .spark:nth-child(7) { animation: spark-7 0.7s ease-out 0.02s forwards; }
+  .joint.sparking .spark:nth-child(8) { animation: spark-8 0.5s ease-out 0.15s forwards; }
 
   /* ===== BRAZO 2 ===== */
   .arm-2 {
