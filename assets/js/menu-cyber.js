@@ -1,8 +1,6 @@
 /* ============================================================
    MENÚ BRAZO MECÁNICO — PREMIUM FINAL
-   - Botón integrado en el brazo 1
-   - Se CIERRA cuando scroll está arriba (scrollY < 100)
-   - Se ABRE cuando bajas y el hero desaparece
+   Con interruptor mecánico y partículas de chispa
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,15 +22,25 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="arm-1" id="arm1">
         <div class="energy-line" id="energy1"></div>
         
-        <!-- Botón integrado en el brazo -->
+        <!-- Interruptor mecánico tipo switch -->
         <button class="arm-toggle-btn" id="armToggleBtn" aria-label="Toggle menú">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
-          <span class="btn-status"></span>
+          <div class="switch-track"></div>
+          <div class="switch-knob"></div>
         </button>
         
         <div class="joint" id="joint">
+          <!-- Contenedor de partículas -->
+          <div class="particles-container" id="particles">
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
+          </div>
+          
           <div class="arm-2" id="arm2">
             <div class="energy-line" id="energy2"></div>
             <div class="projector" id="projector">
@@ -122,12 +130,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const footerTime = document.getElementById('footerTime');
   const menuItems = document.querySelectorAll('.menu-panel .menu-item');
 
-  // Hero element para detectar cuándo sale de pantalla
   const heroWrap = document.querySelector('.hero-wrap') || document.querySelector('.hero') || document.querySelector('#home');
 
   let isOpen = false;
   let isAnimating = false;
-  let wasAtTop = true; // Track si estábamos arriba
+  let wasAtTop = true;
 
   // ===== UTILIDADES =====
   const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -145,6 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateTime, 1000);
   updateTime();
 
+  // ===== EFECTO CHISPAS =====
+  function triggerSparks() {
+    joint.classList.add('sparking');
+    setTimeout(() => {
+      joint.classList.remove('sparking');
+    }, 800);
+  }
+
   // ===== DESPLIEGUE =====
   async function deploy() {
     if (isAnimating || isOpen) return;
@@ -159,11 +174,13 @@ document.addEventListener("DOMContentLoaded", () => {
     await sleep(500);
     
     energy1.style.transition = 'width 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
-    energy1.style.width = 'calc(100% - 45px)';
+    energy1.style.width = 'calc(100% - 55px)';
 
     await sleep(400);
 
+    // ¡CHISPAS! cuando se activa el joint
     joint.classList.add('active');
+    triggerSparks();
 
     await sleep(200);
 
@@ -222,6 +239,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await sleep(450);
 
+    // Chispas al desactivar también
+    triggerSparks();
     joint.classList.remove('active');
 
     energy1.style.transition = 'width 0.35s ease-out';
@@ -309,28 +328,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== LÓGICA AUTO OPEN/CLOSE =====
   function checkScrollPosition() {
     const scrollY = window.scrollY;
-    const isAtTop = scrollY < 150; // Estamos "arriba" si scroll < 150px
+    const isAtTop = scrollY < 150;
     
-    // Detectar si el hero ya salió de pantalla
     let heroIsOut = false;
     if (heroWrap) {
       const rect = heroWrap.getBoundingClientRect();
-      heroIsOut = rect.bottom < 0; // El hero ya no se ve
+      heroIsOut = rect.bottom < 0;
     } else {
-      heroIsOut = scrollY > 400; // Fallback si no encuentra hero
+      heroIsOut = scrollY > 400;
     }
 
-    // Si estamos arriba y el menú está abierto → CERRAR
     if (isAtTop && isOpen && !isAnimating) {
       retract();
       wasAtTop = true;
     }
-    // Si bajamos (hero fuera de pantalla) y estábamos arriba → ABRIR
     else if (heroIsOut && !isOpen && !isAnimating && wasAtTop) {
       deploy();
       wasAtTop = false;
     }
-    // Si volvemos arriba, marcar que estamos arriba
     else if (isAtTop) {
       wasAtTop = true;
     }
@@ -340,7 +355,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const initialScrollY = window.scrollY;
   wasAtTop = initialScrollY < 150;
   
-  // Si al cargar ya estamos abajo, abrir
   if (!wasAtTop) {
     let heroIsOut = false;
     if (heroWrap) {
