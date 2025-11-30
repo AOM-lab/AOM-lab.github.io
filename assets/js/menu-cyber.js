@@ -1,6 +1,6 @@
 /* ============================================================
    MENÚ BRAZO MECÁNICO — PREMIUM
-   Animaciones suaves y profesionales
+   Brazo 2 se pliega hacia ARRIBA (detrás del brazo 1)
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     isOpen = true;
     toggleBtn.classList.add('active');
 
-    // Brazo 1 se despliega
+    // Brazo 1 se despliega (de 90deg vertical a 0deg horizontal)
     arm1.style.transition = 'transform 1.1s cubic-bezier(0.22, 1, 0.36, 1)';
     arm1.style.transform = 'translateY(-50%) rotate(0deg)';
 
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await sleep(250);
 
-    // Brazo 2 se despliega
+    // Brazo 2 se despliega (de 90deg hacia arriba a 0deg horizontal hacia izquierda)
     arm2.style.transition = 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
     arm2.style.transform = 'translateY(-50%) rotate(0deg)';
 
@@ -239,9 +239,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await sleep(250);
 
-    // Brazo 2 se pliega
+    // Brazo 2 se pliega hacia ARRIBA (90deg) - se esconde detrás del brazo 1
     arm2.style.transition = 'transform 0.9s cubic-bezier(0.55, 0, 1, 0.45)';
-    arm2.style.transform = 'translateY(-50%) rotate(-90deg)';
+    arm2.style.transform = 'translateY(-50%) rotate(90deg)';
 
     await sleep(500);
 
@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await sleep(300);
 
-    // Brazo 1 se pliega
+    // Brazo 1 se pliega (vuelve a 90deg vertical)
     arm1.style.transition = 'transform 0.9s cubic-bezier(0.55, 0, 1, 0.45)';
     arm1.style.transform = 'translateY(-50%) rotate(90deg)';
 
