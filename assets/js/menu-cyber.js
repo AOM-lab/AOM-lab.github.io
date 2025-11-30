@@ -1,6 +1,6 @@
 /* ============================================================
    MENÚ BRAZO MECÁNICO — PREMIUM FINAL
-   Con interruptor mecánico y partículas de chispa
+   Posición dinámica: centrado cuando plegado, arriba al desplegar
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -166,6 +166,8 @@ document.addEventListener("DOMContentLoaded", () => {
     isAnimating = true;
     isOpen = true;
     toggleBtn.classList.add('active');
+    
+    // Añadir clase deployed PRIMERO para que suba mientras se despliega
     armSystem.classList.add('deployed');
 
     arm1.style.transition = 'transform 1s cubic-bezier(0.22, 1, 0.36, 1)';
@@ -178,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await sleep(400);
 
-    // ¡CHISPAS! cuando se activa el joint
     joint.classList.add('active');
     triggerSparks();
 
@@ -214,7 +215,6 @@ document.addEventListener("DOMContentLoaded", () => {
     isAnimating = true;
     isOpen = false;
     toggleBtn.classList.remove('active');
-    armSystem.classList.remove('deployed');
 
     menuPanel.style.transition = 'all 0.3s cubic-bezier(0.55, 0, 1, 0.45)';
     menuPanel.classList.remove('active');
@@ -239,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await sleep(450);
 
-    // Chispas al desactivar también
     triggerSparks();
     joint.classList.remove('active');
 
@@ -251,7 +250,11 @@ document.addEventListener("DOMContentLoaded", () => {
     arm1.style.transition = 'transform 0.8s cubic-bezier(0.55, 0, 1, 0.45)';
     arm1.style.transform = 'translateY(-50%) rotate(90deg)';
 
-    await sleep(750);
+    // Quitar clase deployed al FINAL para que baje al centro
+    await sleep(400);
+    armSystem.classList.remove('deployed');
+
+    await sleep(350);
     
     menuPanel.style.transition = '';
     isAnimating = false;
