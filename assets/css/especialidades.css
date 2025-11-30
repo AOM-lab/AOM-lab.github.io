@@ -1,8 +1,7 @@
-/* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Clean & Balanced) --- */
+/* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Versión Premium con Profundidad) --- */
 
 #especialidades {
-  --sp-bg: #0b1022;
-  --sp-border: rgba(255, 255, 255, 0.08);
+  --sp-bg-base: #0b1022;
   --sp-accent: #ff9f1a;
   --sp-text: #94a3b8;
   --sp-title: #f1f5f9;
@@ -19,20 +18,26 @@
   padding-left: 20px;
 }
 
-/* GRID 2x2 (Simetría Perfecta para 4 o 6 items) */
+/* GRID 2x2 */
 #spec-grid-pro {
   display: grid;
-  /* En escritorio: 2 columnas iguales. Las tarjetas serán anchas y legibles. */
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
 
-/* TARJETA (Estilo Sólido y Limpio) */
+/* TARJETA (Aquí está la magia) */
 .spec-card-pro {
-  background: var(--sp-bg);
-  border: 1px solid var(--sp-border);
-  border-radius: 12px;
-  padding: 36px 32px; /* Más espacio interno = más elegancia */
+  /* 1. Degradado sutil en lugar de color plano para dar volumen */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  
+  /* 2. Borde sutil */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  
+  /* 3. Sombra suave para separarla del fondo */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  
+  border-radius: 16px; /* Bordes un poco más redondeados */
+  padding: 36px 32px;
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
@@ -40,67 +45,72 @@
   height: 100%;
 }
 
-/* Hover: Elegante, sin luces locas. Solo marca el borde y sube un poco */
+/* Hover: Se ilumina el borde y sube */
 .spec-card-pro:hover {
   transform: translateY(-5px);
-  border-color: var(--sp-accent);
-  background: rgba(255, 159, 26, 0.03); /* Fondo naranja ultra sutil */
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  /* Borde naranja brillante */
+  border-color: rgba(255, 159, 26, 0.6); 
+  /* Fondo un pelín más claro */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5);
 }
 
-/* Icono Box */
+/* CAJA DEL ICONO (Mejorada) */
 .spec-icon-box {
   width: 52px; height: 52px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  /* Fondo oscuro para contrastar con la tarjeta */
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 22px;
-  transition: border-color 0.3s, background-color 0.3s;
+  margin-bottom: 24px;
+  /* Borde muy fino apenas visible */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s;
 }
 
-/* Al hacer hover en la tarjeta, el icono se enciende */
+/* Al hover, el icono se enciende */
 .spec-card-pro:hover .spec-icon-box {
-  border-color: var(--sp-accent);
-  background: rgba(255, 159, 26, 0.1);
+  background: rgba(255, 159, 26, 0.15); /* Fondo naranja brillante */
+  border-color: rgba(255, 159, 26, 0.3);
 }
 
 .spec-icon-img {
   width: 28px; height: 28px;
   filter: invert(1) brightness(2); /* Blanco puro */
   transition: filter 0.3s;
+  opacity: 0.9;
 }
 
 .spec-card-pro:hover .spec-icon-img {
-  /* Se tiñe suavemente de naranja */
-  filter: sepia(1) saturate(5) hue-rotate(-20deg) brightness(1.2); 
+  /* Se vuelve naranja intenso */
+  filter: sepia(1) saturate(10) hue-rotate(-20deg) brightness(1.1); 
+  opacity: 1;
 }
 
-/* Títulos */
+/* TÍTULOS */
 .spec-title {
   font-family: 'Inter', sans-serif;
-  color: var(--sp-title);
-  font-size: 1.3rem; /* Un pelín más grande */
+  color: #fff; /* Blanco puro */
+  font-size: 1.35rem; /* Más grande y legible */
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   letter-spacing: -0.02em;
 }
 
-/* Texto del cuerpo */
+/* TEXTO */
 .spec-body {
-  color: var(--sp-text);
+  color: var(--sp-text); /* Gris azulado */
   font-size: 0.95rem;
-  line-height: 1.65;
-  flex-grow: 1; /* Esto asegura que todas las tarjetas se vean iguales */
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 /* RESPONSIVE */
-/* En tablets y móviles, pasamos a 1 sola columna */
 @media (max-width: 900px) {
   #spec-grid-pro {
     grid-template-columns: 1fr;
   }
   .spec-card-pro {
-    padding: 24px;
+    padding: 28px;
   }
 }
