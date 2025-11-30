@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('tools-pro');
     if (!root) return;
 
-    /* --- BASE DE DATOS DE HERRAMIENTAS --- */
-    // Puedes añadir más aquí fácilmente
+    /* --- 1. BASE DE DATOS DE HERRAMIENTAS --- */
     const tools = [
         { name: "Ansible",   cat: "linux",   icon: "fa-brands fa-redhat" },
         { name: "Docker",    cat: "multi",   icon: "fa-brands fa-docker" },
@@ -23,8 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Git",       cat: "multi",   icon: "fa-brands fa-git-alt" }
     ];
 
-    /* --- BASE DE DATOS DE LENGUAJES --- */
-    // Nivel del 1 al 3 (donde 3 es experto)
+    /* --- 2. BASE DE DATOS DE LENGUAJES --- */
     const languages = [
         { name: "Python",     icon: "fa-brands fa-python", level: 3 },
         { name: "Bash",       icon: "fa-solid fa-terminal", level: 3 },
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "HTML/CSS",   icon: "fa-solid fa-code",    level: 2 }
     ];
 
-    /* --- CONSTRUCCIÓN DE LA INTERFAZ (HTML) --- */
+    /* --- 3. CONSTRUCCIÓN DE LA INTERFAZ HTML --- */
     root.innerHTML = `
         <h2 class="section-title">
            <i class="fa-solid fa-microchip"></i> Herramientas y Stack
@@ -71,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     `;
 
-    /* --- REFERENCIAS --- */
+    /* --- REFERENCIAS DOM --- */
     const gridContainer = document.getElementById('tools-grid-container');
     const langContainer = document.getElementById('lang-list-container');
     const searchInput = document.getElementById('tech-search');
@@ -79,11 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentFilter = 'all';
 
-    /* --- FUNCIÓN RENDER HERRAMIENTAS --- */
+    /* --- 4. FUNCIÓN RENDER HERRAMIENTAS (CORREGIDA) --- */
     function renderTools(searchTerm = '') {
-        gridContainer.innerHTML = ''; // Limpiar
+        gridContainer.innerHTML = ''; // Limpiamos el grid antes de pintar
         
-        const term = searchTerm.toLowerCase();
+        const term = searchTerm.toLowerCase().trim();
+        let foundCount = 0;
 
         tools.forEach((tool, index) => {
             // Lógica de filtrado
@@ -91,38 +90,39 @@ document.addEventListener('DOMContentLoaded', () => {
             const matchesSearch = tool.name.toLowerCase().includes(term);
 
             if (matchesFilter && matchesSearch) {
+                foundCount++;
                 const card = document.createElement('div');
                 card.className = 'tool-card animate-in';
-                // Delay escalonado para efecto visual chulo
                 card.style.animationDelay = `${index * 0.05}s`;
-                
-                let tagClass = '';
-                if (tool.cat === 'linux') tagClass = 'tag-green';
-                else if (tool.cat === 'windows') tagClass = 'tag-blue';
-                else tagClass = 'tag-orange'; // multi
 
-                // 2. Insertamos el HTML usando esa clase nueva
+                // Asignar color según categoría
+                let tagClass = 'tag-orange'; // por defecto (multi)
+                if (tool.cat === 'linux') tagClass = 'tag-green';
+                if (tool.cat === 'windows') tagClass = 'tag-blue';
+
                 card.innerHTML = `
                     <i class="${tool.icon} tool-icon"></i>
                     <span class="tool-name">${tool.name}</span>
-                    <span class="tool-tag ${tagClass}">${tool.cat}</span>
+                    <span class="tool-tag ${tagClass}">${tool.cat.toUpperCase()}</span>
                 `;
+                
+                // ESTA ES LA LÍNEA QUE FALTABA: Añadir la tarjeta al grid
+                gridContainer.appendChild(card);
             }
         });
 
         // Mensaje si no hay resultados
-        if (gridContainer.children.length === 0) {
+        if (foundCount === 0) {
             gridContainer.innerHTML = `
-                <div style="grid-column:1/-1; text-align:center; padding:20px; color:#64748b; font-family:'Source Code Pro'">
+                <div style="grid-column:1/-1; text-align:center; padding:40px; color:#64748b; font-family:'Source Code Pro'">
                     // No matches found
                 </div>`;
         }
     }
 
-    /* --- FUNCIÓN RENDER LENGUAJES --- */
+    /* --- 5. FUNCIÓN RENDER LENGUAJES --- */
     function renderLanguages() {
         langContainer.innerHTML = languages.map(lang => {
-            // Generar los 3 puntos de nivel
             let dotsHTML = '';
             for(let i=1; i<=3; i++) {
                 const isActive = i <= lang.level ? 'active' : '';
@@ -143,26 +143,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* --- EVENTOS --- */
-    
-    // 1. Buscador
     searchInput.addEventListener('input', (e) => {
         renderTools(e.target.value);
     });
 
-    // 2. Filtros
     filterChips.forEach(chip => {
         chip.addEventListener('click', () => {
-            // UI
             filterChips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
-            
-            // Lógica
             currentFilter = chip.dataset.filter;
-            renderTools(searchInput.value);
+            renderTools(searchInput.value); 
         });
     });
 
-    /* --- INICIALIZACIÓN --- */
-    renderTools();
+    /* --- INICIO AUTOMÁTICO --- */
+    renderTools(); 
     renderLanguages();
 });
