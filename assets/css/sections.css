@@ -153,16 +153,30 @@ body {
   font-weight: 600;
 }
 
-/* Grid de Tarjetas (Nano-Cards) */
+/* Grid de Tarjetas (Nano-Cards) CON FONDO TÉCNICO */
 #tools-pro .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 16px;
-   
-  min-height: 460px; 
   
-
+  /* --- AJUSTE DE ALTURA --- */
+  /* Bajamos de 460px a 320px (aprox 2 filas).
+     Es suficiente para que no salte mucho, pero no deja tanto hueco vacio. */
+  min-height: 320px; 
   align-content: start; 
+
+  /* --- EFECTO "BLUEPRINT" (VESTIR EL VACÍO) --- */
+  /* Esto crea una rejilla de fondo muy sutil, estilo editor de mapas o CAD */
+  background-color: rgba(0, 0, 0, 0.15);
+  background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px; /* Tamaño de los cuadraditos del fondo */
+  
+  /* Borde para delimitar el área */
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px; /* Un poco de aire interior */
 }
 
 /* Estilo individual de la Tarjeta */
