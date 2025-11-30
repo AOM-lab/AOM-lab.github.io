@@ -76,12 +76,12 @@
     50% { opacity: 1; transform: scale(1); }
   }
 
-  /* ===== BRAZO 1 — Principal ===== */
+  /* ===== BRAZO 1 — Principal (MÁS CORTO) ===== */
   .arm-1 {
     position: absolute;
     right: 6px;
     top: 50%;
-    width: 120px;
+    width: 95px; /* Reducido de 120px */
     height: 14px;
     background: linear-gradient(180deg, 
       color-mix(in srgb, var(--panel, #111a2d) 70%, #2a3a55) 0%,
@@ -144,11 +144,11 @@
   /* ===== JOINT — Articulación ===== */
   .joint {
     position: absolute;
-    left: -12px;
+    left: -11px;
     top: 50%;
     transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     background: 
       radial-gradient(circle at 30% 30%, 
         color-mix(in srgb, var(--panel, #111a2d) 60%, #3a4a65) 0%, 
@@ -172,8 +172,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -186,8 +186,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     background: var(--accent, #ff9f1a);
     border-radius: 50%;
     opacity: 0;
@@ -207,12 +207,12 @@
     opacity: 1;
   }
 
-  /* ===== BRAZO 2 — Secundario ===== */
+  /* ===== BRAZO 2 — Secundario (MÁS CORTO) ===== */
   .arm-2 {
     position: absolute;
-    right: 12px;
+    right: 11px;
     top: 50%;
-    width: 130px;
+    width: 100px; /* Reducido de 130px */
     height: 11px;
     background: linear-gradient(180deg, 
       color-mix(in srgb, var(--panel, #111a2d) 70%, #2a3a55) 0%,
@@ -231,7 +231,7 @@
   .arm-2::before {
     content: '';
     position: absolute;
-    left: 20px;
+    left: 18px;
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
@@ -260,8 +260,8 @@
     left: 8px;
     top: 50%;
     transform: translateY(-50%) scale(0.7);
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     background: 
       radial-gradient(circle at 30% 30%, 
         color-mix(in srgb, var(--panel, #111a2d) 60%, #3a4a65) 0%, 
@@ -281,8 +281,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background: radial-gradient(circle, var(--accent, #ff9f1a) 0%, rgba(255, 159, 26, 0.3) 70%, transparent 100%);
     border-radius: 50%;
     opacity: 0;
@@ -325,14 +325,14 @@
     transition: height 0.5s ease;
   }
 
-  /* ===== PANEL DEL MENÚ ===== */
+  /* ===== PANEL DEL MENÚ — MÁS SEPARADO ===== */
   .menu-panel {
     position: absolute;
-    top: calc(100% + 20px);
+    top: calc(100% + 25px); /* Aumentado de 20px */
     left: 50%;
     transform: translateX(-50%) scaleY(0) translateY(-10px);
     transform-origin: top center;
-    width: 220px;
+    width: 200px; /* Reducido de 220px */
     background: linear-gradient(180deg, 
       color-mix(in srgb, var(--panel, #111a2d) 95%, #1a2540) 0%,
       var(--panel, #111a2d) 100%
@@ -378,17 +378,17 @@
 
   /* ===== HEADER ===== */
   .panel-header {
-    padding: 16px 18px;
+    padding: 14px 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     background: linear-gradient(180deg, rgba(255, 159, 26, 0.03) 0%, transparent 100%);
   }
 
   .status-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     background: #22c55e;
     border-radius: 50%;
     box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
@@ -405,14 +405,14 @@
   }
 
   .header-title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--text, #e9eef6);
     letter-spacing: -0.01em;
   }
 
   .header-subtitle {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--muted, #a8b2c2);
     margin-top: 2px;
     opacity: 0.8;
@@ -420,8 +420,8 @@
 
   /* ===== GRUPOS Y LISTA ===== */
   .menu-group {
-    padding: 14px 18px 6px;
-    font-size: 10px;
+    padding: 12px 16px 5px;
+    font-size: 9px;
     font-weight: 700;
     color: var(--muted, #a8b2c2);
     letter-spacing: 0.1em;
@@ -430,7 +430,7 @@
   }
 
   .menu-list {
-    padding: 0 10px 6px;
+    padding: 0 8px 4px;
     list-style: none;
     margin: 0;
   }
@@ -438,9 +438,9 @@
   .menu-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-    border-radius: 10px;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
@@ -474,11 +474,11 @@
   }
 
   .item-icon {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     background: rgba(255, 159, 26, 0.06);
     border: 1px solid rgba(255, 159, 26, 0.1);
-    border-radius: 8px;
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -492,7 +492,7 @@
   }
 
   .item-icon i {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted, #a8b2c2);
     transition: color 0.2s ease;
   }
@@ -502,7 +502,7 @@
   }
 
   .item-label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--text, #e9eef6);
     flex: 1;
@@ -533,7 +533,7 @@
 
   /* ===== FOOTER ===== */
   .panel-footer {
-    padding: 12px 18px;
+    padding: 10px 16px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     justify-content: space-between;
@@ -544,18 +544,18 @@
   .footer-status {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 10px;
+    gap: 5px;
+    font-size: 9px;
     color: #22c55e;
     font-weight: 500;
   }
 
   .footer-status i {
-    font-size: 10px;
+    font-size: 9px;
   }
 
   .footer-time {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--muted, #a8b2c2);
     font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
     opacity: 0.6;
@@ -566,14 +566,14 @@
     position: fixed;
     right: 24px;
     bottom: 24px;
-    width: 50px;
-    height: 50px;
+    width: 46px;
+    height: 46px;
     background: linear-gradient(180deg, 
       color-mix(in srgb, var(--panel, #111a2d) 90%, #1a2540) 0%,
       var(--panel, #111a2d) 100%
     );
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
+    border-radius: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -615,8 +615,8 @@
   }
 
   .arm-toggle-btn svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
@@ -627,9 +627,9 @@
   /* Hint */
   .arm-hint {
     position: fixed;
-    right: 86px;
-    bottom: 38px;
-    font-size: 12px;
+    right: 82px;
+    bottom: 36px;
+    font-size: 11px;
     color: var(--muted, #a8b2c2);
     opacity: 0;
     z-index: 1001;
@@ -642,13 +642,13 @@
   }
 
   .arm-hint kbd {
-    padding: 4px 8px;
+    padding: 3px 7px;
     background: var(--panel, #111a2d);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    font-size: 11px;
+    border-radius: 5px;
+    font-size: 10px;
     color: var(--muted, #a8b2c2);
-    margin-left: 6px;
+    margin-left: 5px;
     font-family: inherit;
   }
 
