@@ -7,21 +7,21 @@
   <meta name="description" content="Portafolio profesional de Alejandro Orcajada Meseguer, Administrador de Sistemas y Ciberseguridad."/>
   <meta name="theme-color" content="#0b1220"/>
 
-  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tomorrow:wdth,wght@100..125,400..900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Iconos necesarios para la tabla -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- CSS del sitio -->
   <link rel="stylesheet" href="assets/css/nav.css"/>
   <link rel="stylesheet" href="assets/css/hero-glitch.css"/>
   <link rel="stylesheet" href="assets/css/graph.css"/>
   <link rel="stylesheet" href="assets/css/cubes.css"/>
   <link rel="stylesheet" href="assets/css/sections.css"/>
   <link rel="stylesheet" href="assets/css/menu-cyber.css">
-  <link rel="stylesheet" href="assets/css/Atecnicos.css">
+  
+  <link rel="stylesheet" href="assets/css/Atecnicos.css"> 
+
   <style>
     /* ===== Variables base (global) ===== */
     :root{
@@ -68,7 +68,7 @@
     .skill-btn:active{transform:translateY(-2px)}
     @media (max-width:980px){.grid-3{grid-template-columns:1fr}.skills-grid{grid-template-columns:1fr}}
 
-    /* OVERRIDE solo para Investigación (ya no tocamos Especialidades) */
+    /* OVERRIDE solo para Investigación */
     #investigacion .card{
       background:transparent!important;
       border:none!important;
@@ -80,35 +80,26 @@
     #investigacion .card > *:first-child {margin-top:0}
 
     /* ====== NUEVA PARRILLA DE 4 ESPECIALIDADES CON ICONOS ====== */
-
     #especialidades .section-title {
       color: var(--accent);
       text-shadow: 0 0 8px rgba(255,159,26,.25);
     }
-
-    /* Tarjeta grande que agrupa las 4 */
     .spec-shell{
       padding:18px 18px 20px;
       margin-top:4px;
     }
-
-    /* Intro dentro de la tarjeta grande
-       -> mismo estilo que el texto de la tarjeta de "Sobre mí"
-       y más espacio antes de las tarjetas */
-#especialidades .spec-shell .spec-intro{
-  margin:0 0 22px;
-  color:var(--text);
-  font-size:1rem;
-  line-height:1.6;
-  max-width:85ch;
-}
-
+    #especialidades .spec-shell .spec-intro{
+      margin:0 0 22px;
+      color:var(--text);
+      font-size:1rem;
+      line-height:1.6;
+      max-width:85ch;
+    }
     #especialidades .spec-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
     }
-
     .spec-card {
       background: linear-gradient(180deg,
         color-mix(in oklab, var(--panel) 92%, #0f1422 8%),
@@ -120,28 +111,24 @@
       box-shadow: 0 14px 30px rgba(0,0,0,.55);
       display: flex;
       flex-direction: column;
-      /* transición para animación de elevación */
       transition:
         transform 0.18s ease-out,
         box-shadow 0.18s ease-out,
         border-color 0.18s ease-out,
         background 0.18s ease-out;
     }
-
     .spec-card:hover {
       box-shadow: 0 18px 40px rgba(0,0,0,.65);
       border-color: rgba(255,159,26,.7);
       background: linear-gradient(135deg, rgba(255,159,26,.08), var(--panel));
-      transform: translateY(-4px); /* elevación suave */
+      transform: translateY(-4px); 
     }
-
     .spec-header {
       display: flex;
       align-items: center;
       gap: 14px;
       margin-bottom: 8px;
     }
-
     .spec-icon {
       width: 46px;
       height: 46px;
@@ -153,33 +140,28 @@
       background: rgba(0,0,0,0.25);
       flex-shrink: 0;
     }
-
     .spec-icon img {
       width: 30px;
       height: 30px;
       filter: invert(1) brightness(1.4);
       display: block;
     }
-
     .spec-title {
       font-size: 1.02rem;
       font-weight: 600;
       margin: 0;
     }
-
     .spec-body {
       font-size: 0.92rem;
       color: var(--muted);
       line-height: 1.6;
       margin-top: 6px;
     }
-
     @media (max-width: 980px) {
       #especialidades .spec-grid {
         grid-template-columns: repeat(2, minmax(0,1fr));
       }
     }
-
     @media (max-width: 620px) {
       #especialidades .spec-grid {
         grid-template-columns: 1fr;
@@ -188,7 +170,6 @@
   </style>
 </head>
 <body>
-  <!-- NAV -->
   <header class="topbar">
     <div class="topwrap">
       <a class="brand" href="./"><span class="brand-dot"></span><span>AO · Portafolio</span></a>
@@ -197,7 +178,6 @@
     </div>
   </header>
 
-  <!-- HERO -->
   <div class="hero-wrap" id="home">
     <div class="hero">
       <span class="glitch-wrap">
@@ -210,7 +190,6 @@
   </div>
 
 <main class="container">
-    <!-- SOBRE MÍ -->
     <section id="sobre-mi" class="custom-section reveal" data-reveal="fade-up" aria-labelledby="sobre-mi-title">
       <h2 id="sobre-mi-title" class="section-title">Sobre mí</h2>
       <p class="kicker">Perfil personal, formación y objetivos profesionales.</p>
@@ -220,24 +199,20 @@
       </div>
     </section>
 
-    <!-- ESPECIALIDADES -->
     <section id="especialidades" class="custom-section" aria-labelledby="especialidades-title">
       <h2 id="especialidades-title" class="section-title">Especialidades</h2>
       <p class="kicker">Áreas con especialización práctica y enfoque técnico.</p>
 
-      <!-- Tarjeta grande que agrupa las 4 -->
       <div class="card spec-shell">
         <p class="spec-intro">
           Combino seguridad en la nube, análisis ofensivo, administración de datos y hardening de sistemas para cubrir el ciclo completo de protección de la infraestructura. Cada especialidad se traduce en prácticas concretas que aplico en proyectos reales.
         </p>
 
         <div class="spec-grid">
-          <!-- 1. Seguridad en la Nube -->
           <article class="spec-card">
             <div class="spec-header">
               <div class="spec-icon">
-                <img src="https://unpkg.com/lucide-static@latest/icons/cloud-cog.svg"
-                     alt="Seguridad en la nube" loading="lazy">
+                <img src="https://unpkg.com/lucide-static@latest/icons/cloud-cog.svg" alt="Seguridad en la nube" loading="lazy">
               </div>
               <h3 class="spec-title">Seguridad en la Nube</h3>
             </div>
@@ -245,13 +220,10 @@
               Diseño y administro entornos virtualizados y servicios en la nube, con redes seguras, backups y alta disponibilidad.
             </p>
           </article>
-
-          <!-- 2. Red Team & Vulnerabilidades -->
           <article class="spec-card">
             <div class="spec-header">
               <div class="spec-icon">
-                <img src="https://unpkg.com/lucide-static@latest/icons/crosshair.svg"
-                     alt="Red Team y vulnerabilidades" loading="lazy">
+                <img src="https://unpkg.com/lucide-static@latest/icons/crosshair.svg" alt="Red Team y vulnerabilidades" loading="lazy">
               </div>
               <h3 class="spec-title">Red Team &amp; Vulnerabilidades</h3>
             </div>
@@ -259,13 +231,10 @@
               Identifico vulnerabilidades, evalúo vectores de ataque y documento hallazgos accionables mediante pruebas controladas.
             </p>
           </article>
-
-          <!-- 3. Bases de Datos: Administración -->
           <article class="spec-card">
             <div class="spec-header">
               <div class="spec-icon">
-                <img src="https://unpkg.com/lucide-static@latest/icons/database.svg"
-                     alt="Administración de bases de datos" loading="lazy">
+                <img src="https://unpkg.com/lucide-static@latest/icons/database.svg" alt="Administración de bases de datos" loading="lazy">
               </div>
               <h3 class="spec-title">Administración de Bases de Datos</h3>
             </div>
@@ -273,13 +242,10 @@
               Gestiono SQL, integridad de datos, copias de seguridad y mantenimiento de bases relacionales orientadas a disponibilidad y rendimiento.
             </p>
           </article>
-
-          <!-- 4. Hardening de Sistemas -->
           <article class="spec-card">
             <div class="spec-header">
               <div class="spec-icon">
-                <img src="https://unpkg.com/lucide-static@latest/icons/shield-check.svg"
-                     alt="Hardening de sistemas" loading="lazy">
+                <img src="https://unpkg.com/lucide-static@latest/icons/shield-check.svg" alt="Hardening de sistemas" loading="lazy">
               </div>
               <h3 class="spec-title">Hardening de Sistemas</h3>
             </div>
@@ -290,7 +256,8 @@
         </div>
       </div>
     </section>
-  <section id="dominio-tecnico" class="custom-section reveal" data-reveal="fade-up">
+
+    <section id="dominio-tecnico" class="custom-section reveal" data-reveal="fade-up">
       <div class="tech-header">
          <svg class="tech-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
          <h2 class="section-title" style="margin:0">Dominio Técnico & Producción</h2>
@@ -477,14 +444,12 @@
         </article>
       </div>
     </section>
-  
-    <!-- HERRAMIENTAS Y LENGUAJES -->
+
     <section id="tools" class="reveal" data-reveal="fade-up" aria-labelledby="tools-title">
       <div id="tools-pro">
         <h2 id="tools-title" class="section-title tools-title"><i class="fa-solid fa-code-branch"></i> Herramientas y Lenguajes</h2>
 
         <div class="grid">
-          <!-- HERRAMIENTAS -->
           <section class="card" id="toolsCard">
             <div class="card-head tools"><i class="fa-solid fa-screwdriver-wrench"></i> Herramientas</div>
 
@@ -504,7 +469,7 @@
               <span class="count" id="resultCount">12</span>
             </div>
             <div class="card-body">
-              <div id="toolsListNew"><!-- render JS --></div>
+              <div id="toolsListNew"></div>
             </div>
 
             <div class="card-foot nav">
@@ -517,7 +482,6 @@
             </div>
           </section>
 
-          <!-- LENGUAJES -->
           <section class="card" id="langsCard">
             <div class="card-head langs"><i class="fa-solid fa-code"></i> Lenguajes</div>
             <div class="card-body" id="langsBody">
@@ -554,7 +518,6 @@
           </section>
         </div>
 
-        <!-- Placeholders ocultos por compatibilidad (no se usan) -->
         <div id="toolsLegacyPlaceholders" hidden>
           <div id="toolsList"></div>
           <div id="langsList"></div>
@@ -562,7 +525,6 @@
       </div>
     </section>
 
-    <!-- INVESTIGACIÓN -->
     <section id="investigacion" class="custom-section reveal" data-reveal="fade-up" aria-labelledby="investigacion-title">
       <h2 id="investigacion-title" class="section-title">Cómo investigo y trabajo</h2>
       <p class="kicker">Metodología profesional y verificable.</p>
@@ -572,7 +534,6 @@
       </div>
     </section>
 
-    <!-- MAPA VISUAL -->
     <section id="site-graph" class="graph reveal" data-reveal="fade-up" aria-labelledby="site-graph-title">
       <div class="card">
         <div class="graph-head">
@@ -590,7 +551,6 @@
       </div>
     </section>
 
-    <!-- CUBOS -->
     <section id="news-cubes" class="reveal" data-reveal="fade-up" aria-labelledby="news-cubes-title">
       <h2 id="news-cubes-title" class="section-title">Lecturas y artículos</h2>
       <p class="kicker">Novedades seleccionadas — desplazamiento suave y continuo.</p>
@@ -605,7 +565,6 @@
       </div>
     </section>
 
-    <!-- CONTACTO -->
     <section id="contact" class="reveal" data-reveal="fade-up" aria-labelledby="contact-title">
       <h2 id="contact-title" class="section-title">Contacto</h2>
       <div class="contact-box">
@@ -628,7 +587,6 @@
 
   <footer>© <span id="y"></span> Alejandro Orcajada Meseguer — Administrador de Sistemas y Ciberseguridad</footer>
 
-  <!-- JS del sitio -->
   <script defer src="assets/js/hero-glitch.js"></script>
   <script defer src="assets/js/nav-data.js"></script>
   <script defer src="assets/js/nav.js"></script>
@@ -636,10 +594,10 @@
   <script src="assets/js/graph-data.js"></script>
   <script src="assets/js/graph.js"></script>
   <script defer src="assets/js/scroll-reveal.js"></script>
-  <!-- Tabla nueva: JS externo -->
   <script defer src="assets/js/tools.js"></script>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
   <script defer src="assets/js/menu-cyber.js"></script>
-  <script defer src="assets/js/Atecnicos.js"></script>
+  
+  <script defer src="assets/js/Atecnicos.js"></script> 
 </body>
 </html>
