@@ -1,10 +1,11 @@
-/* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Aespecialidades.css) --- */
+/* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Clean & Balanced) --- */
 
 #especialidades {
-  --sp-bg: #0b1022; /* Fondo oscuro base */
-  --sp-border: rgba(255, 255, 255, 0.08); /* Borde sutil */
-  --sp-accent: #ff9f1a; /* Tu naranja */
-  --sp-text: #94a3b8; /* Texto gris azulado */
+  --sp-bg: #0b1022;
+  --sp-border: rgba(255, 255, 255, 0.08);
+  --sp-accent: #ff9f1a;
+  --sp-text: #94a3b8;
+  --sp-title: #f1f5f9;
 }
 
 /* Intro Text */
@@ -18,80 +19,88 @@
   padding-left: 20px;
 }
 
-/* GRID */
+/* GRID 2x2 (Simetría Perfecta para 4 o 6 items) */
 #spec-grid-pro {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* En escritorio: 2 columnas iguales. Las tarjetas serán anchas y legibles. */
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
 
-/* TARJETA (Clean Tech Style) */
+/* TARJETA (Estilo Sólido y Limpio) */
 .spec-card-pro {
   background: var(--sp-bg);
   border: 1px solid var(--sp-border);
   border-radius: 12px;
-  padding: 32px 28px;
-  position: relative;
+  padding: 36px 32px; /* Más espacio interno = más elegancia */
   display: flex;
   flex-direction: column;
-  transition: all 0.3s ease; /* Transición suave para todo */
+  transition: all 0.3s ease;
+  position: relative;
   height: 100%;
 }
 
-/* Hover: Borde Naranja + Leve Subida + Sombra sutil */
+/* Hover: Elegante, sin luces locas. Solo marca el borde y sube un poco */
 .spec-card-pro:hover {
   transform: translateY(-5px);
-  border-color: var(--sp-accent); /* Borde naranja sólido */
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6); /* Sombra elegante */
+  border-color: var(--sp-accent);
+  background: rgba(255, 159, 26, 0.03); /* Fondo naranja ultra sutil */
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 /* Icono Box */
 .spec-icon-box {
-  width: 54px; height: 54px;
+  width: 52px; height: 52px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 24px;
-  transition: 0.3s;
+  margin-bottom: 22px;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
-/* Al hacer hover en la tarjeta, el icono también reacciona */
+/* Al hacer hover en la tarjeta, el icono se enciende */
 .spec-card-pro:hover .spec-icon-box {
-  background: rgba(255, 159, 26, 0.1); /* Fondo naranja muy suave */
-  border-color: rgba(255, 159, 26, 0.4);
+  border-color: var(--sp-accent);
+  background: rgba(255, 159, 26, 0.1);
 }
 
 .spec-icon-img {
   width: 28px; height: 28px;
-  filter: invert(1) brightness(2); /* Blanco */
-  transition: 0.3s;
+  filter: invert(1) brightness(2); /* Blanco puro */
+  transition: filter 0.3s;
 }
 
 .spec-card-pro:hover .spec-icon-img {
-  /* Se tiñe de naranja al hacer hover */
-  filter: sepia(1) saturate(5) hue-rotate(-20deg) brightness(1.1); 
+  /* Se tiñe suavemente de naranja */
+  filter: sepia(1) saturate(5) hue-rotate(-20deg) brightness(1.2); 
 }
 
 /* Títulos */
 .spec-title {
   font-family: 'Inter', sans-serif;
-  color: #fff;
-  font-size: 1.25rem;
+  color: var(--sp-title);
+  font-size: 1.3rem; /* Un pelín más grande */
   font-weight: 700;
-  margin-bottom: 14px;
-  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
 }
 
 /* Texto del cuerpo */
 .spec-body {
   color: var(--sp-text);
   font-size: 0.95rem;
-  line-height: 1.65; /* Un poco más de aire para leer mejor */
+  line-height: 1.65;
+  flex-grow: 1; /* Esto asegura que todas las tarjetas se vean iguales */
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
-  #spec-grid-pro { grid-template-columns: 1fr; }
-  .spec-card-pro { padding: 24px; }
+/* RESPONSIVE */
+/* En tablets y móviles, pasamos a 1 sola columna */
+@media (max-width: 900px) {
+  #spec-grid-pro {
+    grid-template-columns: 1fr;
+  }
+  .spec-card-pro {
+    padding: 24px;
+  }
 }
