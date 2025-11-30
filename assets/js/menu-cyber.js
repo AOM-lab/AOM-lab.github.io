@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Pulso de energía en brazo 2
     energy2.style.transition = 'width 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
-    energy2.style.width = 'calc(100% - 32px)';
+    energy2.style.width = 'calc(100% - 30px)';
 
     await sleep(600);
 
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await sleep(450);
 
     // Haz de proyección
-    beam.style.height = '20px';
+    beam.style.height = '25px';
 
     await sleep(300);
 
