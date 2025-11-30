@@ -1,12 +1,11 @@
 /* ===============================
    MENÚ BRAZO MECÁNICO — PREMIUM FINAL
-   Botón integrado en el módulo de pared
-   Sistema siempre visible, solo se pliega/despliega
+   Botón integrado en el brazo como elemento mecánico
    =============================== */
 
 @media (min-width: 981px) {
 
-  /* ===== SISTEMA PRINCIPAL — Siempre visible ===== */
+  /* ===== SISTEMA PRINCIPAL ===== */
   .arm-system {
     position: fixed;
     right: 0;
@@ -20,172 +19,87 @@
     pointer-events: auto;
   }
 
-  /* ===== MÓDULO DE PARED CON BOTÓN INTEGRADO ===== */
+  /* ===== MÓDULO DE PARED ===== */
   .wall-mount {
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 32px;
-    height: 110px;
+    width: 10px;
+    height: 80px;
     background: linear-gradient(180deg, 
       transparent 0%, 
-      color-mix(in srgb, var(--panel, #111a2d) 95%, #1a2540) 10%,
-      var(--panel, #111a2d) 50%,
-      color-mix(in srgb, var(--panel, #111a2d) 95%, #1a2540) 90%,
+      var(--panel, #111a2d) 20%,
+      color-mix(in srgb, var(--panel, #111a2d) 80%, #1a2540) 50%,
+      var(--panel, #111a2d) 80%,
       transparent 100%
     );
     border-left: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px 0 0 8px;
+    border-radius: 4px 0 0 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 
-      -4px 0 20px rgba(0, 0, 0, 0.4),
-      inset 1px 0 0 rgba(255, 255, 255, 0.03);
   }
 
-  /* Indicadores superiores */
   .mount-indicators {
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
   }
 
   .indicator {
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: var(--accent, #ff9f1a);
-    box-shadow: 0 0 6px var(--accent, #ff9f1a);
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
+    background: rgba(255, 159, 26, 0.3);
+    transition: all 0.4s ease;
   }
 
   .arm-system.deployed .indicator {
-    opacity: 1;
+    background: var(--accent, #ff9f1a);
+    box-shadow: 0 0 8px var(--accent, #ff9f1a);
     animation: indicator-pulse 2s ease-in-out infinite;
   }
 
-  .indicator:nth-child(2) {
-    animation-delay: 0.3s;
-  }
-
-  .indicator:nth-child(3) {
-    animation-delay: 0.6s;
-  }
+  .indicator:nth-child(2) { animation-delay: 0.3s; }
+  .indicator:nth-child(3) { animation-delay: 0.6s; }
 
   @keyframes indicator-pulse {
     0%, 100% { opacity: 0.6; }
     50% { opacity: 1; }
   }
 
-  /* ===== BOTÓN TOGGLE INTEGRADO ===== */
-  .arm-toggle-btn {
-    position: relative;
-    width: 26px;
-    height: 26px;
-    background: linear-gradient(135deg, 
-      rgba(255, 159, 26, 0.08) 0%,
-      rgba(255, 159, 26, 0.03) 100%
-    );
-    border: 1px solid rgba(255, 159, 26, 0.2);
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-    color: var(--muted, #a8b2c2);
-    margin-top: 20px;
-  }
-
-  .arm-toggle-btn:hover {
-    background: linear-gradient(135deg, 
-      rgba(255, 159, 26, 0.15) 0%,
-      rgba(255, 159, 26, 0.08) 100%
-    );
-    border-color: rgba(255, 159, 26, 0.4);
-    color: var(--accent, #ff9f1a);
-    transform: scale(1.08);
-  }
-
-  .arm-toggle-btn.active {
-    background: linear-gradient(135deg, 
-      rgba(255, 159, 26, 0.2) 0%,
-      rgba(255, 159, 26, 0.1) 100%
-    );
-    border-color: var(--accent, #ff9f1a);
-    color: var(--accent, #ff9f1a);
-    box-shadow: 0 0 12px rgba(255, 159, 26, 0.3);
-  }
-
-  .arm-toggle-btn svg {
-    width: 14px;
-    height: 14px;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .arm-toggle-btn.active svg {
-    transform: rotate(180deg);
-  }
-
-  /* Línea decorativa bajo el botón */
-  .mount-line {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 20px;
-    background: linear-gradient(180deg, 
-      rgba(255, 159, 26, 0.3) 0%,
-      transparent 100%
-    );
-    border-radius: 1px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .arm-system.deployed .mount-line {
-    opacity: 1;
-  }
-
-  /* ===== BRAZO 1 ===== */
+  /* ===== BRAZO 1 CON BOTÓN INTEGRADO ===== */
   .arm-1 {
     position: absolute;
-    right: 32px;
+    right: 10px;
     top: 50%;
-    width: 95px;
-    height: 14px;
+    width: 100px;
+    height: 18px;
     background: linear-gradient(180deg, 
-      color-mix(in srgb, var(--panel, #111a2d) 70%, #2a3a55) 0%,
+      color-mix(in srgb, var(--panel, #111a2d) 65%, #2a3a55) 0%,
       var(--panel, #111a2d) 50%,
       color-mix(in srgb, var(--panel, #111a2d) 90%, #0a0f18) 100%
     );
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-right: none;
-    border-radius: 7px 0 0 7px;
+    border-radius: 9px 0 0 9px;
     transform-origin: right center;
     transform: translateY(-50%) rotate(90deg);
     box-shadow: 
       0 4px 20px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
     z-index: 2;
   }
 
+  /* Canal de energía */
   .arm-1::before {
     content: '';
     position: absolute;
-    left: 12px;
-    right: 18px;
+    left: 40px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
     height: 4px;
@@ -196,7 +110,7 @@
 
   .arm-1 .energy-line {
     position: absolute;
-    right: 18px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
     width: 0;
@@ -206,17 +120,94 @@
     box-shadow: 0 0 8px var(--accent, #ff9f1a), 0 0 16px rgba(255, 159, 26, 0.4);
   }
 
-  .arm-1::after {
-    content: '';
+  /* ===== BOTÓN TOGGLE EN EL BRAZO ===== */
+  .arm-toggle-btn {
     position: absolute;
-    right: 8px;
+    left: 8px;
     top: 50%;
     transform: translateY(-50%);
-    width: 6px;
-    height: 6px;
-    background: rgba(255, 159, 26, 0.1);
-    border: 1px solid rgba(255, 159, 26, 0.2);
+    width: 28px;
+    height: 14px;
+    background: linear-gradient(180deg,
+      rgba(255, 159, 26, 0.12) 0%,
+      rgba(255, 159, 26, 0.05) 100%
+    );
+    border: 1px solid rgba(255, 159, 26, 0.25);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: var(--accent, #ff9f1a);
+    overflow: hidden;
+  }
+
+  .arm-toggle-btn::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 159, 26, 0.1) 50%,
+      transparent 100%
+    );
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .arm-toggle-btn:hover {
+    background: linear-gradient(180deg,
+      rgba(255, 159, 26, 0.2) 0%,
+      rgba(255, 159, 26, 0.1) 100%
+    );
+    border-color: rgba(255, 159, 26, 0.5);
+    box-shadow: 0 0 12px rgba(255, 159, 26, 0.3);
+  }
+
+  .arm-toggle-btn:hover::before {
+    opacity: 1;
+  }
+
+  .arm-toggle-btn.active {
+    background: linear-gradient(180deg,
+      rgba(255, 159, 26, 0.25) 0%,
+      rgba(255, 159, 26, 0.15) 100%
+    );
+    border-color: var(--accent, #ff9f1a);
+    box-shadow: 
+      0 0 15px rgba(255, 159, 26, 0.4),
+      inset 0 0 10px rgba(255, 159, 26, 0.1);
+  }
+
+  .arm-toggle-btn svg {
+    width: 10px;
+    height: 10px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 0 2px rgba(255, 159, 26, 0.5));
+  }
+
+  .arm-toggle-btn.active svg {
+    transform: rotate(180deg);
+  }
+
+  /* Indicador de estado en el botón */
+  .btn-status {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 159, 26, 0.4);
     border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .arm-toggle-btn.active .btn-status {
+    background: var(--accent, #ff9f1a);
+    box-shadow: 0 0 6px var(--accent, #ff9f1a);
   }
 
   /* ===== JOINT ===== */
@@ -238,8 +229,7 @@
     z-index: 10;
     box-shadow: 
       0 4px 16px rgba(0, 0, 0, 0.6),
-      inset 0 2px 4px rgba(255, 255, 255, 0.05),
-      inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      inset 0 2px 4px rgba(255, 255, 255, 0.05);
     transition: all 0.5s ease;
   }
 
@@ -249,8 +239,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -267,15 +257,15 @@
     background: var(--accent, #ff9f1a);
     border-radius: 50%;
     opacity: 0;
-    box-shadow: 0 0 10px var(--accent, #ff9f1a), 0 0 20px rgba(255, 159, 26, 0.5);
+    box-shadow: 0 0 10px var(--accent, #ff9f1a);
     transition: opacity 0.5s ease;
   }
 
   .joint.active {
-    border-color: rgba(255, 159, 26, 0.3);
+    border-color: rgba(255, 159, 26, 0.4);
     box-shadow: 
       0 4px 16px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(255, 159, 26, 0.15);
+      0 0 20px rgba(255, 159, 26, 0.2);
   }
 
   .joint.active::after {
@@ -287,10 +277,10 @@
     position: absolute;
     right: 11px;
     top: 50%;
-    width: 100px;
-    height: 11px;
+    width: 95px;
+    height: 12px;
     background: linear-gradient(180deg, 
-      color-mix(in srgb, var(--panel, #111a2d) 70%, #2a3a55) 0%,
+      color-mix(in srgb, var(--panel, #111a2d) 65%, #2a3a55) 0%,
       var(--panel, #111a2d) 50%,
       color-mix(in srgb, var(--panel, #111a2d) 90%, #0a0f18) 100%
     );
@@ -298,17 +288,15 @@
     border-radius: 6px;
     transform-origin: right center;
     transform: translateY(-50%) rotate(90deg);
-    box-shadow: 
-      0 3px 16px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: 0 3px 16px rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
 
   .arm-2::before {
     content: '';
     position: absolute;
-    left: 18px;
-    right: 12px;
+    left: 16px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     height: 3px;
@@ -318,24 +306,24 @@
 
   .arm-2 .energy-line {
     position: absolute;
-    right: 12px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     width: 0;
     height: 2px;
     background: linear-gradient(270deg, var(--accent, #ff9f1a), var(--accent-soft, #ffd79a), transparent);
     border-radius: 1px;
-    box-shadow: 0 0 8px var(--accent, #ff9f1a), 0 0 16px rgba(255, 159, 26, 0.4);
+    box-shadow: 0 0 8px var(--accent, #ff9f1a);
   }
 
   /* ===== PROYECTOR ===== */
   .projector {
     position: absolute;
-    left: 8px;
+    left: 6px;
     top: 50%;
     transform: translateY(-50%) scale(0.7);
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     background: 
       radial-gradient(circle at 30% 30%, 
         color-mix(in srgb, var(--panel, #111a2d) 60%, #3a4a65) 0%, 
@@ -357,19 +345,18 @@
     transform: translate(-50%, -50%);
     width: 6px;
     height: 6px;
-    background: radial-gradient(circle, var(--accent, #ff9f1a) 0%, rgba(255, 159, 26, 0.3) 70%, transparent 100%);
+    background: radial-gradient(circle, var(--accent, #ff9f1a) 0%, transparent 70%);
     border-radius: 50%;
     opacity: 0;
-    transition: opacity 0.4s ease;
   }
 
   .projector.active {
     opacity: 1;
     transform: translateY(-50%) scale(1);
-    border-color: rgba(255, 159, 26, 0.4);
+    border-color: rgba(255, 159, 26, 0.5);
     box-shadow: 
       0 3px 12px rgba(0, 0, 0, 0.5),
-      0 0 15px rgba(255, 159, 26, 0.2);
+      0 0 15px rgba(255, 159, 26, 0.3);
   }
 
   .projector.active::before {
@@ -378,8 +365,8 @@
   }
 
   @keyframes projector-glow {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 
   /* ===== HAZ ===== */
@@ -392,21 +379,21 @@
     height: 0;
     background: linear-gradient(180deg, 
       var(--accent, #ff9f1a) 0%, 
-      rgba(255, 159, 26, 0.4) 50%, 
+      rgba(255, 159, 26, 0.3) 60%, 
       transparent 100%
     );
-    box-shadow: 0 0 6px rgba(255, 159, 26, 0.5);
+    box-shadow: 0 0 8px rgba(255, 159, 26, 0.5);
     transition: height 0.5s ease;
   }
 
   /* ===== PANEL MENÚ ===== */
   .menu-panel {
     position: absolute;
-    top: calc(100% + 25px);
+    top: calc(100% + 20px);
     left: 50%;
     transform: translateX(-50%) scaleY(0) translateY(-10px);
     transform-origin: top center;
-    width: 200px;
+    width: 195px;
     background: linear-gradient(180deg, 
       color-mix(in srgb, var(--panel, #111a2d) 95%, #1a2540) 0%,
       var(--panel, #111a2d) 100%
@@ -416,7 +403,6 @@
     opacity: 0;
     box-shadow: 
       0 20px 50px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(255, 255, 255, 0.02),
       inset 0 1px 0 rgba(255, 255, 255, 0.04);
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -451,7 +437,7 @@
 
   /* ===== HEADER ===== */
   .panel-header {
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     align-items: center;
@@ -473,12 +459,10 @@
     50% { opacity: 0.5; }
   }
 
-  .header-text {
-    flex: 1;
-  }
+  .header-text { flex: 1; }
 
   .header-title {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--text, #e9eef6);
   }
@@ -486,23 +470,23 @@
   .header-subtitle {
     font-size: 9px;
     color: var(--muted, #a8b2c2);
-    margin-top: 2px;
-    opacity: 0.8;
+    margin-top: 1px;
+    opacity: 0.7;
   }
 
   /* ===== GRUPOS Y LISTA ===== */
   .menu-group {
-    padding: 12px 16px 5px;
+    padding: 10px 14px 4px;
     font-size: 9px;
     font-weight: 700;
     color: var(--muted, #a8b2c2);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    opacity: 0.6;
+    opacity: 0.5;
   }
 
   .menu-list {
-    padding: 0 8px 4px;
+    padding: 0 6px 4px;
     list-style: none;
     margin: 0;
   }
@@ -511,7 +495,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 10px;
+    padding: 7px 10px;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -541,30 +525,25 @@
     height: 50%;
   }
 
-  .menu-item:active {
-    transform: scale(0.98);
-  }
-
   .item-icon {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     background: rgba(255, 159, 26, 0.06);
     border: 1px solid rgba(255, 159, 26, 0.1);
-    border-radius: 7px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    flex-shrink: 0;
   }
 
   .menu-item:hover .item-icon {
-    background: rgba(255, 159, 26, 0.1);
-    border-color: rgba(255, 159, 26, 0.2);
+    background: rgba(255, 159, 26, 0.12);
+    border-color: rgba(255, 159, 26, 0.25);
   }
 
   .item-icon i {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--muted, #a8b2c2);
     transition: color 0.2s ease;
   }
@@ -574,10 +553,9 @@
   }
 
   .item-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     color: var(--text, #e9eef6);
-    flex: 1;
   }
 
   .menu-item.active {
@@ -586,7 +564,7 @@
 
   .menu-item.active::before {
     height: 60%;
-    box-shadow: 0 0 8px rgba(255, 159, 26, 0.4);
+    box-shadow: 0 0 6px rgba(255, 159, 26, 0.4);
   }
 
   .menu-item.active .item-label {
@@ -604,7 +582,7 @@
 
   /* ===== FOOTER ===== */
   .panel-footer {
-    padding: 10px 16px;
+    padding: 8px 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     justify-content: space-between;
@@ -621,38 +599,13 @@
     font-weight: 500;
   }
 
-  .footer-status i {
-    font-size: 9px;
-  }
+  .footer-status i { font-size: 9px; }
 
   .footer-time {
     font-size: 9px;
     color: var(--muted, #a8b2c2);
-    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-family: 'SF Mono', 'Fira Code', monospace;
     opacity: 0.6;
-  }
-
-  /* ===== HINT TECLADO ===== */
-  .arm-hint {
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 9px;
-    color: var(--muted, #a8b2c2);
-    opacity: 0.5;
-    white-space: nowrap;
-    pointer-events: none;
-  }
-
-  .arm-hint kbd {
-    padding: 2px 5px;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    font-size: 8px;
-    margin-left: 3px;
-    font-family: inherit;
   }
 
 }
