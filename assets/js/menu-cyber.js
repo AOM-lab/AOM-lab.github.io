@@ -1,5 +1,6 @@
 /* ============================================================
    MENÚ BRAZO MECÁNICO CYBER
+   - Aparece al llegar a la sección "Sobre mí"
    - Animación de despliegue del brazo robótico
    - Panel de navegación con scroll suave
    - Detección de sección activa
@@ -26,89 +27,92 @@ document.addEventListener("DOMContentLoaded", () => {
       <!-- BRAZO 1 -->
       <div class="arm-1" id="arm1">
         <div class="energy-line" id="energy1"></div>
-        <div class="joint" id="joint"></div>
-      </div>
+        
+        <!-- JOINT con BRAZO 2 dentro -->
+        <div class="joint" id="joint">
+          <div class="arm-2" id="arm2">
+            <div class="energy-line" id="energy2"></div>
+            
+            <!-- PROYECTOR -->
+            <div class="projector" id="projector">
+              <div class="beam" id="beam"></div>
+              
+              <!-- PANEL DEL MENÚ -->
+              <nav class="menu-panel" id="menuPanel" aria-label="Panel de navegación rápida">
+                <div class="panel-header">
+                  <div class="status-dot"></div>
+                  <div class="header-text">
+                    <div class="header-title">Panel rápido</div>
+                    <div class="header-subtitle">Navegación del sitio</div>
+                  </div>
+                </div>
 
-      <!-- BRAZO 2 -->
-      <div class="arm-2" id="arm2">
-        <div class="energy-line" id="energy2"></div>
-        <div class="projector" id="projector">
-          <div class="beam" id="beam"></div>
-          
-          <!-- PANEL DEL MENÚ -->
-          <nav class="menu-panel" id="menuPanel" aria-label="Panel de navegación rápida">
-            <div class="panel-header">
-              <div class="status-dot"></div>
-              <div class="header-text">
-                <div class="header-title">Panel rápido</div>
-                <div class="header-subtitle">Navegación del sitio</div>
-              </div>
+                <div class="menu-group">Perfil</div>
+                <ul class="menu-list">
+                  <li>
+                    <a href="#sobre-mi" class="menu-item" data-section="sobre-mi">
+                      <div class="item-icon">
+                        <i class="fa-solid fa-user"></i>
+                      </div>
+                      <span class="item-label">Sobre mí</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#especialidades" class="menu-item" data-section="especialidades">
+                      <div class="item-icon">
+                        <i class="fa-solid fa-bullseye"></i>
+                      </div>
+                      <span class="item-label">Especialidades</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#investigacion" class="menu-item" data-section="investigacion">
+                      <div class="item-icon">
+                        <i class="fa-solid fa-flask"></i>
+                      </div>
+                      <span class="item-label">Investigación</span>
+                    </a>
+                  </li>
+                </ul>
+
+                <div class="menu-group">Contenido</div>
+                <ul class="menu-list">
+                  <li>
+                    <a href="#tools" class="menu-item" data-section="tools">
+                      <div class="item-icon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                      </div>
+                      <span class="item-label">Herramientas</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#site-graph" class="menu-item" data-section="site-graph">
+                      <div class="item-icon">
+                        <i class="fa-solid fa-diagram-project"></i>
+                      </div>
+                      <span class="item-label">Mapa visual</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#contact" class="menu-item" data-section="contact">
+                      <div class="item-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                      </div>
+                      <span class="item-label">Contacto</span>
+                    </a>
+                  </li>
+                </ul>
+
+                <div class="panel-footer">
+                  <div class="footer-status">
+                    <i class="fa-solid fa-check-circle"></i>
+                    Online
+                  </div>
+                  <span class="footer-time" id="footerTime">--:--</span>
+                </div>
+              </nav>
             </div>
-
-            <div class="menu-group">Perfil</div>
-            <ul class="menu-list">
-              <li>
-                <a href="#sobre-mi" class="menu-item" data-section="sobre-mi">
-                  <div class="item-icon">
-                    <i class="fa-solid fa-user"></i>
-                  </div>
-                  <span class="item-label">Sobre mí</span>
-                </a>
-              </li>
-              <li>
-                <a href="#especialidades" class="menu-item" data-section="especialidades">
-                  <div class="item-icon">
-                    <i class="fa-solid fa-bullseye"></i>
-                  </div>
-                  <span class="item-label">Especialidades</span>
-                </a>
-              </li>
-              <li>
-                <a href="#investigacion" class="menu-item" data-section="investigacion">
-                  <div class="item-icon">
-                    <i class="fa-solid fa-flask"></i>
-                  </div>
-                  <span class="item-label">Investigación</span>
-                </a>
-              </li>
-            </ul>
-
-            <div class="menu-group">Contenido</div>
-            <ul class="menu-list">
-              <li>
-                <a href="#tools" class="menu-item" data-section="tools">
-                  <div class="item-icon">
-                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                  </div>
-                  <span class="item-label">Herramientas</span>
-                </a>
-              </li>
-              <li>
-                <a href="#site-graph" class="menu-item" data-section="site-graph">
-                  <div class="item-icon">
-                    <i class="fa-solid fa-diagram-project"></i>
-                  </div>
-                  <span class="item-label">Mapa visual</span>
-                </a>
-              </li>
-              <li>
-                <a href="#contact" class="menu-item" data-section="contact">
-                  <div class="item-icon">
-                    <i class="fa-solid fa-envelope"></i>
-                  </div>
-                  <span class="item-label">Contacto</span>
-                </a>
-              </li>
-            </ul>
-
-            <div class="panel-footer">
-              <div class="footer-status">
-                <i class="fa-solid fa-check-circle"></i>
-                Online
-              </div>
-              <span class="footer-time" id="footerTime">--:--</span>
-            </div>
-          </nav>
+          </div>
         </div>
       </div>
     </div>
@@ -127,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.insertAdjacentHTML('beforeend', armHTML);
 
   // ===== REFERENCIAS A ELEMENTOS =====
+  const armSystem = document.getElementById('armSystem');
   const arm1 = document.getElementById('arm1');
   const arm2 = document.getElementById('arm2');
   const joint = document.getElementById('joint');
@@ -136,10 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const beam = document.getElementById('beam');
   const menuPanel = document.getElementById('menuPanel');
   const toggleBtn = document.getElementById('armToggleBtn');
+  const armHint = document.querySelector('.arm-hint');
   const footerTime = document.getElementById('footerTime');
 
   let isOpen = false;
   let isAnimating = false;
+  let isVisible = false;
 
   // ===== ACTUALIZAR HORA =====
   function updateTime() {
@@ -158,6 +165,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== UTILIDAD SLEEP =====
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // ===== MOSTRAR/OCULTAR SISTEMA =====
+  function showSystem() {
+    if (isVisible) return;
+    isVisible = true;
+    armSystem.classList.add('visible');
+    toggleBtn.classList.add('visible');
+    armHint.classList.add('visible');
+  }
+
+  function hideSystem() {
+    if (!isVisible || isOpen) return;
+    isVisible = false;
+    armSystem.classList.remove('visible');
+    toggleBtn.classList.remove('visible');
+    armHint.classList.remove('visible');
   }
 
   // ===== ANIMACIÓN DE DESPLIEGUE =====
@@ -181,13 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // FASE 2: Joint se activa
     joint.classList.add('active');
-
-    // Posicionar brazo 2 en el joint
-    await sleep(100);
-    const jointRect = joint.getBoundingClientRect();
-    arm2.style.right = (window.innerWidth - jointRect.left - jointRect.width/2 + 7) + 'px';
-    arm2.style.top = jointRect.top + jointRect.height/2 + 'px';
-    arm2.style.transform = 'translateY(-50%) rotate(-90deg)';
 
     // FASE 3: Brazo 2 se despliega hacia la izquierda (1.2 segundos)
     await sleep(200);
@@ -291,17 +308,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // No activar si estamos escribiendo en un input
       if (document.activeElement.tagName === 'INPUT' || 
           document.activeElement.tagName === 'TEXTAREA') return;
+      // Solo si el sistema es visible
+      if (!isVisible) return;
       e.preventDefault();
       toggle();
-    }
-  });
-
-  // Reposicionar brazo 2 en resize
-  window.addEventListener('resize', () => {
-    if (isOpen && joint) {
-      const jointRect = joint.getBoundingClientRect();
-      arm2.style.right = (window.innerWidth - jointRect.left - jointRect.width/2 + 7) + 'px';
-      arm2.style.top = jointRect.top + jointRect.height/2 + 'px';
     }
   });
 
@@ -372,39 +382,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Ejecutar al cargar
-  updateActiveSection();
-
-  // Actualizar en scroll
-  window.addEventListener('scroll', () => {
-    requestAnimationFrame(updateActiveSection);
-  }, { passive: true });
-
-  // ===== DESPLIEGUE AUTOMÁTICO AL LLEGAR A "SOBRE MÍ" =====
+  // ===== VISIBILIDAD Y AUTO-DESPLIEGUE AL LLEGAR A "SOBRE MÍ" =====
   const triggerSection = document.getElementById('sobre-mi');
-  const OPEN_OFFSET = 200;
-  let hasAutoOpened = false;
+  const SHOW_OFFSET = 300; // Mostrar cuando "sobre-mi" está a 300px del top
+  let hasAutoDeployed = false;
 
-  function checkAutoOpen() {
-    if (!triggerSection || hasAutoOpened) return;
+  function checkVisibilityAndDeploy() {
+    if (!triggerSection) return;
 
     const rect = triggerSection.getBoundingClientRect();
 
-    if (rect.top <= OPEN_OFFSET && !isOpen) {
-      hasAutoOpened = true;
-      deploy();
+    // Mostrar el sistema cuando llegamos cerca de "sobre-mi"
+    if (rect.top <= SHOW_OFFSET) {
+      showSystem();
+      
+      // Auto-desplegar solo una vez
+      if (!hasAutoDeployed && !isOpen && !isAnimating) {
+        hasAutoDeployed = true;
+        // Pequeño delay para que se vea el sistema antes de desplegar
+        setTimeout(() => {
+          deploy();
+        }, 300);
+      }
+    } else {
+      // Ocultar si volvemos arriba (solo si está cerrado)
+      if (!isOpen) {
+        hideSystem();
+        hasAutoDeployed = false;
+      }
     }
   }
 
   // Ejecutar al cargar
-  checkAutoOpen();
+  checkVisibilityAndDeploy();
+  updateActiveSection();
 
   // Actualizar en scroll
   window.addEventListener('scroll', () => {
-    requestAnimationFrame(checkAutoOpen);
+    requestAnimationFrame(() => {
+      checkVisibilityAndDeploy();
+      updateActiveSection();
+    });
   }, { passive: true });
 
-});
-
-  });
 });
