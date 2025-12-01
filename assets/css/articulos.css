@@ -2,14 +2,14 @@
 
 #articulos {
   --art-bg: transparent;
-  --art-card-bg: #0a0f1c;
+  --art-card-bg: #0a0f1c; /* Fondo oscuro */
   --art-border: rgba(255, 255, 255, 0.1);
   --art-accent: #ff9f1a;
   --art-text: #94a3b8;
   
   padding: 60px 0;
   position: relative;
-  overflow: hidden; /* Evita scroll horizontal en la página */
+  overflow: hidden;
 }
 
 #articulos .section-title { 
@@ -20,7 +20,7 @@
   font-size: 1.5rem;
 }
 
-/* --- CABECERA TÉCNICA --- */
+/* --- CABECERA --- */
 .art-header {
   display: flex; 
   justify-content: space-between; 
@@ -33,9 +33,7 @@
 }
 
 /* Filtros */
-.art-filters {
-  display: flex; gap: 10px;
-}
+.art-filters { display: flex; gap: 10px; }
 
 .art-filter-btn {
   background: transparent; 
@@ -60,7 +58,7 @@
   box-shadow: 0 0 10px rgba(255, 159, 26, 0.2);
 }
 
-/* Controles Flechas */
+/* Controles */
 .art-nav-controls { display: flex; gap: 8px; }
 
 .art-nav-btn {
@@ -79,7 +77,7 @@
   background: rgba(255, 159, 26, 0.05);
 }
 
-/* --- CARRUSEL (Fixed Layout) --- */
+/* --- CARRUSEL --- */
 .art-carousel-wrapper {
   width: 100%;
   overflow: hidden;
@@ -88,34 +86,32 @@
 
 .art-track {
   display: flex; 
-  gap: 30px;
+  gap: 24px; /* Espacio entre tarjetas */
   overflow-x: auto; 
   scroll-behavior: smooth; 
   scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE 10+ */
-  padding-bottom: 20px; /* Espacio para sombras */
+  scrollbar-width: none;
+  padding-bottom: 20px;
 }
-.art-track::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
+.art-track::-webkit-scrollbar { display: none; }
 
-/* --- TARJETA (Diseño Robusto) --- */
+/* --- TARJETA (Aquí estaba el error) --- */
 .art-card {
-  /* TAMAÑO FIJO: Esto evita que se expandan como en tu foto */
-  flex: 0 0 350px; 
-  width: 350px; 
-  max-width: 350px;
+  /* CÁLCULO MATEMÁTICO: (100% ancho - 48px de huecos) / 3 tarjetas */
+  /* Esto asegura que SIEMPRE entren 3, sin importar el tamaño de pantalla */
+  flex: 0 0 calc((100% - 48px) / 3);
+  max-width: calc((100% - 48px) / 3);
   
   scroll-snap-align: start;
   background: var(--art-card-bg);
   border: 1px solid var(--art-border);
-  /* Borde izquierdo decorativo */
   border-left: 3px solid var(--art-border); 
   border-radius: 8px;
   overflow: hidden;
   display: flex; 
   flex-direction: column;
   transition: all 0.3s ease;
-  height: 480px; /* Altura fija para uniformidad */
+  height: 480px;
   position: relative;
 }
 
@@ -133,11 +129,10 @@
   position: relative; 
   overflow: hidden;
   border-bottom: 1px solid var(--art-border);
-  flex-shrink: 0; /* Evita que la imagen desaparezca */
+  flex-shrink: 0; 
   background: #000;
 }
 
-/* Efecto de "Scanline" (Línea que baja) */
 .art-img-box::before {
   content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   background: linear-gradient(to bottom, transparent 50%, rgba(255, 159, 26, 0.2) 50%, transparent 51%);
@@ -146,7 +141,6 @@
   opacity: 0.2;
 }
 
-/* Overlay oscuro por defecto */
 .art-img-box::after {
   content: ""; position: absolute; inset: 0;
   background: rgba(11, 18, 32, 0.4);
@@ -157,11 +151,12 @@
 .art-img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.5s ease;
-  filter: grayscale(80%) contrast(1.2); /* Look desaturado tech */
+  filter: grayscale(80%) contrast(1.2);
+  display: block;
 }
 .art-card:hover .art-img { transform: scale(1.1); filter: grayscale(0%); }
 
-/* Badge Flotante */
+/* Badge */
 .art-badge {
   position: absolute; top: 12px; right: 12px; z-index: 3;
   padding: 4px 8px; border-radius: 2px;
@@ -191,10 +186,10 @@
 .art-title {
   color: #fff; font-size: 1.15rem; font-weight: 700; margin: 0 0 12px 0;
   line-height: 1.4; font-family: 'Inter', sans-serif;
-  /* Limitar texto */
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  position: relative; z-index: 2;
+  flex-shrink: 0;
 }
-/* Decoración ">" */
 .art-title::before { content: "> "; color: var(--art-accent); }
 
 .art-excerpt {
@@ -203,7 +198,7 @@
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 
-/* Botón "System Link" */
+/* Botón */
 .art-read-btn {
   align-self: flex-start;
   color: var(--art-accent); font-size: 0.75rem; font-weight: 700; text-decoration: none;
@@ -215,10 +210,16 @@
 }
 .art-read-btn:hover { border-bottom-color: var(--art-accent); gap: 12px; }
 
+/* Estado Vacío */
+.art-empty {
+  width: 100%; text-align: center; padding: 60px; color: var(--art-text);
+  border: 1px dashed var(--art-border);
+}
+
 /* RESPONSIVE */
-@media (max-width: 768px) {
-  .art-card { flex: 0 0 280px; width: 280px; } /* Más pequeño en móvil */
-  .art-header { flex-direction: column; align-items: stretch; gap: 15px; }
-  .art-filters { overflow-x: auto; padding-bottom: 5px; }
-  .art-nav-controls { justify-content: flex-end; }
+@media (max-width: 900px) {
+  /* En móvil sí queremos ancho fijo para deslizar */
+  .art-card { flex: 0 0 280px; max-width: 280px; } 
+  .art-header { flex-direction: column; align-items: flex-start; }
+  .art-filters { overflow-x: auto; width: 100%; padding-bottom: 5px; }
 }
