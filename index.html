@@ -23,7 +23,9 @@
   
   <link rel="stylesheet" href="assets/css/Atecnico.css"> 
   <link rel="stylesheet" href="assets/css/especialidades.css">
-  <link rel="stylesheet" href="assets/css/sobremi.css"> <style>
+  <link rel="stylesheet" href="assets/css/sobremi.css">
+  <link rel="stylesheet" href="assets/css/investigacion.css">
+  <style>
     /* Estilos mínimos globales que pueden quedar aquí */
     :root{
       --bg:#0b1220; --panel:#111a2d; --text:#e9eef6; --muted:#a8b2c2;
@@ -396,16 +398,95 @@
       <div id="tools-pro">
         </div>
     </section>
+    <section id="investigacion" class="reveal" data-reveal="fade-up">
+      <h2 class="section-title">Investigación y Metodología</h2>
 
-    <section id="investigacion" class="reveal" data-reveal="fade-up" aria-labelledby="investigacion-title">
-      <h2 id="investigacion-title" class="section-title">Cómo investigo y trabajo</h2>
-      <p class="kicker">Metodología profesional y verificable.</p>
-      <div class="card">
-        <p>Trabajo con metodologías replicables: priorizo documentación oficial, papers y repos mantenidos. Verifico en laboratorio (sandbox), registro comandos, versiones y artefactos y publico con referencias y pruebas reproducibles.</p>
-        <p style="margin-top:8px">Cuando publico artículos o notas, enlazo material de soporte y dejo un resumen con <strong>conclusiones accionables</strong>.</p>
+      <div class="inv-manifesto-grid">
+        <div class="manifesto-card alert">
+          <h3 class="manifesto-title"><i class="fa-solid fa-triangle-exclamation"></i> El Riesgo de la Superficialidad</h3>
+          <p class="manifesto-text">
+            Hoy en día, la investigación técnica a menudo se vuelve pobre, dependiendo excesivamente de los primeros resultados de búsqueda o respuestas de IA sin contexto ni verificación, generando una base de conocimiento frágil y propensa a errores.
+          </p>
+        </div>
+        <div class="manifesto-card secure">
+          <h3 class="manifesto-title"><i class="fa-solid fa-shield-halved"></i> Rigor y Verificación</h3>
+          <p class="manifesto-text">
+            Una investigación rigurosa exige contrastar fuentes oficiales, analizar documentación técnica y verificar hechos en entornos controlados. La falta de este rigor es lo que provoca fallos críticos en infraestructuras a gran escala.
+          </p>
+        </div>
       </div>
-    </section>
 
+      <div class="inv-pipeline-container">
+        
+        <span class="pipeline-phase-title">// FASE 1: Análisis y Alcance General</span>
+        <div class="pipeline-grid">
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">01</span>
+              <i class="fa-solid fa-magnifying-glass step-icon"></i>
+            </div>
+            <h4 class="step-title">Definición del Alcance</h4>
+            <p class="step-desc">Entender el problema raíz, no solo el síntoma. Delimitar qué sistemas y tecnologías están realmente afectados.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">02</span>
+              <i class="fa-solid fa-book-bookmark step-icon"></i>
+            </div>
+            <h4 class="step-title">Fuentes Oficiales (Vendor)</h4>
+            <p class="step-desc">Consulta prioritaria a documentación del fabricante (man pages, whitepapers, RFCs) antes que a foros de terceros.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">03</span>
+              <i class="fa-brands fa-github step-icon"></i>
+            </div>
+            <h4 class="step-title">Comunidad y Repositorios</h4>
+            <p class="step-desc">Análisis de 'Issues' en GitHub, changelogs y discusiones técnicas para identificar patrones o bugs conocidos.</p>
+          </div>
+        </div>
+
+        <span class="pipeline-phase-title" style="margin-top: 30px;">// FASE 2: Ejecución y Verificación Específica</span>
+        <div class="pipeline-grid">
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">04</span>
+              <i class="fa-solid fa-flask-vial step-icon"></i>
+            </div>
+            <h4 class="step-title">Sandbox / Laboratorio</h4>
+            <p class="step-desc">Reproducción del escenario en un entorno aislado y controlado. Nunca probar en producción sin validar.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">05</span>
+              <i class="fa-solid fa-file-waveform step-icon"></i>
+            </div>
+            <h4 class="step-title">Análisis de Evidencia (Logs)</h4>
+            <p class="step-desc">Revisión profunda de logs, trazas de sistema y métricas para confirmar la causa raíz con datos objetivos.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-number">06</span>
+              <i class="fa-solid fa-clipboard-check step-icon"></i>
+            </div>
+            <h4 class="step-title">Documentación Accionable</h4>
+            <p class="step-desc">Generar un reporte claro con el hallazgo, la solución verificada y los pasos para evitar la recurrencia.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="inv-footer-card">
+        <div class="footer-icon-box">
+          <i class="fa-solid fa-compass-drafting"></i>
+        </div>
+        <p class="footer-text">
+          Más allá de resolver errores puntuales, mi trabajo se rige por metodologías claras (adaptando marcos como <strong>NIST</strong> o <strong>OWASP</strong> según el proyecto), manteniendo siempre la agilidad necesaria para adaptarme rápidamente a nuevas tecnologías o situaciones de crisis.
+        </p>
+      </div>
+
+    </section>
+    
     <section id="site-graph" class="graph reveal" data-reveal="fade-up" aria-labelledby="site-graph-title">
       <div class="card">
         <div class="graph-head">
