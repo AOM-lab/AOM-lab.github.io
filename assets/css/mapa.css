@@ -1,152 +1,139 @@
-/* --- ESTILOS PRO: SQL DATABASE INTERFACE (Amapa.css) --- */
+/* --- ESTILOS PRO: KNOWLEDGE HUB (Diseño Documentación Moderna) --- */
 
 #site-graph {
-  --db-bg: #0b1022;
-  --db-panel: #0f1525;
-  --db-border: rgba(255, 255, 255, 0.08);
-  --db-accent: #ff9f1a;
-  --db-text: #94a3b8;
-  --db-keyword: #ff79c6; /* Rosa para SELECT, FROM */
-  --db-string: #f1fa8c; /* Amarillo para strings */
-  --db-func: #8be9fd; /* Cyan para funciones */
+  --hub-bg: #0b1022;
+  --hub-card: rgba(255, 255, 255, 0.03);
+  --hub-border: rgba(255, 255, 255, 0.08);
+  --hub-accent: #ff9f1a;
+  --hub-text: #94a3b8;
   
   padding: 40px 0;
 }
 
-#site-graph .section-title { color: var(--db-accent); margin-bottom: 20px; }
+#site-graph .section-title { color: var(--hub-accent); margin-bottom: 10px; }
 
-/* VENTANA PRINCIPAL (IDE STYLE) */
-.sql-window {
-  background: var(--db-bg);
-  border: 1px solid var(--db-border);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6);
-  min-height: 600px;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Source Code Pro', monospace; /* Todo monoespaciado */
+/* CONTENEDOR PRINCIPAL */
+.hub-window {
+  display: flex; flex-direction: column; gap: 20px;
+  min-height: 500px;
 }
 
-/* 1. BARRA DE HERRAMIENTAS SUPERIOR */
-.sql-toolbar {
-  background: #1e2538;
-  border-bottom: 1px solid var(--db-border);
-  padding: 10px 15px;
-  display: flex; gap: 15px; align-items: center;
+/* 1. BARRA DE NAVEGACIÓN (Breadcrumbs) */
+.hub-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--hub-border);
+  border-radius: 12px;
+  padding: 15px 24px;
 }
 
-.traffic-lights { display: flex; gap: 6px; margin-right: 15px; }
-.light { width: 10px; height: 10px; border-radius: 50%; background: #333; }
-.light.red { background: #ff5f56; }
-.light.yellow { background: #ffbd2e; }
-.light.green { background: #27c93f; }
-
-.connection-info {
+.breadcrumbs {
+  font-family: 'Inter', sans-serif;
+  color: var(--hub-text); font-size: 0.95rem;
   display: flex; align-items: center; gap: 8px;
-  font-size: 0.75rem; color: #fff;
-  background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--db-border);
 }
-.conn-dot { width: 6px; height: 6px; background: #27c93f; border-radius: 50%; box-shadow: 0 0 5px #27c93f; }
 
-/* 2. ÁREA DE TRABAJO (DIVIDIDA) */
-.sql-workspace {
-  display: flex; flex-grow: 1;
+.crumb-item {
+  cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px;
+}
+.crumb-item:hover { color: #fff; }
+.crumb-item i { font-size: 0.8em; }
+.crumb-sep { opacity: 0.4; font-size: 0.8em; }
+.crumb-current { color: #fff; font-weight: 600; cursor: default; }
+
+/* 2. GRID DE CONTENIDO */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* TARJETA DE CATEGORÍA (Folder) */
+.hub-card {
+  background: var(--hub-card);
+  border: 1px solid var(--hub-border);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
   overflow: hidden;
-}
-
-/* SIDEBAR (Object Explorer) */
-.db-sidebar {
-  width: 250px;
-  background: #131929;
-  border-right: 1px solid var(--db-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
   display: flex; flex-direction: column;
-  flex-shrink: 0;
 }
 
-.sidebar-header {
-  padding: 10px 15px; font-size: 0.75rem; color: var(--db-text); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--db-border);
+/* Barra de color superior (decorativa) */
+.hub-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--hub-border); transition: 0.3s;
 }
 
-.db-tree {
-  padding: 10px; overflow-y: auto;
+/* Hover Effects */
+.hub-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+}
+.hub-card:hover::before { background: var(--hub-accent); } /* La barra se enciende */
+
+/* Header de la tarjeta */
+.card-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 16px;
 }
 
-.tree-item {
-  padding: 6px 10px; cursor: pointer; color: var(--db-text); font-size: 0.85rem;
-  border-radius: 4px; display: flex; align-items: center; gap: 8px;
-  transition: 0.1s;
+.card-icon {
+  width: 48px; height: 48px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: #fff;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: 0.3s;
 }
-.tree-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
-.tree-item.active { background: rgba(255, 159, 26, 0.15); color: var(--db-accent); border-left: 2px solid var(--db-accent); }
-
-.tree-icon { width: 14px; text-align: center; }
-
-/* PANEL PRINCIPAL (Resultados) */
-.db-main-panel {
-  flex-grow: 1; display: flex; flex-direction: column;
-  background: var(--db-bg);
+.hub-card:hover .card-icon {
+  background: var(--hub-accent); color: #000; border-color: var(--hub-accent);
 }
 
-/* Caja de Consulta SQL (Falsa) */
-.query-editor {
-  background: #0f131f;
-  padding: 15px 20px;
-  border-bottom: 1px solid var(--db-border);
-  color: #fff; font-size: 0.9rem;
-  height: 60px; display: flex; align-items: center;
-}
-.sql-keyword { color: var(--db-keyword); font-weight: 700; margin-right: 5px; }
-.sql-text { color: #fff; margin-right: 5px; }
-.sql-string { color: var(--db-string); }
-.cursor-blink { border-right: 2px solid var(--db-accent); animation: blink 1s step-end infinite; }
-
-@keyframes blink { 50% { border-color: transparent; } }
-
-/* Tabla de Resultados */
-.results-area {
-  flex-grow: 1;
-  overflow: auto;
-  padding: 0;
+/* Badge de cantidad */
+.card-badge {
+  font-size: 0.75rem; font-weight: 600;
+  background: rgba(255,255,255,0.1); color: #ccc;
+  padding: 4px 10px; border-radius: 20px;
 }
 
-.db-table {
-  width: 100%; border-collapse: collapse; min-width: 600px;
+/* Textos */
+.card-title {
+  color: #fff; font-size: 1.1rem; font-weight: 700; margin: 0 0 8px 0;
+  font-family: 'Inter', sans-serif;
+}
+.card-desc {
+  color: var(--hub-text); font-size: 0.9rem; line-height: 1.5; margin: 0;
 }
 
-.db-table thead {
-  background: #1a2133; position: sticky; top: 0; z-index: 10;
+/* TARJETA DE ARCHIVO (Artículo final) */
+.hub-card.is-file {
+  border-left: 3px solid #3b82f6; /* Borde azul a la izquierda para diferenciar archivos */
 }
+.hub-card.is-file::before { display: none; } /* Sin barra superior */
+.hub-card.is-file .card-icon { font-size: 1.2rem; width: 40px; height: 40px; color: #3b82f6; }
+.hub-card.is-file:hover .card-icon { background: #3b82f6; color: #fff; }
 
-.db-table th {
-  text-align: left; padding: 10px 15px;
-  font-size: 0.75rem; color: var(--db-text);
-  border-bottom: 1px solid var(--db-border);
-  border-right: 1px solid var(--db-border);
+/* Botón "Atrás" */
+.back-btn {
+  background: transparent; border: 1px solid var(--hub-border);
+  color: var(--hub-text); padding: 6px 14px; border-radius: 6px;
+  cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;
+  transition: 0.2s;
 }
+.back-btn:hover { border-color: #fff; color: #fff; }
 
-.db-table td {
-  padding: 12px 15px;
-  border-bottom: 1px solid var(--db-border);
-  border-right: 1px solid rgba(255,255,255,0.03);
-  font-size: 0.85rem; color: #cbd5e1;
-}
+/* Estado vacío */
+.hub-empty { text-align: center; padding: 40px; color: var(--hub-text); font-style: italic; width: 100%; }
 
-.db-table tr:hover { background: rgba(255,255,255,0.03); }
-
-/* Badges dentro de la tabla */
-.type-badge {
-  padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; text-transform: uppercase;
-}
-.badge-folder { background: rgba(234, 179, 8, 0.2); color: #eab308; }
-.badge-file { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-
-/* Mensaje vacío */
-.empty-state { padding: 40px; text-align: center; color: var(--db-text); font-style: italic; }
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .sql-window { flex-direction: column; min-height: auto; }
-  .db-sidebar { width: 100%; height: 150px; border-right: none; border-bottom: 1px solid var(--db-border); }
-  .sql-toolbar { display: none; } /* Ocultar toolbar en móvil para ganar espacio */
+/* Responsive */
+@media (max-width: 600px) {
+  .hub-grid { grid-template-columns: 1fr; }
 }
