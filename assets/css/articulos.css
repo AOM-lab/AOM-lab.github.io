@@ -1,9 +1,10 @@
-/* --- ESTILOS PRO: FEED DE INTELIGENCIA (Cyber-News) --- */
+/* --- ESTILOS PRO: ARTÍCULOS (Cyber-Report Feed) --- */
 
 #articulos {
   --art-bg: transparent;
-  --art-card-bg: #0a0f1c;
-  --art-border: rgba(255, 255, 255, 0.1);
+  /* Fondo tarjeta semitransparente para efecto glass */
+  --art-card-bg: rgba(13, 17, 23, 0.7); 
+  --art-border: rgba(255, 255, 255, 0.08);
   --art-accent: #ff9f1a;
   --art-text: #94a3b8;
   
@@ -24,10 +25,8 @@
 .art-header {
   display: flex; 
   justify-content: space-between; 
-  align-items: flex-end;
+  align-items: center; /* Alineado al centro verticalmente */
   margin-bottom: 40px; 
-  flex-wrap: wrap; 
-  gap: 20px;
   border-bottom: 1px solid var(--art-border);
   padding-bottom: 15px;
 }
@@ -39,7 +38,7 @@
   background: transparent; 
   border: 1px solid var(--art-border);
   color: var(--art-text);
-  padding: 8px 16px; 
+  padding: 6px 16px; 
   border-radius: 4px;
   cursor: pointer; 
   font-size: 0.75rem; 
@@ -58,8 +57,12 @@
   box-shadow: 0 0 10px rgba(255, 159, 26, 0.2);
 }
 
-/* Controles */
-.art-nav-controls { display: flex; gap: 8px; }
+/* Controles (Flechas alineadas a la derecha) */
+.art-nav-controls { 
+  display: flex; 
+  gap: 10px; 
+  margin-left: auto; /* Empuja a la derecha si hay espacio */
+}
 
 .art-nav-btn {
   width: 40px; height: 40px; 
@@ -86,7 +89,7 @@
 
 .art-track {
   display: flex; 
-  gap: 24px; /* Espacio entre tarjetas */
+  gap: 24px; 
   overflow-x: auto; 
   scroll-behavior: smooth; 
   scroll-snap-type: x mandatory;
@@ -95,35 +98,37 @@
 }
 .art-track::-webkit-scrollbar { display: none; }
 
-/* --- TARJETA (Ajuste Matemático) --- */
+/* --- TARJETA (Estilo Informe Técnico) --- */
 .art-card {
-  /* Esto calcula el ancho exacto para que quepan 3 tarjetas restando los huecos */
+  /* Ancho matemático para 3 columnas */
   flex: 0 0 calc((100% - 48px) / 3);
   width: calc((100% - 48px) / 3);
   
   scroll-snap-align: start;
   background: var(--art-card-bg);
   border: 1px solid var(--art-border);
-  border-left: 3px solid var(--art-border); 
-  border-radius: 8px;
+  /* Borde superior decorativo */
+  border-top: 3px solid var(--art-border); 
+  border-radius: 6px;
   overflow: hidden;
   display: flex; 
   flex-direction: column;
   transition: all 0.3s ease;
-  height: 480px;
+  height: 460px;
   position: relative;
+  backdrop-filter: blur(10px);
 }
 
 .art-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   border-color: var(--art-accent);
-  border-left-color: var(--art-accent);
-  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6);
+  border-top-color: var(--art-accent);
+  box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
 }
 
-/* --- IMAGEN --- */
+/* Imagen */
 .art-img-box {
-  height: 200px; 
+  height: 190px; 
   width: 100%;
   position: relative; 
   overflow: hidden;
@@ -132,63 +137,53 @@
   background: #000;
 }
 
-.art-img-box::before {
-  content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to bottom, transparent 50%, rgba(255, 159, 26, 0.2) 50%, transparent 51%);
-  background-size: 100% 4px;
-  z-index: 2; pointer-events: none;
-  opacity: 0.2;
-}
-
+/* Efecto Overlay */
 .art-img-box::after {
   content: ""; position: absolute; inset: 0;
-  background: rgba(11, 18, 32, 0.4);
-  transition: 0.3s; z-index: 1;
+  background: linear-gradient(0deg, #0a0f1c 0%, transparent 100%);
+  opacity: 0.8; transition: 0.3s;
 }
-.art-card:hover .art-img-box::after { background: transparent; }
+.art-card:hover .art-img-box::after { opacity: 0.3; }
 
 .art-img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.5s ease;
-  filter: grayscale(80%) contrast(1.2);
-  display: block;
+  filter: grayscale(100%) contrast(1.1); /* Blanco y negro técnico */
 }
-.art-card:hover .art-img { transform: scale(1.1); filter: grayscale(0%); }
+.art-card:hover .art-img { transform: scale(1.05); filter: grayscale(0%); }
 
 /* Badge */
 .art-badge {
-  position: absolute; top: 12px; right: 12px; z-index: 3;
+  position: absolute; top: 10px; right: 10px; z-index: 2;
   padding: 4px 8px; border-radius: 2px;
-  font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
   color: #fff; font-family: 'Source Code Pro', monospace;
   background: rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2);
 }
 .art-card:hover .art-badge { border-color: var(--art-accent); color: var(--art-accent); }
 
-/* --- CONTENIDO --- */
+/* Contenido */
 .art-content {
   padding: 25px;
-  display: flex; 
-  flex-direction: column; 
-  flex-grow: 1;
+  display: flex; flex-direction: column; flex-grow: 1;
 }
 
 .art-meta {
   font-family: 'Source Code Pro', monospace;
   font-size: 0.65rem; color: #64748b;
-  margin-bottom: 15px; display: flex; justify-content: space-between;
+  margin-bottom: 12px; display: flex; justify-content: space-between;
   border-bottom: 1px dashed rgba(255,255,255,0.1);
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   flex-shrink: 0;
 }
 
 .art-title {
-  color: #fff; font-size: 1.15rem; font-weight: 700; margin: 0 0 12px 0;
-  line-height: 1.4; font-family: 'Inter', sans-serif;
+  color: #fff; font-size: 1.1rem; font-weight: 700; margin: 0 0 10px 0;
+  line-height: 1.3; font-family: 'Inter', sans-serif;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  position: relative; z-index: 2;
   flex-shrink: 0;
 }
+/* Decoración ">" */
 .art-title::before { content: "> "; color: var(--art-accent); }
 
 .art-excerpt {
@@ -197,25 +192,19 @@
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 
-/* Botón */
+/* Botón Link */
 .art-read-btn {
   align-self: flex-start;
-  color: var(--art-accent); font-size: 0.75rem; font-weight: 700; text-decoration: none;
+  color: var(--art-accent); font-size: 0.7rem; font-weight: 700; text-decoration: none;
   font-family: 'Source Code Pro', monospace;
   display: flex; align-items: center; gap: 8px;
-  padding: 8px 0; border-bottom: 2px solid transparent;
+  padding: 6px 0; border-bottom: 2px solid transparent;
   transition: 0.2s;
   margin-top: auto;
 }
 .art-read-btn:hover { border-bottom-color: var(--art-accent); gap: 12px; }
 
-/* Estado Vacío */
-.art-empty {
-  width: 100%; text-align: center; padding: 60px; color: var(--art-text);
-  border: 1px dashed var(--art-border);
-}
-
-/* ¡ESTO ERA LO QUE FALTABA! ANIMACIÓN DE ENTRADA */
+/* Animación */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -223,8 +212,9 @@
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  /* En móvil sí queremos ancho fijo para deslizar con el dedo */
+  .art-header { flex-direction: column; align-items: stretch; gap: 20px; }
+  .art-nav-controls { justify-content: flex-end; margin-top: -50px; /* Truco para alinear en móvil */ }
+  .art-filters { overflow-x: auto; padding-bottom: 5px; }
+  /* En móvil ancho fijo para swipe */
   .art-card { flex: 0 0 280px; width: 280px; max-width: 280px; } 
-  .art-header { flex-direction: column; align-items: flex-start; }
-  .art-filters { overflow-x: auto; width: 100%; padding-bottom: 5px; }
 }
