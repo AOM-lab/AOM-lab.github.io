@@ -1,14 +1,15 @@
-/* --- ESTILOS PRO: ARTÍCULOS (FEED DE INTELIGENCIA) --- */
+/* --- ESTILOS PRO: FEED DE INTELIGENCIA (Cyber-News) --- */
 
 #articulos {
   --art-bg: transparent;
-  --art-card-bg: #0a0f1c; /* Fondo muy oscuro */
+  --art-card-bg: #0a0f1c;
   --art-border: rgba(255, 255, 255, 0.1);
   --art-accent: #ff9f1a;
   --art-text: #94a3b8;
   
   padding: 60px 0;
   position: relative;
+  overflow: hidden; /* Evita scroll horizontal en la página */
 }
 
 #articulos .section-title { 
@@ -16,6 +17,7 @@
   margin-bottom: 30px; 
   text-transform: uppercase; 
   letter-spacing: 2px; 
+  font-size: 1.5rem;
 }
 
 /* --- CABECERA TÉCNICA --- */
@@ -30,7 +32,7 @@
   padding-bottom: 15px;
 }
 
-/* Filtros estilo Terminal */
+/* Filtros */
 .art-filters {
   display: flex; gap: 10px;
 }
@@ -39,7 +41,7 @@
   background: transparent; 
   border: 1px solid var(--art-border);
   color: var(--art-text);
-  padding: 6px 16px; 
+  padding: 8px 16px; 
   border-radius: 4px;
   cursor: pointer; 
   font-size: 0.75rem; 
@@ -49,10 +51,7 @@
   text-transform: uppercase;
 }
 
-.art-filter-btn:hover { 
-  border-color: var(--art-accent); 
-  color: #fff; 
-}
+.art-filter-btn:hover { border-color: var(--art-accent); color: #fff; }
 
 .art-filter-btn.active {
   background: rgba(255, 159, 26, 0.1);
@@ -61,11 +60,11 @@
   box-shadow: 0 0 10px rgba(255, 159, 26, 0.2);
 }
 
-/* Controles */
-.art-nav-controls { display: flex; gap: 5px; }
+/* Controles Flechas */
+.art-nav-controls { display: flex; gap: 8px; }
 
 .art-nav-btn {
-  width: 36px; height: 36px; 
+  width: 40px; height: 40px; 
   border-radius: 4px;
   background: #0f1525; 
   border: 1px solid var(--art-border);
@@ -77,72 +76,80 @@
 .art-nav-btn:hover {
   border-color: var(--art-accent); 
   color: var(--art-accent);
+  background: rgba(255, 159, 26, 0.05);
 }
 
-/* --- CARRUSEL --- */
+/* --- CARRUSEL (Fixed Layout) --- */
 .art-carousel-wrapper {
+  width: 100%;
   overflow: hidden;
   padding: 10px 0 40px 0;
 }
 
 .art-track {
-  display: flex; gap: 30px;
+  display: flex; 
+  gap: 30px;
   overflow-x: auto; 
   scroll-behavior: smooth; 
   scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+  padding-bottom: 20px; /* Espacio para sombras */
 }
-.art-track::-webkit-scrollbar { display: none; }
+.art-track::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
 
-/* --- TARJETA (Cyber-Card) --- */
+/* --- TARJETA (Diseño Robusto) --- */
 .art-card {
-  /* Cálculo para que quepan 3 exactas */
-  flex: 0 0 calc((100% - 60px) / 3); 
-  scroll-snap-align: start;
+  /* TAMAÑO FIJO: Esto evita que se expandan como en tu foto */
+  flex: 0 0 350px; 
+  width: 350px; 
+  max-width: 350px;
   
+  scroll-snap-align: start;
   background: var(--art-card-bg);
   border: 1px solid var(--art-border);
+  /* Borde izquierdo decorativo */
   border-left: 3px solid var(--art-border); 
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   display: flex; 
   flex-direction: column;
   transition: all 0.3s ease;
-  height: 460px;
+  height: 480px; /* Altura fija para uniformidad */
   position: relative;
 }
 
 .art-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
   border-color: var(--art-accent);
   border-left-color: var(--art-accent);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6);
 }
 
-/* --- IMAGEN (Con arreglo de superposición) --- */
+/* --- IMAGEN TÉCNICA --- */
 .art-img-box {
-  height: 180px; 
+  height: 200px; 
   width: 100%;
   position: relative; 
   overflow: hidden;
   border-bottom: 1px solid var(--art-border);
-  flex-shrink: 0; /* Vital para que no se aplaste */
+  flex-shrink: 0; /* Evita que la imagen desaparezca */
   background: #000;
 }
 
-/* Línea de escaneo animada */
+/* Efecto de "Scanline" (Línea que baja) */
 .art-img-box::before {
   content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to bottom, transparent 50%, rgba(255, 159, 26, 0.1) 50%, transparent 51%);
+  background: linear-gradient(to bottom, transparent 50%, rgba(255, 159, 26, 0.2) 50%, transparent 51%);
   background-size: 100% 4px;
   z-index: 2; pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
-/* Overlay oscuro */
+/* Overlay oscuro por defecto */
 .art-img-box::after {
   content: ""; position: absolute; inset: 0;
-  background: rgba(11, 18, 32, 0.3);
+  background: rgba(11, 18, 32, 0.4);
   transition: 0.3s; z-index: 1;
 }
 .art-card:hover .art-img-box::after { background: transparent; }
@@ -150,18 +157,17 @@
 .art-img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.5s ease;
-  filter: grayscale(60%) contrast(1.2);
-  display: block;
+  filter: grayscale(80%) contrast(1.2); /* Look desaturado tech */
 }
-.art-card:hover .art-img { transform: scale(1.05); filter: grayscale(0%); }
+.art-card:hover .art-img { transform: scale(1.1); filter: grayscale(0%); }
 
-/* Badge Técnico */
+/* Badge Flotante */
 .art-badge {
-  position: absolute; top: 10px; right: 10px; z-index: 3;
+  position: absolute; top: 12px; right: 12px; z-index: 3;
   padding: 4px 8px; border-radius: 2px;
-  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
   color: #fff; font-family: 'Source Code Pro', monospace;
-  background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2);
 }
 .art-card:hover .art-badge { border-color: var(--art-accent); color: var(--art-accent); }
 
@@ -171,27 +177,24 @@
   display: flex; 
   flex-direction: column; 
   flex-grow: 1;
-  overflow: hidden; /* Evita que el texto se salga */
 }
 
 .art-meta {
   font-family: 'Source Code Pro', monospace;
   font-size: 0.65rem; color: #64748b;
-  margin-bottom: 12px; display: flex; justify-content: space-between;
+  margin-bottom: 15px; display: flex; justify-content: space-between;
   border-bottom: 1px dashed rgba(255,255,255,0.1);
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   flex-shrink: 0;
 }
-.art-meta span i { color: var(--art-accent); margin-right: 5px; }
 
 .art-title {
-  color: #fff; font-size: 1.1rem; font-weight: 700; margin: 0 0 12px 0;
+  color: #fff; font-size: 1.15rem; font-weight: 700; margin: 0 0 12px 0;
   line-height: 1.4; font-family: 'Inter', sans-serif;
+  /* Limitar texto */
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  position: relative; z-index: 2;
-  flex-shrink: 0;
 }
-/* Efecto prefijo "> " en el título */
+/* Decoración ">" */
 .art-title::before { content: "> "; color: var(--art-accent); }
 
 .art-excerpt {
@@ -200,27 +203,22 @@
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 
-/* Botón de Comando */
+/* Botón "System Link" */
 .art-read-btn {
   align-self: flex-start;
   color: var(--art-accent); font-size: 0.75rem; font-weight: 700; text-decoration: none;
   font-family: 'Source Code Pro', monospace;
   display: flex; align-items: center; gap: 8px;
-  padding: 6px 0; border-bottom: 2px solid transparent;
+  padding: 8px 0; border-bottom: 2px solid transparent;
   transition: 0.2s;
-  margin-top: auto; /* Empuja el botón al fondo */
+  margin-top: auto;
 }
 .art-read-btn:hover { border-bottom-color: var(--art-accent); gap: 12px; }
 
-/* Estado Vacío */
-.art-empty {
-  width: 100%; text-align: center; padding: 60px; color: var(--art-text);
-  border: 1px dashed var(--art-border);
-}
-
 /* RESPONSIVE */
-@media (max-width: 900px) {
-  .art-card { flex: 0 0 300px; }
-  .art-header { flex-direction: column; align-items: flex-start; }
-  .art-filters { overflow-x: auto; width: 100%; padding-bottom: 5px; }
+@media (max-width: 768px) {
+  .art-card { flex: 0 0 280px; width: 280px; } /* Más pequeño en móvil */
+  .art-header { flex-direction: column; align-items: stretch; gap: 15px; }
+  .art-filters { overflow-x: auto; padding-bottom: 5px; }
+  .art-nav-controls { justify-content: flex-end; }
 }
