@@ -1,167 +1,233 @@
-/* --- ESTILOS PRO: KNOWLEDGE VAULT (Data System) --- */
+/* LÓGICA DEL KNOWLEDGE VAULT (SISTEMA DE ARCHIVOS) */
 
-#site-graph {
-  --map-bg: #0b1022;
-  --map-panel: rgba(255, 255, 255, 0.02);
-  --map-border: rgba(255, 255, 255, 0.08);
-  --map-accent: #ff9f1a;
-  --map-text: #94a3b8;
-  
-  padding: 40px 0;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Capturamos los elementos del HTML
+    const container = document.getElementById('explorer-grid');
+    const pathContainer = document.getElementById('explorer-breadcrumbs');
+    const searchInput = document.getElementById('vault-search');
+    
+    // Elementos de estadísticas
+    const statTotal = document.getElementById('stat-total');
+    const statFolders = document.getElementById('stat-folders');
 
-#site-graph .section-title { color: var(--map-accent); margin-bottom: 20px; }
+    // Si no encuentra el contenedor, paramos para no dar error
+    if (!container) return;
 
-/* CONTENEDOR PRINCIPAL */
-.explorer-window {
-  background: var(--map-bg);
-  border: 1px solid var(--map-border);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6);
-  min-height: 600px;
-  display: flex;
-  flex-direction: column;
-}
+    /* --- 2. BASE DE DATOS (Tu estructura de carpetas) --- */
+    const fileSystem = {
+        name: "root",
+        type: "folder",
+        children: [
+            {
+                name: "01_Teoría_Fundamentos",
+                icon: "fa-solid fa-book",
+                desc: "Protocolos, Redes y Sistemas.",
+                type: "folder",
+                children: [
+                    {
+                        name: "Ciberseguridad",
+                        icon: "fa-solid fa-shield-halved",
+                        desc: "Defensa y Ataque.",
+                        type: "folder",
+                        children: [
+                            { name: "Blue Team Ops", icon: "fa-solid fa-user-shield", type: "folder", children: [
+                                { name: "Análisis de Logs.md", type: "file" },
+                                { name: "SIEM_Setup.pdf", type: "file" }
+                            ]},
+                            { name: "Red Team Tactics", icon: "fa-solid fa-bug", type: "folder", children: [] },
+                            { name: "OWASP_Top_10_2025.pdf", type: "file" }
+                        ]
+                    },
+                    {
+                        name: "Sistemas",
+                        icon: "fa-solid fa-server",
+                        type: "folder",
+                        children: [
+                            { name: "Linux_Hardening_Guide.md", type: "file" },
+                            { name: "Windows_AD_Security.md", type: "file" }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: "02_Portafolio_Proyectos",
+                icon: "fa-solid fa-briefcase",
+                desc: "Implementaciones reales.",
+                type: "folder",
+                children: [
+                    { name: "Despliegue_Kubernetes.pdf", type: "file" },
+                    { name: "Auditoria_Empresa_X.pdf", type: "file" }
+                ]
+            },
+            {
+                name: "03_Artículos_Públicos",
+                icon: "fa-solid fa-newspaper",
+                desc: "Publicaciones y análisis.",
+                type: "folder",
+                children: [
+                    { name: "Analisis_CrowdStrike_Crash.md", type: "file" },
+                    { name: "Zero_Trust_Architecture.md", type: "file" }
+                ]
+            }
+        ]
+    };
 
-/* 1. BARRA DE TELEMETRÍA (STATS) */
-.vault-stats {
-  background: rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid var(--map-border);
-  padding: 12px 24px;
-  display: flex; gap: 30px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 0.75rem;
-  color: var(--map-text);
-  overflow-x: auto;
-}
+    /* --- 3. ESTADO DEL SISTEMA --- */
+    let currentDir = fileSystem; // Carpeta actual
+    let pathHistory = [fileSystem]; // Historial para volver atrás
+    let allFilesCache = []; // Para el buscador global
 
-.stat-item { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-.stat-value { color: #fff; font-weight: 700; color: var(--map-accent); }
-.stat-dot { width: 6px; height: 6px; background: #34d399; border-radius: 50%; box-shadow: 0 0 5px #34d399; }
+    /* --- 4. FUNCIÓN: INDEXAR Y CONTAR (Telemetría) --- */
+    function indexSystem(node) {
+        let fileCount = 0;
+        let folderCount = 0;
 
-/* 2. CABECERA DE CONTROL (Buscador + Ruta) */
-.vault-controls {
-  background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid var(--map-border);
-  padding: 16px 24px;
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 20px;
-}
+        if (node.children) {
+            node.children.forEach(child => {
+                if (child.type === 'file') {
+                    fileCount++;
+                    allFilesCache.push(child);
+                } else {
+                    folderCount++;
+                    const subCounts = indexSystem(child);
+                    fileCount += subCounts.files;
+                    folderCount += subCounts.folders;
+                    child.totalItems = subCounts.total; // Guardamos el dato en la carpeta
+                }
+            });
+        }
+        // Devolvemos la suma total de esta rama
+        return { files: fileCount, folders: folderCount, total: fileCount + folderCount };
+    }
 
-/* Migas de pan (Ruta) */
-.breadcrumbs {
-  font-family: 'Source Code Pro', monospace;
-  color: var(--map-text); font-size: 0.9rem;
-  flex-grow: 1;
-}
-.crumb-root { color: var(--map-accent); font-weight: 700; cursor: pointer; }
-.crumb-item { cursor: pointer; transition: 0.2s; }
-.crumb-item:hover { color: #fff; text-decoration: underline; }
-.crumb-sep { opacity: 0.4; margin: 0 6px; }
-.crumb-current { color: #fff; }
+    // Ejecutamos el conteo inicial y actualizamos el HTML
+    const stats = indexSystem(fileSystem);
+    if(statTotal) statTotal.textContent = stats.total;
+    if(statFolders) statFolders.textContent = stats.folders;
 
-/* Buscador Integrado */
-.vault-search-box {
-  position: relative;
-  width: 250px;
-}
-.vault-search-box input {
-  width: 100%;
-  background: #05080f;
-  border: 1px solid var(--map-border);
-  border-radius: 6px;
-  padding: 8px 12px 8px 35px;
-  color: #fff; font-family: 'Inter', sans-serif; font-size: 0.85rem;
-  transition: 0.2s;
-}
-.vault-search-box input:focus {
-  border-color: var(--map-accent);
-  box-shadow: 0 0 10px rgba(255, 159, 26, 0.1);
-  outline: none;
-}
-.vault-search-box i {
-  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-  color: var(--map-text); font-size: 0.8rem;
-}
 
-/* 3. CUERPO (GRID) */
-.explorer-body {
-  padding: 30px;
-  flex-grow: 1;
-  background: 
-    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
-  background-size: 40px 40px;
-  overflow-y: auto;
-  max-height: 600px; /* Scroll interno si hay mucho contenido */
-}
+    /* --- 5. FUNCIÓN PRINCIPAL: PINTAR EN PANTALLA (Render) --- */
+    function render(isSearch = false, searchResults = []) {
+        container.innerHTML = ''; // Limpiamos la pantalla
 
-.nodes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-}
+        // MODO BÚSQUEDA
+        if (isSearch) {
+            pathContainer.innerHTML = `<span class="crumb-root">~/search-results</span>`;
+            
+            if (searchResults.length === 0) {
+                container.innerHTML = `<div class="vault-message">No se encontraron archivos que coincidan con "${searchInput.value}"</div>`;
+                return;
+            }
+            searchResults.forEach(file => createCard(file));
+            return;
+        }
 
-/* TARJETA DE NODO */
-.node-card {
-  background: var(--map-panel);
-  border: 1px solid var(--map-border);
-  border-radius: 10px;
-  padding: 24px 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-  position: relative;
-}
+        // MODO NAVEGACIÓN NORMAL
+        updateBreadcrumbs(); // Actualizamos la barra de ruta
 
-.node-card:hover {
-  background: rgba(255, 159, 26, 0.06);
-  border-color: var(--map-accent);
-  transform: translateY(-4px);
-}
+        // Botón "Subir Nivel" (si no estamos en la raíz)
+        if (pathHistory.length > 1) {
+            const backRow = document.createElement('div');
+            backRow.className = 'back-btn-row';
+            backRow.innerHTML = `<div class="back-btn"><i class="fa-solid fa-arrow-turn-up"></i> Subir nivel</div>`;
+            backRow.onclick = () => {
+                pathHistory.pop();
+                currentDir = pathHistory[pathHistory.length - 1];
+                render();
+            };
+            container.appendChild(backRow);
+        }
 
-.node-icon {
-  font-size: 2.2rem; margin-bottom: 15px; color: #64748b; transition: 0.2s;
-}
-/* Colores específicos */
-.node-card.folder .node-icon { color: #eab308; } /* Amarillo carpeta */
-.node-card.file .node-icon { color: #3b82f6; font-size: 1.8rem; } /* Azul archivo */
+        // Pintar las carpetas/archivos
+        if (currentDir.children && currentDir.children.length > 0) {
+            currentDir.children.forEach(item => createCard(item));
+        } else {
+            container.innerHTML = `<div class="vault-message">[ Directorio Vacío ]</div>`;
+        }
+    }
 
-/* Contador de items dentro de carpeta */
-.node-count {
-  position: absolute; top: 12px; right: 12px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 0.65rem; color: var(--map-text);
-  background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;
-}
+    /* --- AUXILIAR: CREAR TARJETA --- */
+    function createCard(item) {
+        const card = document.createElement('div');
+        card.className = `node-card ${item.type}`;
+        
+        // Elegir icono
+        let icon = item.icon;
+        if (!icon) {
+            icon = item.type === 'folder' ? 'fa-solid fa-folder' : 'fa-regular fa-file-code';
+        }
 
-.node-title {
-  color: #e2e8f0; font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;
-}
-.node-desc {
-  color: var(--map-text); font-size: 0.75rem; line-height: 1.4;
-}
+        // Badge de cantidad (solo para carpetas)
+        const countBadge = item.type === 'folder' ? `<span class="node-count">${item.totalItems || 0} items</span>` : '';
 
-/* BOTÓN DE RETORNO (Estilo Botón) */
-.back-btn-row {
-  grid-column: 1 / -1; margin-bottom: 10px;
-}
-.back-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 16px; border-radius: 6px;
-  background: rgba(255,255,255,0.05);
-  color: #fff; font-size: 0.85rem; cursor: pointer;
-  border: 1px solid transparent; transition: 0.2s;
-}
-.back-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--map-text); }
+        card.innerHTML = `
+            ${countBadge}
+            <i class="${icon} node-icon"></i>
+            <div class="node-title">${item.name}</div>
+            ${item.desc ? `<div class="node-desc">${item.desc}</div>` : ''}
+        `;
 
-/* MENSAJES DE ESTADO */
-.vault-message { grid-column: 1/-1; text-align: center; padding: 40px; color: var(--map-text); }
+        // Click en la tarjeta
+        card.onclick = () => {
+            if (item.type === 'folder') {
+                pathHistory.push(item);
+                currentDir = item;
+                searchInput.value = ''; // Limpiar buscador al entrar
+                render();
+            } else {
+                alert(`Abriendo archivo: ${item.name}`);
+            }
+        };
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .vault-controls { flex-direction: column; align-items: stretch; gap: 15px; }
-  .vault-search-box { width: 100%; }
-  .nodes-grid { grid-template-columns: 1fr 1fr; }
-}
+        container.appendChild(card);
+    }
+
+    /* --- AUXILIAR: BARRA DE RUTA (Breadcrumbs) --- */
+    function updateBreadcrumbs() {
+        let html = `<span class="crumb-root" id="root-crumb">~/root</span>`;
+        
+        pathHistory.forEach((dir, index) => {
+            if (index > 0) { // Saltamos root
+                const isLast = index === pathHistory.length - 1;
+                html += ` <span class="crumb-sep">/</span> <span class="${isLast ? 'crumb-current' : 'crumb-item'}" data-idx="${index}">${dir.name}</span>`;
+            }
+        });
+        pathContainer.innerHTML = html;
+
+        // Eventos para hacer click en la ruta
+        const crumbs = pathContainer.querySelectorAll('.crumb-item');
+        crumbs.forEach(c => {
+            c.onclick = () => {
+                const idx = parseInt(c.dataset.idx);
+                pathHistory = pathHistory.slice(0, idx + 1);
+                currentDir = pathHistory[pathHistory.length - 1];
+                render();
+            };
+        });
+        
+        // Evento para volver al inicio
+        const rootBtn = document.getElementById('root-crumb');
+        if(rootBtn) {
+            rootBtn.onclick = () => {
+                pathHistory = [fileSystem];
+                currentDir = fileSystem;
+                render();
+            }
+        }
+    }
+
+    /* --- 6. EVENTOS DEL BUSCADOR --- */
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        
+        if (query.length > 0) {
+            const results = allFilesCache.filter(file => file.name.toLowerCase().includes(query));
+            render(true, results);
+        } else {
+            render(); // Volver a vista normal
+        }
+    });
+
+    // ¡ARRANCAR!
+    render();
+});
