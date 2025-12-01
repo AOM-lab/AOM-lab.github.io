@@ -1,4 +1,4 @@
-/* --- ESTILOS PRO: SOBRE MÍ (Versión Limpia - Solo Texto) --- */
+/* --- ESTILOS PRO: SOBRE MÍ (Versión Monitor de Estado) --- */
 
 #sobre-mi {
   --sm-bg: #0b1022;
@@ -6,123 +6,147 @@
   --sm-border: rgba(255, 255, 255, 0.06);
   --sm-accent: #ff9f1a;
   --sm-text: #94a3b8;
-  --sm-highlight: #e2e8f0;
+  --sm-monitor-bg: #05080f; /* Fondo negro profundo para el monitor */
+  --sm-code: #34d399; /* Verde terminal */
   
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 40px; padding-bottom: 40px;
 }
 
-#sobre-mi .section-title {
-  color: var(--sm-accent); margin-bottom: 10px;
-}
+#sobre-mi .section-title { color: var(--sm-accent); margin-bottom: 10px; }
 
 #sobre-mi .kicker {
   color: var(--sm-text); margin-bottom: 30px;
   border-left: 2px solid var(--sm-accent); padding-left: 12px;
 }
 
-/* TARJETA PRINCIPAL (Layout Fluido) */
+/* TARJETA PRINCIPAL (Layout Grid) */
 .profile-card {
   background: var(--sm-card-bg);
   border: 1px solid var(--sm-border);
-  border-radius: 12px;
-  padding: 36px; /* Más espacio interno */
+  border-radius: 16px;
+  padding: 40px;
+  display: grid;
+  /* Columna texto flexible | Columna monitor fija */
+  grid-template-columns: 1fr 320px; 
+  gap: 40px;
+  align-items: start;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
 }
 
-/* Decoración Tech en la esquina superior derecha */
-.profile-card::after {
-  content: ""; position: absolute; top: 0; right: 0;
-  width: 100px; height: 100px;
-  background: linear-gradient(45deg, transparent 50%, rgba(255, 159, 26, 0.04) 50%);
-  border-bottom: 1px solid var(--sm-border);
-  border-left: 1px solid var(--sm-border);
-  border-radius: 0 0 0 20px;
+/* --- COLUMNA IZQUIERDA: TEXTO --- */
+.profile-main {
+  display: flex; flex-direction: column;
 }
 
-/* --- CABECERA (Nombre y Rol) --- */
 .profile-header {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding-bottom: 20px;
 }
 
 .profile-name {
   font-family: 'Inter', sans-serif;
-  color: #fff; 
-  font-size: 1.8rem; /* Nombre más grande y protagonista */
-  font-weight: 700;
-  margin: 0 0 8px 0;
-  letter-spacing: -0.02em;
+  color: #fff; font-size: 1.8rem; font-weight: 700;
+  margin: 0 0 8px 0; letter-spacing: -0.02em;
 }
 
 .profile-role {
   font-family: 'Source Code Pro', monospace;
-  color: var(--sm-accent); 
-  font-size: 1rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  color: var(--sm-accent); font-size: 0.95rem; font-weight: 600;
+  display: flex; align-items: center; gap: 10px;
 }
-
-/* Pequeño punto decorativo antes del rol */
 .profile-role::before {
   content: ""; display: block; width: 8px; height: 8px;
   background: var(--sm-accent); border-radius: 50%;
-  box-shadow: 0 0 8px var(--sm-accent);
+  box-shadow: 0 0 10px var(--sm-accent);
 }
 
-/* --- CUERPO DE TEXTO --- */
 .profile-bio-text {
-  color: #cbd5e1; 
-  font-size: 1rem; 
-  line-height: 1.8; /* Mejor legibilidad */
-  margin-bottom: 30px; 
-  max-width: 850px; /* Ancho óptimo de lectura */
+  color: #cbd5e1; font-size: 1rem; line-height: 1.7;
+  margin-bottom: 30px;
+}
+.profile-bio-text strong { color: #fff; font-weight: 600; }
+
+/* --- COLUMNA DERECHA: MONITOR DE ESTADO (HUD) --- */
+.profile-monitor {
+  background: var(--sm-monitor-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.85rem;
+  position: relative;
 }
 
-.profile-bio-text strong { 
-  color: #fff; font-weight: 600; 
-  border-bottom: 1px solid rgba(255, 159, 26, 0.3); /* Subrayado sutil en negritas */
+/* Barra superior decorativa del monitor */
+.profile-monitor::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--sm-accent), transparent);
 }
 
-/* --- GRID DE FORMACIÓN (Tus Títulos) --- */
+.monitor-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px; color: #64748b; font-size: 0.75rem; letter-spacing: 1px;
+}
+.monitor-dots { display: flex; gap: 4px; }
+.monitor-dot { width: 6px; height: 6px; background: #334155; border-radius: 50%; }
+.monitor-dot:first-child { background: var(--sm-code); box-shadow: 0 0 5px var(--sm-code); }
+
+.monitor-row {
+  display: flex; justify-content: space-between;
+  margin-bottom: 10px; padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+.monitor-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.key { color: #94a3b8; }
+.val { color: #e2e8f0; font-weight: 600; text-align: right; }
+.val.highlight { color: var(--sm-accent); }
+.val.online { color: var(--sm-code); display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+
+/* Animación parpadeo status */
+.blink { animation: blinkStatus 2s infinite; width: 6px; height: 6px; background: currentColor; border-radius: 50%; display: inline-block; }
+@keyframes blinkStatus { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* --- BLOQUE FORMACIÓN (Debajo del texto) --- */
 .edu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  background: rgba(0, 0, 0, 0.2); /* Fondo oscuro para separar visualmente */
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: auto;
 }
 
 .edu-item {
-  display: flex; gap: 14px; align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+  transition: 0.2s;
 }
+.edu-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1); }
 
+/* Icono Glass (Mejorado) */
 .edu-icon-box {
-  width: 40px; height: 40px;
-  background: rgba(255, 159, 26, 0.1);
+  width: 36px; height: 36px;
+  /* Fondo transparente con borde sutil en lugar de bloque sólido */
+  background: rgba(255, 159, 26, 0.1); 
+  border: 1px solid rgba(255, 159, 26, 0.3);
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   color: var(--sm-accent);
-  font-size: 1.1rem;
+  font-size: 1rem;
+  flex-shrink: 0;
 }
 
-.edu-info h4 {
-  margin: 0 0 4px 0; color: #e2e8f0; font-size: 0.95rem; font-weight: 600;
-}
-.edu-info span {
-  display: block; color: var(--sm-text); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;
-}
+.edu-info h4 { margin: 0; color: #fff; font-size: 0.85rem; font-weight: 600; line-height: 1.4; }
+.edu-info span { display: block; color: var(--sm-text); font-size: 0.75rem; }
 
 /* RESPONSIVE */
-@media (max-width: 768px) {
-  .profile-card { padding: 24px; }
+@media (max-width: 900px) {
+  .profile-card { grid-template-columns: 1fr; gap: 30px; }
+  .profile-monitor { width: 100%; order: -1; /* Poner monitor arriba en móvil o quitar con display:none */ }
   .edu-grid { grid-template-columns: 1fr; }
-  .profile-name { font-size: 1.5rem; }
 }
