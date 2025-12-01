@@ -1,167 +1,152 @@
-/* --- ESTILOS PRO: KNOWLEDGE VAULT (Data System) --- */
+/* --- ESTILOS PRO: SQL DATABASE INTERFACE (Amapa.css) --- */
 
 #site-graph {
-  --map-bg: #0b1022;
-  --map-panel: rgba(255, 255, 255, 0.02);
-  --map-border: rgba(255, 255, 255, 0.08);
-  --map-accent: #ff9f1a;
-  --map-text: #94a3b8;
+  --db-bg: #0b1022;
+  --db-panel: #0f1525;
+  --db-border: rgba(255, 255, 255, 0.08);
+  --db-accent: #ff9f1a;
+  --db-text: #94a3b8;
+  --db-keyword: #ff79c6; /* Rosa para SELECT, FROM */
+  --db-string: #f1fa8c; /* Amarillo para strings */
+  --db-func: #8be9fd; /* Cyan para funciones */
   
   padding: 40px 0;
 }
 
-#site-graph .section-title { color: var(--map-accent); margin-bottom: 20px; }
+#site-graph .section-title { color: var(--db-accent); margin-bottom: 20px; }
 
-/* CONTENEDOR PRINCIPAL */
-.explorer-window {
-  background: var(--map-bg);
-  border: 1px solid var(--map-border);
-  border-radius: 12px;
+/* VENTANA PRINCIPAL (IDE STYLE) */
+.sql-window {
+  background: var(--db-bg);
+  border: 1px solid var(--db-border);
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6);
   min-height: 600px;
   display: flex;
   flex-direction: column;
+  font-family: 'Source Code Pro', monospace; /* Todo monoespaciado */
 }
 
-/* 1. BARRA DE TELEMETRÍA (STATS) */
-.vault-stats {
-  background: rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid var(--map-border);
-  padding: 12px 24px;
-  display: flex; gap: 30px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 0.75rem;
-  color: var(--map-text);
-  overflow-x: auto;
+/* 1. BARRA DE HERRAMIENTAS SUPERIOR */
+.sql-toolbar {
+  background: #1e2538;
+  border-bottom: 1px solid var(--db-border);
+  padding: 10px 15px;
+  display: flex; gap: 15px; align-items: center;
 }
 
-.stat-item { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-.stat-value { color: #fff; font-weight: 700; color: var(--map-accent); }
-.stat-dot { width: 6px; height: 6px; background: #34d399; border-radius: 50%; box-shadow: 0 0 5px #34d399; }
+.traffic-lights { display: flex; gap: 6px; margin-right: 15px; }
+.light { width: 10px; height: 10px; border-radius: 50%; background: #333; }
+.light.red { background: #ff5f56; }
+.light.yellow { background: #ffbd2e; }
+.light.green { background: #27c93f; }
 
-/* 2. CABECERA DE CONTROL (Buscador + Ruta) */
-.vault-controls {
-  background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid var(--map-border);
-  padding: 16px 24px;
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 20px;
+.connection-info {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; color: #fff;
+  background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--db-border);
+}
+.conn-dot { width: 6px; height: 6px; background: #27c93f; border-radius: 50%; box-shadow: 0 0 5px #27c93f; }
+
+/* 2. ÁREA DE TRABAJO (DIVIDIDA) */
+.sql-workspace {
+  display: flex; flex-grow: 1;
+  overflow: hidden;
 }
 
-/* Migas de pan (Ruta) */
-.breadcrumbs {
-  font-family: 'Source Code Pro', monospace;
-  color: var(--map-text); font-size: 0.9rem;
-  flex-grow: 1;
-}
-.crumb-root { color: var(--map-accent); font-weight: 700; cursor: pointer; }
-.crumb-item { cursor: pointer; transition: 0.2s; }
-.crumb-item:hover { color: #fff; text-decoration: underline; }
-.crumb-sep { opacity: 0.4; margin: 0 6px; }
-.crumb-current { color: #fff; }
-
-/* Buscador Integrado */
-.vault-search-box {
-  position: relative;
+/* SIDEBAR (Object Explorer) */
+.db-sidebar {
   width: 250px;
-}
-.vault-search-box input {
-  width: 100%;
-  background: #05080f;
-  border: 1px solid var(--map-border);
-  border-radius: 6px;
-  padding: 8px 12px 8px 35px;
-  color: #fff; font-family: 'Inter', sans-serif; font-size: 0.85rem;
-  transition: 0.2s;
-}
-.vault-search-box input:focus {
-  border-color: var(--map-accent);
-  box-shadow: 0 0 10px rgba(255, 159, 26, 0.1);
-  outline: none;
-}
-.vault-search-box i {
-  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-  color: var(--map-text); font-size: 0.8rem;
+  background: #131929;
+  border-right: 1px solid var(--db-border);
+  display: flex; flex-direction: column;
+  flex-shrink: 0;
 }
 
-/* 3. CUERPO (GRID) */
-.explorer-body {
-  padding: 30px;
+.sidebar-header {
+  padding: 10px 15px; font-size: 0.75rem; color: var(--db-text); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--db-border);
+}
+
+.db-tree {
+  padding: 10px; overflow-y: auto;
+}
+
+.tree-item {
+  padding: 6px 10px; cursor: pointer; color: var(--db-text); font-size: 0.85rem;
+  border-radius: 4px; display: flex; align-items: center; gap: 8px;
+  transition: 0.1s;
+}
+.tree-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+.tree-item.active { background: rgba(255, 159, 26, 0.15); color: var(--db-accent); border-left: 2px solid var(--db-accent); }
+
+.tree-icon { width: 14px; text-align: center; }
+
+/* PANEL PRINCIPAL (Resultados) */
+.db-main-panel {
+  flex-grow: 1; display: flex; flex-direction: column;
+  background: var(--db-bg);
+}
+
+/* Caja de Consulta SQL (Falsa) */
+.query-editor {
+  background: #0f131f;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--db-border);
+  color: #fff; font-size: 0.9rem;
+  height: 60px; display: flex; align-items: center;
+}
+.sql-keyword { color: var(--db-keyword); font-weight: 700; margin-right: 5px; }
+.sql-text { color: #fff; margin-right: 5px; }
+.sql-string { color: var(--db-string); }
+.cursor-blink { border-right: 2px solid var(--db-accent); animation: blink 1s step-end infinite; }
+
+@keyframes blink { 50% { border-color: transparent; } }
+
+/* Tabla de Resultados */
+.results-area {
   flex-grow: 1;
-  background: 
-    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
-  background-size: 40px 40px;
-  overflow-y: auto;
-  max-height: 600px; /* Scroll interno si hay mucho contenido */
+  overflow: auto;
+  padding: 0;
 }
 
-.nodes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+.db-table {
+  width: 100%; border-collapse: collapse; min-width: 600px;
 }
 
-/* TARJETA DE NODO */
-.node-card {
-  background: var(--map-panel);
-  border: 1px solid var(--map-border);
-  border-radius: 10px;
-  padding: 24px 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-  position: relative;
+.db-table thead {
+  background: #1a2133; position: sticky; top: 0; z-index: 10;
 }
 
-.node-card:hover {
-  background: rgba(255, 159, 26, 0.06);
-  border-color: var(--map-accent);
-  transform: translateY(-4px);
+.db-table th {
+  text-align: left; padding: 10px 15px;
+  font-size: 0.75rem; color: var(--db-text);
+  border-bottom: 1px solid var(--db-border);
+  border-right: 1px solid var(--db-border);
 }
 
-.node-icon {
-  font-size: 2.2rem; margin-bottom: 15px; color: #64748b; transition: 0.2s;
-}
-/* Colores específicos */
-.node-card.folder .node-icon { color: #eab308; } /* Amarillo carpeta */
-.node-card.file .node-icon { color: #3b82f6; font-size: 1.8rem; } /* Azul archivo */
-
-/* Contador de items dentro de carpeta */
-.node-count {
-  position: absolute; top: 12px; right: 12px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 0.65rem; color: var(--map-text);
-  background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;
+.db-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--db-border);
+  border-right: 1px solid rgba(255,255,255,0.03);
+  font-size: 0.85rem; color: #cbd5e1;
 }
 
-.node-title {
-  color: #e2e8f0; font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;
-}
-.node-desc {
-  color: var(--map-text); font-size: 0.75rem; line-height: 1.4;
-}
+.db-table tr:hover { background: rgba(255,255,255,0.03); }
 
-/* BOTÓN DE RETORNO (Estilo Botón) */
-.back-btn-row {
-  grid-column: 1 / -1; margin-bottom: 10px;
+/* Badges dentro de la tabla */
+.type-badge {
+  padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; text-transform: uppercase;
 }
-.back-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 16px; border-radius: 6px;
-  background: rgba(255,255,255,0.05);
-  color: #fff; font-size: 0.85rem; cursor: pointer;
-  border: 1px solid transparent; transition: 0.2s;
-}
-.back-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--map-text); }
+.badge-folder { background: rgba(234, 179, 8, 0.2); color: #eab308; }
+.badge-file { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
 
-/* MENSAJES DE ESTADO */
-.vault-message { grid-column: 1/-1; text-align: center; padding: 40px; color: var(--map-text); }
+/* Mensaje vacío */
+.empty-state { padding: 40px; text-align: center; color: var(--db-text); font-style: italic; }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .vault-controls { flex-direction: column; align-items: stretch; gap: 15px; }
-  .vault-search-box { width: 100%; }
-  .nodes-grid { grid-template-columns: 1fr 1fr; }
+  .sql-window { flex-direction: column; min-height: auto; }
+  .db-sidebar { width: 100%; height: 150px; border-right: none; border-bottom: 1px solid var(--db-border); }
+  .sql-toolbar { display: none; } /* Ocultar toolbar en móvil para ganar espacio */
 }
