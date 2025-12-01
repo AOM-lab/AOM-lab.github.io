@@ -1,3 +1,5 @@
+/* LÓGICA DEL CARRUSEL DE ARTÍCULOS */
+
 document.addEventListener('DOMContentLoaded', () => {
     const track = document.getElementById('art-track');
     const filterBtns = document.querySelectorAll('.art-filter-btn');
@@ -11,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 1,
             title: "Hardening de Servidores Linux con CIS Benchmarks",
             excerpt: "Guía práctica para asegurar servidores Ubuntu en producción. Aplicación de normativas de seguridad y cierre de puertos.",
-            image: "https://images.unsplash.com/photo-1558494949-ef526b0042a0?auto=format&fit=crop&w=800&q=80", // Server rack
+            // Imagen nueva y fiable
+            image: "https://images.unsplash.com/photo-1558494949-ef526b0042a0?w=800&q=80",
             category: "teoria",
             tag: "HARDENING",
             badgeClass: "badge-red",
@@ -22,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 2,
             title: "Laboratorio Active Directory: Ataque y Defensa",
             excerpt: "Despliegue de un entorno AD vulnerable para prácticas de Red Team. Kerberoasting, DCSync y mitigaciones.",
-            image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80", // Code screen
+            image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80",
             category: "portafolio",
             tag: "RED TEAM",
             badgeClass: "badge-blue",
@@ -33,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 3,
             title: "Análisis Forense de Memoria Volátil (RAM)",
             excerpt: "Uso de Volatility para extraer artefactos de un volcado de memoria tras un incidente de ransomware.",
-            image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80", // Tech abstract
+            image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80",
             category: "portafolio",
             tag: "FORENSICS",
             badgeClass: "badge-purple",
@@ -44,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 4,
             title: "Pipeline DevSecOps con Jenkins y SonarQube",
             excerpt: "Integración de análisis estático de código (SAST) en un pipeline de CI/CD para detectar vulnerabilidades.",
-            image: "https://images.unsplash.com/photo-1607799275518-d580e8105d86?auto=format&fit=crop&w=800&q=80", // DevOps
+            image: "https://images.unsplash.com/photo-1607799275518-d580e8105d86?w=800&q=80",
             category: "teoria",
             tag: "DEVSECOPS",
             badgeClass: "badge-green",
@@ -55,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 5,
             title: "Arquitectura Zero Trust: Más allá del Perímetro",
             excerpt: "Principios fundamentales de Zero Trust. Por qué 'confiar pero verificar' ya no es suficiente.",
-            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80", // Network
+            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
             category: "teoria",
             tag: "ARCH",
             badgeClass: "badge-red",
@@ -79,8 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
         filtered.forEach((art, index) => {
             const card = document.createElement('article');
             card.className = 'art-card';
+            // Aquí es donde se aplica la animación definida en el CSS
             card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.1}s`;
-            card.style.opacity = '0';
+            card.style.opacity = '0'; // Empieza invisible
             
             card.innerHTML = `
                 <div class="art-img-box">
@@ -103,23 +107,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* Eventos Filtros */
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            
             const filter = btn.dataset.filter;
             
             track.style.opacity = '0';
+            track.style.transition = 'opacity 0.2s';
             setTimeout(() => {
                 renderArticles(filter);
+                track.scrollLeft = 0;
                 track.style.opacity = '1';
-                track.scrollLeft = 0; 
             }, 200);
         });
     });
 
+    /* Controles Scroll */
     btnPrev.addEventListener('click', () => {
-        // Desplazar el ancho de una tarjeta + gap
         const itemWidth = track.querySelector('.art-card').offsetWidth + 24;
         track.scrollBy({ left: -itemWidth, behavior: 'smooth' });
     });
@@ -129,5 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         track.scrollBy({ left: itemWidth, behavior: 'smooth' });
     });
 
+    // Init
     renderArticles('all');
 });
