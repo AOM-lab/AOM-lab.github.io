@@ -385,94 +385,89 @@
       <div id="tools-pro">
         </div>
     </section>
+
     <section id="investigacion" class="reveal" data-reveal="fade-up">
-      <h2 class="section-title">Investigación y Metodología</h2>
-
-      <div class="inv-manifesto-grid">
-        <div class="manifesto-card alert">
-          <h3 class="manifesto-title"><i class="fa-solid fa-triangle-exclamation"></i> El Riesgo de la Superficialidad</h3>
-          <p class="manifesto-text">
-            Hoy en día, la investigación técnica a menudo se vuelve pobre, dependiendo excesivamente de los primeros resultados de búsqueda o respuestas de IA sin contexto ni verificación, generando una base de conocimiento frágil y propensa a errores.
-          </p>
-        </div>
-        <div class="manifesto-card secure">
-          <h3 class="manifesto-title"><i class="fa-solid fa-shield-halved"></i> Rigor y Verificación</h3>
-          <p class="manifesto-text">
-            Una investigación rigurosa exige contrastar fuentes oficiales, analizar documentación técnica y verificar hechos en entornos controlados. La falta de este rigor es lo que provoca fallos críticos en infraestructuras a gran escala.
-          </p>
-        </div>
+      
+      <div class="section-header">
+        <h2 class="section-title">Investigación y Metodología</h2>
+        <div class="section-subtitle">// PROCESS_LOGIC_V1.0</div>
       </div>
 
-      <div class="inv-pipeline-container">
+      <div class="inv-layout">
         
-        <span class="pipeline-phase-title">// FASE 1: Análisis y Alcance General</span>
-        <div class="pipeline-grid">
-          <div class="step-card">
-            <div class="step-header">
-              <span class="step-number">01</span>
-              <i class="fa-solid fa-magnifying-glass step-icon"></i>
-            </div>
-            <h4 class="step-title">Definición del Alcance</h4>
-            <p class="step-desc">Entender el problema raíz, no solo el síntoma. Delimitar qué sistemas y tecnologías están realmente afectados.</p>
+        <div class="inv-left">
+          
+          <div class="inv-card">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> El Problema Actual</h3>
+            <p class="inv-text">
+              Hoy en día, la investigación técnica suele ser pobre, dependiendo de los primeros resultados de Google o respuestas de IA sin contexto. Esto genera una <strong>base de conocimiento frágil</strong> y propensa a errores catastróficos.
+            </p>
           </div>
-          <div class="step-card">
-            <div class="step-header">
-              <span class="step-number">02</span>
-              <i class="fa-solid fa-book-bookmark step-icon"></i>
+
+          <div class="inv-card">
+            <h3><i class="fa-solid fa-microscope"></i> Rigor Técnico</h3>
+            <p class="inv-text">
+              Mi enfoque es distinto: <strong>Contrastar fuentes oficiales</strong>, analizar documentación técnica (RFCs, Vendor Docs) y verificar hechos en laboratorio.
+            </p>
+            
+            <div class="inv-alert-box">
+              <div class="inv-alert-text">
+                "¿Por qué importa? Un fallo en una actualización no verificada (como el caso CrowdStrike) puede detener aeropuertos enteros. El rigor no es un lujo, es seguridad operativa."
+              </div>
             </div>
-            <h4 class="step-title">Fuentes Oficiales (Vendor)</h4>
-            <p class="step-desc">Consulta prioritaria a documentación del fabricante (man pages, whitepapers, RFCs) antes que a foros de terceros.</p>
           </div>
-          <div class="step-card">
-            <div class="step-header">
-              <span class="step-number">03</span>
-              <i class="fa-brands fa-github step-icon"></i>
-            </div>
-            <h4 class="step-title">Comunidad y Repositorios</h4>
-            <p class="step-desc">Análisis de 'Issues' en GitHub, changelogs y discusiones técnicas para identificar patrones o bugs conocidos.</p>
-          </div>
+
         </div>
 
-        <span class="pipeline-phase-title" style="margin-top: 30px;">// FASE 2: Ejecución y Verificación Específica</span>
-        <div class="pipeline-grid">
-          <div class="step-card">
-            <div class="step-header">
-              <span class="step-number">04</span>
-              <i class="fa-solid fa-flask-vial step-icon"></i>
+        <div class="inv-right">
+          
+          <div class="workflow-container">
+            <div class="workflow-header">
+              <span class="wf-title"><i class="fa-solid fa-list-check"></i> PIPELINE DE INVESTIGACIÓN</span>
+              <span class="wf-tag">6 PASOS</span>
             </div>
-            <h4 class="step-title">Sandbox / Laboratorio</h4>
-            <p class="step-desc">Reproducción del escenario en un entorno aislado y controlado. Nunca probar en producción sin validar.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-header">
-              <span class="step-number">05</span>
-              <i class="fa-solid fa-file-waveform step-icon"></i>
+            
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-head"><span class="step-num">01</span> <span class="step-name">Definición</span></div>
+                <p class="step-desc">Entender el problema raíz, no solo el síntoma visible. Delimitar el alcance.</p>
+              </div>
+              <div class="step-item">
+                <div class="step-head"><span class="step-num">02</span> <span class="step-name">Fuentes Oficiales</span></div>
+                <p class="step-desc">Consulta prioritaria al fabricante y documentación técnica oficial.</p>
+              </div>
+              <div class="step-item">
+                <div class="step-head"><span class="step-num">03</span> <span class="step-name">Comunidad</span></div>
+                <p class="step-desc">Análisis de Issues en GitHub y foros técnicos para patrones conocidos.</p>
+              </div>
+              <div class="step-item">
+                <div class="step-head"><span class="step-num">04</span> <span class="step-name">Laboratorio</span></div>
+                <p class="step-desc">Reproducción en entorno aislado (Sandbox). Nunca probar en producción.</p>
+              </div>
+              <div class="step-item">
+                <div class="step-head"><span class="step-num">05</span> <span class="step-name">Evidencia</span></div>
+                <p class="step-desc">Revisión de logs y trazas para confirmar la hipótesis con datos.</p>
+              </div>
+              <div class="step-item">
+                <div class="step-head"><span class="step-num">06</span> <span class="step-name">Informe</span></div>
+                <p class="step-desc">Documentación accionable para evitar la recurrencia del fallo.</p>
+              </div>
             </div>
-            <h4 class="step-title">Análisis de Evidencia (Logs)</h4>
-            <p class="step-desc">Revisión profunda de logs, trazas de sistema y métricas para confirmar la causa raíz con datos objetivos.</p>
           </div>
-          <div class="step-card">
-            <div class="step-header">
-              <span class="step-number">06</span>
-              <i class="fa-solid fa-clipboard-check step-icon"></i>
+
+          <div class="method-card">
+            <i class="fa-solid fa-layer-group method-icon"></i>
+            <div class="method-content">
+              <h4>Metodologías y Adaptación</h4>
+              <p>Sigo marcos claros (NIST, OWASP) pero mantengo la agilidad para adaptarme a nuevas tecnologías o crisis en tiempo real.</p>
             </div>
-            <h4 class="step-title">Documentación Accionable</h4>
-            <p class="step-desc">Generar un reporte claro con el hallazgo, la solución verificada y los pasos para evitar la recurrencia.</p>
           </div>
+
         </div>
 
       </div>
-
-      <div class="inv-footer-card">
-        <div class="footer-icon-box">
-          <i class="fa-solid fa-compass-drafting"></i>
-        </div>
-        <p class="footer-text">
-          Más allá de resolver errores puntuales, mi trabajo se rige por metodologías claras (adaptando marcos como <strong>NIST</strong> o <strong>OWASP</strong> según el proyecto), manteniendo siempre la agilidad necesaria para adaptarme rápidamente a nuevas tecnologías o situaciones de crisis.
-        </p>
-      </div>
-
     </section>
+
     
     <section id="site-graph" class="graph reveal" data-reveal="fade-up" aria-labelledby="site-graph-title">
       <div class="card">
