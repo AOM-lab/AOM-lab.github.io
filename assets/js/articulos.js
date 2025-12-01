@@ -1,182 +1,144 @@
-  // ======== Carrusel "cubos" — versión compacta, accesible y responsive ========
-// - 5/3/2/1 ítems visibles según ancho (coincide con CSS)
-// - Autoplay opcional (data-autoplay, data-interval)
-// - Mezcla opcional (data-shuffle)
-// - Pausa en hover/focus, flechas + dots, soporte teclado
+/* LÓGICA DEL CARRUSEL DE ARTÍCULOS */
 
-(function(){
-  const wrap = document.querySelector('.cube-carousel');
-  if (!wrap) return;
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('art-track');
+    const filterBtns = document.querySelectorAll('.art-filter-btn');
+    const btnPrev = document.getElementById('art-prev');
+    const btnNext = document.getElementById('art-next');
 
-  /* ---------- Datos de ejemplo (puedes reemplazar por los tuyos) ---------- */
-  const ARTICLES = [
-    { title:'Artículo 1: Placeholder', img:'https://picsum.photos/seed/a1/960/600', meta:'Guía • 7 min', excerpt:'Texto ficticio para probar el layout.', url:'#' },
-    { title:'Artículo 2: Placeholder', img:'https://picsum.photos/seed/a2/960/600', meta:'Tutorial • 5 min', excerpt:'Texto ficticio para probar el layout.', url:'#' },
-    { title:'Artículo 3: Placeholder', img:'https://picsum.photos/seed/a3/960/600', meta:'Análisis • 9 min', excerpt:'Texto ficticio para probar el layout.', url:'#' },
-    { title:'Artículo 4: Placeholder', img:'https://picsum.photos/seed/a4/960/600', meta:'Caso práctico • 6 min', excerpt:'Texto ficticio para probar el layout.', url:'#' },
-    { title:'Artículo 5: Placeholder', img:'https://picsum.photos/seed/a5/960/600', meta:'Referencia • 4 min', excerpt:'Texto ficticio para probar el layout.', url:'#' },
-    { title:'Artículo 6: Placeholder', img:'https://picsum.photos/seed/a6/960/600', meta:'Guía • 8 min', excerpt:'Texto ficticio para probar el layout.', url:'#' },
-    { title:'Artículo 7: Placeholder', img:'https://picsum.photos/seed/a7/960/600', meta:'Tutorial • 5 min', excerpt:'Texto ficticio para probar el layout.', url:'#' },
-    { title:'Artículo 8: Placeholder', img:'https://picsum.photos/seed/a8/960/600', meta:'Análisis • 10 min', excerpt:'Texto ficticio para probar el layout.', url:'#' },
-  ];
+    if (!track) return;
 
-  /* ---------- Opciones ---------- */
-  const autoplay   = wrap.getAttribute('data-autoplay') === 'true';
-  const intervalMs = parseInt(wrap.getAttribute('data-interval') || '4000', 10);
-  const shuffle    = wrap.getAttribute('data-shuffle') === 'true';
+    /* --- 1. DATOS DE ARTÍCULOS --- */
+    // category: 'teoria' o 'portafolio'
+    // tag: 'ciberseguridad', 'sistemas', 'redes', etc.
+    const articles = [
+        {
+            id: 1,
+            title: "Hardening de Servidores Linux con CIS Benchmarks",
+            excerpt: "Guía práctica paso a paso para asegurar un servidor Ubuntu en producción aplicando las normativas del Center for Internet Security.",
+            image: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1000&auto=format&fit=crop",
+            category: "teoria",
+            tag: "Ciberseguridad",
+            badgeClass: "badge-red",
+            date: "28 Nov 2024",
+            readTime: "8 min"
+        },
+        {
+            id: 2,
+            title: "Despliegue de Laboratorio AD en VirtualBox",
+            excerpt: "Cómo montar un entorno de Directorio Activo completo con Windows Server 2019 para prácticas de pentesting y administración.",
+            image: "https://images.unsplash.com/photo-1558494949-ef526b0042a0?q=80&w=1000&auto=format&fit=crop",
+            category: "portafolio",
+            tag: "Sistemas",
+            badgeClass: "badge-blue",
+            date: "15 Nov 2024",
+            readTime: "12 min"
+        },
+        {
+            id: 3,
+            title: "Análisis Forense: Caso Ransomware",
+            excerpt: "Investigación post-mortem de un ataque simulado. Extracción de evidencias de memoria volátil y análisis de logs.",
+            image: "https://images.unsplash.com/photo-1563206767-5b1d97289374?q=80&w=1000&auto=format&fit=crop",
+            category: "portafolio",
+            tag: "Blue Team",
+            badgeClass: "badge-purple",
+            date: "02 Nov 2024",
+            readTime: "15 min"
+        },
+        {
+            id: 4,
+            title: "Automatización de Backups con Bash y AWS S3",
+            excerpt: "Scripting avanzado para automatizar copias de seguridad de bases de datos y subida cifrada a la nube.",
+            image: "https://images.unsplash.com/photo-1607799275518-d580e8105d86?q=80&w=1000&auto=format&fit=crop",
+            category: "teoria",
+            tag: "DevOps",
+            badgeClass: "badge-green",
+            date: "20 Oct 2024",
+            readTime: "6 min"
+        },
+        {
+            id: 5,
+            title: "Entendiendo Zero Trust Architecture",
+            excerpt: "Por qué el modelo de seguridad perimetral tradicional ha muerto y cómo implementar principios de confianza cero.",
+            image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop",
+            category: "teoria",
+            tag: "Arquitectura",
+            badgeClass: "badge-red",
+            date: "10 Oct 2024",
+            readTime: "10 min"
+        }
+    ];
 
-  const viewport = wrap.querySelector('.cube-viewport');
-  const track    = wrap.querySelector('.cube-track');
-  const prevBtn  = wrap.querySelector('#cubePrev');
-  const nextBtn  = wrap.querySelector('#cubeNext');
-  const dotsWrap = wrap.querySelector('#cubeDots');
+    /* --- 2. RENDER --- */
+    function renderArticles(filter = 'all') {
+        track.innerHTML = '';
+        
+        const filtered = filter === 'all' 
+            ? articles 
+            : articles.filter(a => a.category === filter);
 
-  if (!viewport || !track) return;
+        if (filtered.length === 0) {
+            track.innerHTML = `
+                <div class="art-empty">
+                    <i class="fa-solid fa-folder-open" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <p>No hay artículos en esta categoría aún.</p>
+                </div>`;
+            return;
+        }
 
-  /* ---------- Utilidades ---------- */
-  function shuffled(arr){
-    const a = arr.slice();
-    for(let i=a.length-1;i>0;i--){
-      const j = Math.floor(Math.random()*(i+1));
-      [a[i],a[j]] = [a[j],a[i]];
+        filtered.forEach(art => {
+            const card = document.createElement('article');
+            card.className = 'art-card';
+            card.innerHTML = `
+                <div class="art-img-box">
+                    <img src="${art.image}" alt="${art.title}" class="art-img" loading="lazy">
+                    <span class="art-badge ${art.badgeClass}">${art.tag}</span>
+                </div>
+                <div class="art-content">
+                    <div class="art-meta">
+                        <span><i class="fa-regular fa-calendar"></i> ${art.date}</span>
+                        <span><i class="fa-regular fa-clock"></i> ${art.readTime}</span>
+                    </div>
+                    <h3 class="art-title">${art.title}</h3>
+                    <p class="art-excerpt">${art.excerpt}</p>
+                    <a href="#" class="art-read-btn">Leer Artículo <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            `;
+            track.appendChild(card);
+        });
     }
-    return a;
-  }
 
-  function visibleCount(){
-    const w = window.innerWidth;
-    if (w <= 520)  return 1;
-    if (w <= 720)  return 2;
-    if (w <= 1020) return 3;
-    return 5;
-  }
-
-  /* ---------- Render ---------- */
-  const data = shuffle ? shuffled(ARTICLES) : ARTICLES.slice();
-
-  function renderItems(){
-    track.innerHTML = '';
-    data.forEach((it, idx)=>{
-      const item = document.createElement('article');
-      item.className = 'cube';
-      item.setAttribute('role','listitem');
-
-      const media = document.createElement('div');
-      media.className = 'cube-media';
-      if (it.img){
-        const img = document.createElement('img');
-        img.src = it.img; img.alt = it.title || 'Artículo';
-        media.appendChild(img);
-      }
-      const body = document.createElement('div');
-      body.className = 'cube-body';
-
-      const h = document.createElement('h4');
-      h.className = 'cube-title';
-      h.textContent = it.title || `Artículo ${idx+1}`;
-
-      const meta = document.createElement('div');
-      meta.className = 'cube-meta';
-      meta.textContent = it.meta || '—';
-
-      const p = document.createElement('p');
-      p.className = 'cube-meta';
-      p.textContent = it.excerpt || 'Resumen breve del contenido.';
-
-      const a = document.createElement('a');
-      a.className = 'cube-link';
-      a.href = it.url || '#';
-      a.textContent = 'Ver más';
-
-      body.append(h, meta, p, a);
-      item.append(media, body);
-      track.appendChild(item);
+    /* --- 3. EVENTOS FILTROS --- */
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // UI Active
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Lógica
+            const filter = btn.dataset.filter;
+            
+            // Animación de salida (opcional, simple)
+            track.style.opacity = '0';
+            setTimeout(() => {
+                renderArticles(filter);
+                track.style.opacity = '1';
+                track.scrollLeft = 0; // Volver al inicio
+            }, 200);
+        });
     });
-  }
 
-  /* ---------- Estado y navegación ---------- */
-  let vis = visibleCount();
-  let page = 0;
-  let pages = 1;
-  let timer = null;
+    /* --- 4. CONTROLES CARRUSEL --- */
+    btnPrev.addEventListener('click', () => {
+        const cardWidth = 350 + 24; // Ancho tarjeta + gap
+        track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    });
 
-  function computePages(){
-    vis = visibleCount();
-    pages = Math.max(1, Math.ceil(data.length / vis));
-    page = Math.min(page, pages - 1);
-  }
+    btnNext.addEventListener('click', () => {
+        const cardWidth = 350 + 24;
+        track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    });
 
-  function updateDots(){
-    dotsWrap.innerHTML = '';
-    for(let i=0;i<pages;i++){
-      const d = document.createElement('button');
-      d.type = 'button';
-      d.className = 'cube-dot' + (i===page ? ' is-active' : '');
-      d.setAttribute('aria-label', `Ir a página ${i+1}`);
-      d.addEventListener('click', ()=> goTo(i));
-      dotsWrap.appendChild(d);
-    }
-  }
-
-  function translate(){
-    const gap = 14; // coincide con CSS
-    // ancho de un item = (viewportWidth - gaps) / visibles
-    const vw = viewport.clientWidth;
-    const itemW = (vw - gap*(vis-1)) / vis;
-    const x = -(itemW + gap) * vis * page;
-    track.style.transform = `translate3d(${x}px,0,0)`;
-    // aria-live simple
-    wrap.setAttribute('aria-live','polite');
-  }
-
-  function goTo(n){
-    page = (n + pages) % pages;
-    updateDots();
-    translate();
-  }
-
-  function next(){ goTo(page + 1); }
-  function prev(){ goTo(page - 1); }
-
-  /* ---------- Autoplay ---------- */
-  function start(){
-    if (!autoplay || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    stop();
-    timer = setInterval(next, intervalMs);
-  }
-  function stop(){ if (timer) { clearInterval(timer); timer = null; } }
-
-  /* ---------- Eventos ---------- */
-  if (prevBtn) prevBtn.addEventListener('click', prev);
-  if (nextBtn) nextBtn.addEventListener('click', next);
-
-  wrap.addEventListener('mouseenter', stop);
-  wrap.addEventListener('mouseleave', start);
-  wrap.addEventListener('focusin',  stop);
-  wrap.addEventListener('focusout', start);
-
-  // Teclado en el carrusel
-  wrap.addEventListener('keydown', (e)=>{
-    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
-    if (e.key === 'ArrowRight'){ e.preventDefault(); next(); }
-  });
-
-  window.addEventListener('resize', ()=>{
-    const old = vis;
-    computePages();
-    // si cambió el nº de visibles, recalculamos dots y posición
-    if (old !== vis){
-      updateDots();
-      translate();
-    } else {
-      translate();
-    }
-  });
-
-  /* ---------- Init ---------- */
-  renderItems();
-  computePages();
-  updateDots();
-  translate();
-  start();
-})();
+    // Init
+    renderArticles('all');
+});
