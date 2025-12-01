@@ -569,18 +569,33 @@
       </div>
     </section>
     
-    <section id="news-cubes" class="reveal" data-reveal="fade-up" aria-labelledby="news-cubes-title">
-      <h2 id="news-cubes-title" class="section-title">Lecturas y artículos</h2>
-      <p class="kicker">Novedades seleccionadas — desplazamiento suave y continuo.</p>
-      <div class="cube-carousel" data-autoplay="true" data-interval="3200" data-shuffle="true" aria-roledescription="carrusel">
-        <div class="cube-head"><h3>Artículos interesantes</h3></div>
-        <div class="cube-viewport" role="region" aria-label="Carrusel de artículos" style="overflow:hidden"><div id="cubeTrack" class="cube-track" role="list"></div></div>
-        <div class="cube-nav" aria-hidden="false">
-          <button class="cube-btn prev" id="cubePrev" type="button" aria-label="Artículo anterior">‹</button>
-          <button class="cube-btn next" id="cubeNext" type="button" aria-label="Artículo siguiente">›</button>
+    <section id="articulos" class="reveal" data-reveal="fade-up">
+      <h2 class="section-title">Publicaciones y Notas</h2>
+      
+      <div class="art-header">
+        
+        <div class="art-filters">
+          <button class="art-filter-btn active" data-filter="all">Todo</button>
+          <button class="art-filter-btn" data-filter="portafolio">Portafolio</button>
+          <button class="art-filter-btn" data-filter="teoria">Teoría</button>
         </div>
-        <div class="cube-dots" id="cubeDots" aria-hidden="true"></div>
+
+        <div class="art-nav-controls">
+          <button class="art-nav-btn" id="art-prev" aria-label="Anterior">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="art-nav-btn" id="art-next" aria-label="Siguiente">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+
       </div>
+
+      <div class="art-carousel-wrapper">
+        <div class="art-track" id="art-track">
+          </div>
+      </div>
+
     </section>
 
     <section id="contact" class="reveal" data-reveal="fade-up" aria-labelledby="contact-title">
