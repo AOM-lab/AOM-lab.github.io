@@ -1,63 +1,63 @@
-/* LÓGICA DEL KNOWLEDGE HUB (Sencillo y Profesional) */
+/* LÓGICA DEL CYBER-ARCHIVE */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('hub-grid');
-    const breadcrumbs = document.getElementById('hub-breadcrumbs');
-    const backBtnContainer = document.getElementById('hub-back-container');
+    const container = document.getElementById('explorer-grid');
+    const pathBar = document.getElementById('explorer-path');
     
     if (!container) return;
 
     /* --- DATOS (Tu estructura) --- */
     const knowledgeBase = {
-        name: "Inicio",
+        name: "root",
         type: "folder",
         children: [
             {
-                name: "Teoría y Fundamentos",
+                name: "Teoría_y_Fundamentos",
                 icon: "fa-solid fa-book-journal-whills",
-                desc: "Documentación técnica sobre protocolos, redes y sistemas operativos.",
                 type: "folder",
+                perms: "drwxr-xr-x", // Detalle técnico
                 children: [
                     {
                         name: "Ciberseguridad",
                         icon: "fa-solid fa-shield-halved",
-                        desc: "Blue Team, Red Team, Metodologías y Normativas.",
                         type: "folder",
+                        perms: "drwxr-xr-x",
                         children: [
-                            { name: "Hacking Ético - Guía.pdf", desc: "Metodología de pentesting", type: "file" },
-                            { name: "Gestión de Incidentes.md", desc: "Playbooks de respuesta", type: "file" }
+                            { name: "Guía_Hacking_Ético.pdf", type: "file", size: "2.4MB" },
+                            { name: "Protocolos_Respuesta.md", type: "file", size: "14KB" },
+                            { name: "Legislación_TIC.pdf", type: "file", size: "850KB" }
                         ]
                     },
                     {
-                        name: "Sistemas & Redes",
+                        name: "Sistemas_Redes",
                         icon: "fa-solid fa-server",
-                        desc: "Administración Linux/Windows y arquitectura de redes.",
                         type: "folder",
+                        perms: "drwxr-xr-x",
                         children: [
-                            { name: "Linux Hardening.pdf", desc: "Guía de aseguramiento", type: "file" },
-                            { name: "Directorio Activo.md", desc: "Estructura y seguridad", type: "file" }
+                            { name: "Hardening_Linux_v2.md", type: "file", size: "12KB" },
+                            { name: "Arquitectura_AD.png", type: "file", size: "4.1MB" }
                         ]
                     }
                 ]
             },
             {
-                name: "Portafolio de Proyectos",
+                name: "Portafolio_Proyectos",
                 icon: "fa-solid fa-rocket",
-                desc: "Casos prácticos, despliegues reales y laboratorios.",
                 type: "folder",
+                perms: "drwxr-xr-x",
                 children: [
-                    { name: "Laboratorio K8s", icon: "fa-solid fa-cubes", desc: "Cluster local", type: "file" },
-                    { name: "Auditoría Web", icon: "fa-solid fa-globe", desc: "Informe anonimizado", type: "file" }
+                    { name: "Lab_Kubernetes_Cluster", type: "folder", children: [] },
+                    { name: "Auditoría_Web_Reporte.pdf", type: "file", size: "15MB" }
                 ]
             },
             {
-                name: "Artículos y Notas",
-                icon: "fa-regular fa-newspaper",
-                desc: "Investigaciones personales y curiosidades técnicas.",
+                name: "Investigaciones",
+                icon: "fa-solid fa-microscope",
                 type: "folder",
+                perms: "dr--r--r--", // Read only ;)
                 children: [
-                    { name: "Análisis CrowdStrike", type: "file", desc: "Post-mortem del incidente" },
-                    { name: "Zero Trust 101", type: "file", desc: "Introducción al concepto" }
+                    { name: "Analisis_Malware.log", type: "file", size: "56KB" },
+                    { name: "CrowdStrike_PostMortem.md", type: "file", size: "8KB" }
                 ]
             }
         ]
@@ -67,64 +67,57 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentFolder = knowledgeBase;
     let pathStack = [knowledgeBase];
 
-    /* --- UTILIDAD: CONTAR ITEMS --- */
-    function countItems(node) {
-        if (!node.children) return 0;
-        return node.children.length;
-    }
-
     /* --- RENDER --- */
     function render() {
-        container.innerHTML = '';
-        
-        // 1. Breadcrumbs
-        let crumbsHTML = '';
+        // 1. Barra de Dirección (Estilo Terminal)
+        let pathHTML = `<span class="path-root">root@server:</span>`;
         pathStack.forEach((folder, index) => {
-            const isLast = index === pathStack.length - 1;
-            crumbsHTML += `
-                <div class="crumb-item ${isLast ? 'crumb-current' : ''}" onclick="navigateTo(${index})">
-                    ${index === 0 ? '<i class="fa-solid fa-house"></i>' : ''} 
-                    ${folder.name}
-                </div>
-                ${!isLast ? '<span class="crumb-sep">/</span>' : ''}
-            `;
+            if (index > 0) {
+                pathHTML += `<span class="path-sep">/</span><span class="path-current">${folder.name}</span>`;
+            } else {
+                pathHTML += `<span class="path-sep">~</span>`;
+            }
         });
-        breadcrumbs.innerHTML = crumbsHTML;
+        pathBar.innerHTML = pathHTML;
 
-        // 2. Botón Atrás
-        backBtnContainer.innerHTML = '';
+        // 2. Grid de Contenido
+        container.innerHTML = '';
+
+        // Botón Atrás
         if (pathStack.length > 1) {
-            const backBtn = document.createElement('button');
-            backBtn.className = 'back-btn';
-            backBtn.innerHTML = `<i class="fa-solid fa-arrow-left"></i> Volver`;
-            backBtn.onclick = () => {
+            const backRow = document.createElement('div');
+            backRow.className = 'back-row';
+            backRow.innerHTML = `<div class="back-btn"><i class="fa-solid fa-level-up-alt"></i> .. (Parent Directory)</div>`;
+            backRow.onclick = () => {
                 pathStack.pop();
                 currentFolder = pathStack[pathStack.length - 1];
                 render();
             };
-            backBtnContainer.appendChild(backBtn);
+            container.appendChild(backRow);
         }
 
-        // 3. Grid de Contenido
+        // Items
         if (currentFolder.children && currentFolder.children.length > 0) {
             currentFolder.children.forEach(item => {
                 const card = document.createElement('div');
-                card.className = `hub-card ${item.type === 'file' ? 'is-file' : ''}`;
+                card.className = 'node-card';
                 
-                // Iconos por defecto
-                let icon = item.icon || (item.type === 'folder' ? 'fa-solid fa-folder' : 'fa-regular fa-file-lines');
+                // Icono
+                let icon = item.icon || (item.type === 'folder' ? 'fa-solid fa-folder' : 'fa-regular fa-file-code');
                 
-                // Badge
-                const count = countItems(item);
-                const badge = item.type === 'folder' ? `<span class="card-badge">${count} items</span>` : '';
+                // Metadatos técnicos (Fake)
+                const meta1 = item.type === 'folder' ? 'DIR' : 'FILE';
+                const meta2 = item.type === 'folder' ? (item.perms || 'drwxr-xr-x') : (item.size || '1KB');
 
                 card.innerHTML = `
-                    <div class="card-top">
-                        <div class="card-icon"><i class="${icon}"></i></div>
-                        ${badge}
+                    <div class="node-icon-box"><i class="${icon}"></i></div>
+                    <div class="node-info">
+                        <div class="node-title">${item.name}</div>
+                        <div class="node-meta">
+                            <span>${meta1}</span>
+                            <span>${meta2}</span>
+                        </div>
                     </div>
-                    <h3 class="card-title">${item.name}</h3>
-                    <p class="card-desc">${item.desc || 'Documento técnico'}</p>
                 `;
 
                 card.onclick = () => {
@@ -133,23 +126,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         currentFolder = item;
                         render();
                     } else {
-                        alert(`Abriendo documento: ${item.name}`);
-                        // window.open(item.link, '_blank');
+                        alert(`ACCESSING FILE: ${item.name}`);
                     }
                 };
 
                 container.appendChild(card);
             });
         } else {
-            container.innerHTML = `<div class="hub-empty">Carpeta vacía</div>`;
+            container.innerHTML = `<div class="explorer-empty">// DIRECTORY EMPTY</div>`;
         }
-        
-        // Exponer función al objeto window para el onclick del breadcrumb
-        window.navigateTo = (index) => {
-            pathStack = pathStack.slice(0, index + 1);
-            currentFolder = pathStack[pathStack.length - 1];
-            render();
-        };
     }
 
     render();
