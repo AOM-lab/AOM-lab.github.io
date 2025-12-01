@@ -470,36 +470,61 @@
 
     </section>
 
+    
     <section id="site-graph" class="reveal" data-reveal="fade-up">
       <h2 class="section-title">Knowledge Vault</h2>
-      <p class="kicker">Repositorio centralizado de documentación, investigaciones y activos técnicos.</p>
+      <p class="kicker">Acceso directo a la base de datos de conocimiento y documentación.</p>
 
-      <div class="explorer-window">
+      <div class="sql-window">
         
-        <div class="vault-stats">
-          <div class="stat-item"><span class="stat-dot"></span> DATABASE: ONLINE</div>
-          <div class="stat-item">TOTAL ITEMS: <span class="stat-value" id="stat-total">0</span></div>
-          <div class="stat-item">DIRECTORIES: <span class="stat-value" id="stat-folders">0</span></div>
-          <div class="stat-item">ACCESS: <span class="stat-value">PUBLIC</span></div>
-        </div>
-
-        <div class="vault-controls">
-          <div class="breadcrumbs" id="explorer-breadcrumbs">
-            </div>
-          <div class="vault-search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="vault-search" placeholder="Search database...">
+        <div class="sql-toolbar">
+          <div class="traffic-lights">
+            <div class="light red"></div>
+            <div class="light yellow"></div>
+            <div class="light green"></div>
+          </div>
+          <div class="connection-info">
+            <div class="conn-dot"></div>
+            <span>Connected: aom_lab_production (PostgreSQL 15)</span>
           </div>
         </div>
 
-        <div class="explorer-body">
-          <div class="nodes-grid" id="explorer-grid">
-            </div>
-        </div>
+        <div class="sql-workspace">
+          
+          <div class="db-sidebar">
+            <div class="sidebar-header">Object Explorer</div>
+            <div class="db-tree" id="db-tree-root">
+              </div>
+          </div>
 
+          <div class="db-main-panel">
+            
+            <div class="query-editor" id="sql-query-display">
+              </div>
+
+            <div class="results-area">
+              <table class="db-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">#</th>
+                    <th>OBJECT_NAME</th>
+                    <th>TYPE</th>
+                    <th>LAST_MODIFIED / VALUE</th>
+                    <th>OWNER</th>
+                  </tr>
+                </thead>
+                <tbody id="db-table-body">
+                  </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </section>
 
+    
     <section id="news-cubes" class="reveal" data-reveal="fade-up" aria-labelledby="news-cubes-title">
       <h2 id="news-cubes-title" class="section-title">Lecturas y artículos</h2>
       <p class="kicker">Novedades seleccionadas — desplazamiento suave y continuo.</p>
