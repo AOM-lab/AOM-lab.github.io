@@ -469,28 +469,103 @@
       </div>
 
     </section>
-
-    <section id="site-graph" class="reveal" data-reveal="fade-up">
+    <section id="site-graph" class="custom-section">
       <h2 class="section-title">Base de Conocimiento</h2>
-      <p class="kicker">Acceso al sistema de archivos: documentación técnica y proyectos.</p>
-
-      <div class="explorer-window">
+      <p class="kicker">Explora mi repositorio de documentación técnica organizado por áreas de especialización.</p>
+      
+      <div class="knowledge-vault">
         
-        <div class="explorer-header">
-          <div class="window-controls">
-            <div class="win-dot red"></div>
-            <div class="win-dot yellow"></div>
-            <div class="win-dot green"></div>
+        <div class="vault-header">
+          <div class="vault-header-left">
+            <div class="vault-stats">
+              <div class="stat-item">
+                <i class="fa-solid fa-layer-group"></i>
+                <span><span class="stat-value" id="statTotal">0</span> recursos</span>
+              </div>
+              <div class="stat-item">
+                <i class="fa-solid fa-folder"></i>
+                <span><span class="stat-value" id="statFolders">0</span> categorías</span>
+              </div>
+              <div class="stat-item">
+                <i class="fa-solid fa-file-lines"></i>
+                <span><span class="stat-value" id="statFiles">0</span> documentos</span>
+              </div>
+            </div>
+            
+            <div class="vault-view-toggle">
+              <button class="view-toggle-btn active" id="btnExplorer">
+                <i class="fa-solid fa-folder-tree"></i>
+                <span>Explorador</span>
+              </button>
+              <button class="view-toggle-btn" id="btnNetwork">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Mapa Visual</span>
+              </button>
+            </div>
           </div>
-          <div class="address-bar" id="explorer-path">
-            </div>
+          
+          <div class="vault-search">
+            <input type="text" id="vaultSearch" placeholder="Buscar en el vault..." autocomplete="off">
+            <i class="fa-solid fa-search"></i>
+          </div>
         </div>
-
-        <div class="explorer-body">
-          <div class="nodes-grid" id="explorer-grid">
+        
+        <div class="vault-views-container">
+          
+          <div class="vault-view active" id="explorerView">
+            <div class="vault-layout">
+              <aside class="vault-sidebar">
+                <nav id="vaultTree"></nav>
+              </aside>
+              <main class="vault-main">
+                <div class="vault-breadcrumb" id="vaultBreadcrumb"></div>
+                <div class="vault-content" id="vaultContent"></div>
+              </main>
             </div>
+          </div>
+          
+          <div class="vault-view" id="networkView">
+            <div class="vault-network" id="networkContainer">
+              <canvas id="networkCanvas"></canvas>
+              <div class="network-nodes" id="networkNodes"></div>
+              
+              <div class="network-stats">
+                <div class="network-stat">
+                  <div class="network-stat-value">7</div>
+                  <div class="network-stat-label">Áreas</div>
+                </div>
+                <div class="network-stat">
+                  <div class="network-stat-value">65+</div>
+                  <div class="network-stat-label">Recursos</div>
+                </div>
+                <div class="network-stat">
+                  <div class="network-stat-value">5</div>
+                  <div class="network-stat-label">Niveles</div>
+                </div>
+              </div>
+              
+              <div class="network-hint">
+                <i class="fa-solid fa-mouse-pointer"></i>
+                <span>Pasa el cursor sobre un área para ver detalles</span>
+              </div>
+              
+              <div class="network-legend">
+                <div class="legend-title">Áreas de Conocimiento</div>
+                <div class="legend-items">
+                  <div class="legend-item"><span class="legend-dot teoria"></span>Teoría</div>
+                  <div class="legend-item"><span class="legend-dot ciberseguridad"></span>Ciberseguridad</div>
+                  <div class="legend-item"><span class="legend-dot programacion"></span>Programación</div>
+                  <div class="legend-item"><span class="legend-dot sistemas"></span>Sistemas</div>
+                  <div class="legend-item"><span class="legend-dot fundamentos"></span>Fundamentos</div>
+                  <div class="legend-item"><span class="legend-dot proyectos"></span>Proyectos</div>
+                  <div class="legend-item"><span class="legend-dot laboratorio"></span>Laboratorio</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
         </div>
-
+        
       </div>
     </section>
     
