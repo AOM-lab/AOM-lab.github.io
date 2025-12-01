@@ -1,0 +1,111 @@
+/* --- ESTILOS PRO: SOBRE MÍ (Credencial Digital - Sin Foto) --- */
+
+#sobre-mi {
+  --sm-bg: #0b1022;
+  --sm-card-bg: rgba(255, 255, 255, 0.02);
+  --sm-border: rgba(255, 255, 255, 0.06);
+  --sm-accent: #ff9f1a;
+  --sm-text: #94a3b8;
+  --sm-highlight: #e2e8f0;
+}
+
+#sobre-mi .section-title {
+  color: var(--sm-accent); margin-bottom: 10px;
+}
+
+#sobre-mi .kicker {
+  color: var(--sm-text); margin-bottom: 30px;
+  border-left: 2px solid var(--sm-accent); padding-left: 12px;
+}
+
+/* TARJETA DE CREDENCIAL */
+.profile-card {
+  background: var(--sm-card-bg);
+  border: 1px solid var(--sm-border);
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+/* Decoración Tech en la esquina */
+.profile-card::after {
+  content: ""; position: absolute; top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: linear-gradient(45deg, transparent 50%, rgba(255, 159, 26, 0.03) 50%);
+  border-bottom: 1px solid var(--sm-border);
+  border-left: 1px solid var(--sm-border);
+  border-radius: 0 0 0 12px;
+}
+
+/* --- MONOGRAMA (Tus iniciales AO) --- */
+.avatar-mono {
+  width: 90px; height: 90px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 159, 26, 0.3);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--sm-accent);
+  box-shadow: inset 0 0 20px rgba(255, 159, 26, 0.05);
+  flex-shrink: 0; /* Para que no se aplaste */
+}
+
+/* --- CONTENIDO --- */
+.profile-content { flex-grow: 1; }
+
+.profile-name {
+  font-family: 'Inter', sans-serif;
+  color: #fff; font-size: 1.4rem; font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.profile-role {
+  font-family: 'Source Code Pro', monospace;
+  color: var(--sm-accent); font-size: 0.9rem;
+  margin-bottom: 16px; display: block;
+}
+
+.profile-bio-text {
+  color: #cbd5e1; font-size: 0.95rem; line-height: 1.7;
+  margin-bottom: 24px; max-width: 700px;
+}
+
+.profile-bio-text strong { color: #fff; font-weight: 600; }
+
+/* --- GRID DE FORMACIÓN (Tus Títulos) --- */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  border-top: 1px dashed var(--sm-border);
+  padding-top: 20px;
+}
+
+.edu-item {
+  display: flex; gap: 10px; align-items: flex-start;
+}
+
+.edu-icon {
+  margin-top: 3px; color: var(--sm-accent); font-size: 0.9rem;
+}
+
+.edu-info h4 {
+  margin: 0 0 2px 0; color: #e2e8f0; font-size: 0.85rem; font-weight: 600;
+}
+.edu-info span {
+  display: block; color: var(--sm-text); font-size: 0.75rem; font-family: 'Source Code Pro', monospace;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .profile-card { flex-direction: column; align-items: center; text-align: center; }
+  .edu-grid { justify-content: center; text-align: left; }
+  .profile-card::after { display: none; }
+}
