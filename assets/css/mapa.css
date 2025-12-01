@@ -1,139 +1,166 @@
-/* --- ESTILOS PRO: KNOWLEDGE HUB (Diseño Documentación Moderna) --- */
+/* --- ESTILOS PRO: CYBER-ARCHIVE (High Tech Explorer) --- */
 
 #site-graph {
-  --hub-bg: #0b1022;
-  --hub-card: rgba(255, 255, 255, 0.03);
-  --hub-border: rgba(255, 255, 255, 0.08);
-  --hub-accent: #ff9f1a;
-  --hub-text: #94a3b8;
+  --map-bg: #0b1022;
+  --map-win-bg: #0f131f; /* Fondo ventana */
+  --map-border: rgba(255, 255, 255, 0.08);
+  --map-accent: #ff9f1a;
+  --map-text: #94a3b8;
+  --map-glass: rgba(255, 255, 255, 0.03);
   
   padding: 40px 0;
 }
 
-#site-graph .section-title { color: var(--hub-accent); margin-bottom: 10px; }
+#site-graph .section-title { color: var(--map-accent); margin-bottom: 20px; }
 
-/* CONTENEDOR PRINCIPAL */
-.hub-window {
-  display: flex; flex-direction: column; gap: 20px;
-  min-height: 500px;
-}
-
-/* 1. BARRA DE NAVEGACIÓN (Breadcrumbs) */
-.hub-nav {
-  display: flex; justify-content: space-between; align-items: center;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--hub-border);
+/* VENTANA PRINCIPAL (Estilo SO) */
+.explorer-window {
+  background: var(--map-win-bg);
+  border: 1px solid var(--map-border);
   border-radius: 12px;
-  padding: 15px 24px;
-}
-
-.breadcrumbs {
-  font-family: 'Inter', sans-serif;
-  color: var(--hub-text); font-size: 0.95rem;
-  display: flex; align-items: center; gap: 8px;
-}
-
-.crumb-item {
-  cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px;
-}
-.crumb-item:hover { color: #fff; }
-.crumb-item i { font-size: 0.8em; }
-.crumb-sep { opacity: 0.4; font-size: 0.8em; }
-.crumb-current { color: #fff; font-weight: 600; cursor: default; }
-
-/* 2. GRID DE CONTENIDO */
-.hub-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* TARJETA DE CATEGORÍA (Folder) */
-.hub-card {
-  background: var(--hub-card);
-  border: 1px solid var(--hub-border);
-  border-radius: 12px;
-  padding: 24px;
-  position: relative;
   overflow: hidden;
+  box-shadow: 0 20px 60px -10px rgba(0,0,0,0.6);
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Decoración de fondo (Grid) */
+.explorer-window::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 1. BARRA SUPERIOR (Address Bar) */
+.explorer-header {
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--map-border);
+  padding: 15px 20px;
+  display: flex; align-items: center; gap: 15px;
+  position: relative; z-index: 2;
+  backdrop-filter: blur(10px);
+}
+
+.window-controls {
+  display: flex; gap: 6px;
+}
+.win-dot { width: 10px; height: 10px; border-radius: 50%; background: #333; }
+.win-dot.red { background: #ff5f56; }
+.win-dot.yellow { background: #ffbd2e; }
+.win-dot.green { background: #27c93f; }
+
+.address-bar {
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--map-border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.85rem;
+  color: var(--map-text);
+  display: flex; align-items: center;
+}
+
+.path-root { color: var(--map-accent); font-weight: 700; margin-right: 5px; }
+.path-sep { opacity: 0.4; margin: 0 5px; }
+.path-current { color: #fff; }
+
+/* 2. CUERPO DEL EXPLORADOR */
+.explorer-body {
+  padding: 30px;
+  flex-grow: 1;
+  position: relative; z-index: 1;
+  overflow-y: auto;
+}
+
+.nodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* TARJETA DE NODO (TECH CARD) */
+.node-card {
+  background: var(--map-glass);
+  border: 1px solid var(--map-border);
+  border-radius: 8px;
+  padding: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
-  display: flex; flex-direction: column;
+  display: flex; flex-direction: row; /* Icono izquierda, texto derecha */
+  align-items: center; gap: 15px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Barra de color superior (decorativa) */
-.hub-card::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--hub-border); transition: 0.3s;
+/* Efecto Hover: Borde brillante */
+.node-card:hover {
+  background: rgba(255, 159, 26, 0.05);
+  border-color: rgba(255, 159, 26, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-/* Hover Effects */
-.hub-card:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+/* Barra decorativa lateral */
+.node-card::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--map-border); transition: 0.2s;
 }
-.hub-card:hover::before { background: var(--hub-accent); } /* La barra se enciende */
+.node-card:hover::before { background: var(--map-accent); }
 
-/* Header de la tarjeta */
-.card-top {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 16px;
-}
-
-.card-icon {
+/* Icono */
+.node-icon-box {
   width: 48px; height: 48px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem; color: #fff;
+  background: rgba(0,0,0,0.3);
   border: 1px solid rgba(255,255,255,0.05);
-  transition: 0.3s;
-}
-.hub-card:hover .card-icon {
-  background: var(--hub-accent); color: #000; border-color: var(--hub-accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: #64748b;
+  flex-shrink: 0;
+  transition: 0.2s;
 }
 
-/* Badge de cantidad */
-.card-badge {
-  font-size: 0.75rem; font-weight: 600;
-  background: rgba(255,255,255,0.1); color: #ccc;
-  padding: 4px 10px; border-radius: 20px;
+.node-card:hover .node-icon-box {
+  color: var(--map-accent);
+  border-color: rgba(255, 159, 26, 0.3);
+  background: rgba(255, 159, 26, 0.1);
 }
 
 /* Textos */
-.card-title {
-  color: #fff; font-size: 1.1rem; font-weight: 700; margin: 0 0 8px 0;
-  font-family: 'Inter', sans-serif;
+.node-info { flex-grow: 1; }
+.node-title {
+  color: #fff; font-weight: 600; font-size: 0.95rem; margin-bottom: 4px;
 }
-.card-desc {
-  color: var(--hub-text); font-size: 0.9rem; line-height: 1.5; margin: 0;
+.node-meta {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.65rem; color: var(--map-text); opacity: 0.7;
+  display: flex; justify-content: space-between;
 }
 
-/* TARJETA DE ARCHIVO (Artículo final) */
-.hub-card.is-file {
-  border-left: 3px solid #3b82f6; /* Borde azul a la izquierda para diferenciar archivos */
+/* Estado Vacío */
+.explorer-empty {
+  text-align: center; color: var(--map-text); padding: 40px; 
+  font-family: 'Source Code Pro', monospace;
 }
-.hub-card.is-file::before { display: none; } /* Sin barra superior */
-.hub-card.is-file .card-icon { font-size: 1.2rem; width: 40px; height: 40px; color: #3b82f6; }
-.hub-card.is-file:hover .card-icon { background: #3b82f6; color: #fff; }
 
-/* Botón "Atrás" */
+/* Botón Volver */
+.back-row { grid-column: 1 / -1; margin-bottom: 10px; }
 .back-btn {
-  background: transparent; border: 1px solid var(--hub-border);
-  color: var(--hub-text); padding: 6px 14px; border-radius: 6px;
-  cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;
-  transition: 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--map-accent); font-family: 'Source Code Pro', monospace;
+  font-size: 0.8rem; cursor: pointer; padding: 5px 10px;
+  border: 1px dashed var(--map-border); border-radius: 4px;
+  transition: 0.2s; width: fit-content;
 }
-.back-btn:hover { border-color: #fff; color: #fff; }
+.back-btn:hover { border-color: var(--map-accent); background: rgba(255,159,26,0.1); }
 
-/* Estado vacío */
-.hub-empty { text-align: center; padding: 40px; color: var(--hub-text); font-style: italic; width: 100%; }
-
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 600px) {
-  .hub-grid { grid-template-columns: 1fr; }
+  .nodes-grid { grid-template-columns: 1fr; }
 }
