@@ -1,5 +1,3 @@
-/* LÓGICA DEL CARRUSEL DE ARTÍCULOS */
-
 document.addEventListener('DOMContentLoaded', () => {
     const track = document.getElementById('art-track');
     const filterBtns = document.querySelectorAll('.art-filter-btn');
@@ -8,15 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!track) return;
 
-    /* --- 1. DATOS DE ARTÍCULOS --- */
-    // Imágenes de Unsplash con IDs fijos para asegurar calidad y que no rompan
     const articles = [
         {
             id: 1,
             title: "Hardening de Servidores Linux con CIS Benchmarks",
             excerpt: "Guía práctica paso a paso para asegurar un servidor Ubuntu en producción aplicando las normativas del Center for Internet Security.",
-            // Imagen: Server room dark
-            image: "https://images.unsplash.com/photo-1558494949-ef526b0042a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80", // Chip
             category: "teoria",
             tag: "HARDENING",
             badgeClass: "badge-red",
@@ -27,8 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 2,
             title: "Despliegue de Laboratorio AD en VirtualBox",
             excerpt: "Cómo montar un entorno de Directorio Activo completo con Windows Server 2019 para prácticas de pentesting y administración.",
-            // Imagen: Code abstract
-            image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=800&q=80", // Server room
             category: "portafolio",
             tag: "LABS",
             badgeClass: "badge-blue",
@@ -39,8 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 3,
             title: "Análisis Forense: Caso Ransomware",
             excerpt: "Investigación post-mortem de un ataque simulado. Extracción de evidencias de memoria volátil y análisis de logs.",
-            // Imagen: Matrix code
-            image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80", // Matrix code
             category: "portafolio",
             tag: "FORENSICS",
             badgeClass: "badge-purple",
@@ -51,8 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 4,
             title: "Automatización de Backups con Bash y AWS S3",
             excerpt: "Scripting avanzado para automatizar copias de seguridad de bases de datos y subida cifrada a la nube.",
-            // Imagen: Cloud / Code
-            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80", // Network globe
             category: "teoria",
             tag: "DEVOPS",
             badgeClass: "badge-green",
@@ -63,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 5,
             title: "Entendiendo Zero Trust Architecture",
             excerpt: "Por qué el modelo de seguridad perimetral tradicional ha muerto y cómo implementar principios de confianza cero.",
-            // Imagen: Network abstract
-            image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80", // Cyber lock
             category: "teoria",
             tag: "THEORY",
             badgeClass: "badge-red",
@@ -73,29 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    /* --- 2. RENDER --- */
     function renderArticles(filter = 'all') {
         track.innerHTML = '';
-        
-        const filtered = filter === 'all' 
-            ? articles 
-            : articles.filter(a => a.category === filter);
+        const filtered = filter === 'all' ? articles : articles.filter(a => a.category === filter);
 
         if (filtered.length === 0) {
-            track.innerHTML = `
-                <div class="art-empty">
-                    <i class="fa-solid fa-folder-open" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                    <p>No hay registros en esta categoría.</p>
-                </div>`;
+            track.innerHTML = `<div class="art-empty"><p>No hay artículos.</p></div>`;
             return;
         }
 
         filtered.forEach((art, index) => {
             const card = document.createElement('article');
             card.className = 'art-card';
-            // Stagger animation
             card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.1}s`;
-            card.style.opacity = '0'; // Inicio invisible para animación
+            card.style.opacity = '0';
             
             card.innerHTML = `
                 <div class="art-img-box">
@@ -104,51 +86,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="art-content">
                     <div class="art-meta">
-                        <span>// DATE: ${art.date}</span>
-                        <span>TIME: ${art.readTime}</span>
+                        <span>// ${art.date}</span>
+                        <span>${art.readTime}</span>
                     </div>
                     <h3 class="art-title">${art.title}</h3>
                     <p class="art-excerpt">${art.excerpt}</p>
-                    <a href="#" class="art-read-btn">
-                        LEER ARTÍCULO <i class="fa-solid fa-arrow-right"></i>
-                    </a>
+                    <a href="#" class="art-read-btn">LEER ARTÍCULO <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             `;
             track.appendChild(card);
         });
     }
 
-    /* --- 3. EVENTOS FILTROS --- */
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
             const filter = btn.dataset.filter;
-            
-            // Fade out suave
             track.style.opacity = '0';
-            track.style.transition = 'opacity 0.2s';
-            
             setTimeout(() => {
                 renderArticles(filter);
-                track.scrollLeft = 0; 
                 track.style.opacity = '1';
+                track.scrollLeft = 0; 
             }, 200);
         });
     });
 
-    /* --- 4. CONTROLES CARRUSEL --- */
     btnPrev.addEventListener('click', () => {
-        const cardWidth = 360 + 30; // ancho + gap
+        const cardWidth = track.querySelector('.art-card').offsetWidth + 24;
         track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
     });
 
     btnNext.addEventListener('click', () => {
-        const cardWidth = 360 + 30;
+        const cardWidth = track.querySelector('.art-card').offsetWidth + 24;
         track.scrollBy({ left: cardWidth, behavior: 'smooth' });
     });
 
-    // Init
     renderArticles('all');
 });
