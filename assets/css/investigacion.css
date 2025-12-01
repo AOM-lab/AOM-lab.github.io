@@ -1,0 +1,145 @@
+/* --- ESTILOS PRO: INVESTIGACIÓN Y METODOLOGÍA (Workflow Pipeline) --- */
+
+#investigacion {
+  --inv-bg: #0b1022;
+  --inv-card-bg: rgba(255, 255, 255, 0.02);
+  --inv-border: rgba(255, 255, 255, 0.06);
+  --inv-accent: #ff9f1a; /* Naranja principal */
+  --inv-alert: #ef4444;  /* Rojo para "problema" */
+  --inv-secure: #3b82f6; /* Azul para "solución" */
+  --inv-text: #94a3b8;
+  --inv-title: #e2e8f0;
+
+  padding-top: 40px; padding-bottom: 40px;
+}
+
+#investigacion .section-title { color: var(--inv-accent); margin-bottom: 30px; }
+
+/* --- PARTE 1 & 2: EL MANIFIESTO (Problema vs Solución) --- */
+.inv-manifesto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 50px;
+}
+
+.manifesto-card {
+  background: var(--inv-card-bg);
+  border: 1px solid var(--inv-border);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decoración lateral según tipo */
+.manifesto-card.alert { border-left: 3px solid var(--inv-alert); }
+.manifesto-card.alert::after {
+  content: ""; position: absolute; top:0; right:0; width: 50px; height: 50px;
+  background: linear-gradient(45deg, transparent 60%, rgba(239, 68, 68, 0.1) 60%);
+}
+
+.manifesto-card.secure { border-left: 3px solid var(--inv-secure); }
+.manifesto-card.secure::after {
+  content: ""; position: absolute; top:0; right:0; width: 50px; height: 50px;
+  background: linear-gradient(45deg, transparent 60%, rgba(59, 130, 246, 0.1) 60%);
+}
+
+.manifesto-title {
+  font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+}
+.alert .manifesto-title { color: var(--inv-alert); }
+.secure .manifesto-title { color: var(--inv-secure); }
+
+.manifesto-text {
+  color: var(--inv-text); font-size: 0.95rem; line-height: 1.6; margin: 0;
+}
+
+/* --- PARTE 3: EL PIPELINE DE 6 PASOS --- */
+.inv-pipeline-container { margin-bottom: 50px; }
+
+.pipeline-phase-title {
+  font-family: 'Source Code Pro', monospace;
+  color: var(--inv-accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 16px; display: block; opacity: 0.9;
+}
+
+/* Grid de 3 columnas para los pasos */
+.pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px; /* Espacio entre la fase 1 y 2 */
+  position: relative;
+}
+
+/* Tarjeta de Paso Individual */
+.step-card {
+  background: var(--inv-card-bg);
+  border: 1px solid var(--inv-border);
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--inv-accent);
+  background: rgba(255, 159, 26, 0.04);
+  box-shadow: 0 8px 20px -5px rgba(0,0,0,0.3);
+}
+
+/* Encabezado del paso (Número + Icono) */
+.step-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+}
+.step-number {
+  font-family: 'Source Code Pro', monospace; font-weight: 700; color: rgba(255, 255, 255, 0.15); font-size: 1.5rem;
+}
+.step-icon { color: var(--inv-accent); font-size: 1.1rem; }
+
+.step-title {
+  color: #fff; font-size: 1rem; font-weight: 700; margin: 0 0 8px 0;
+}
+.step-desc {
+  color: var(--inv-text); font-size: 0.85rem; line-height: 1.5; margin: 0;
+}
+
+/* LÍNEAS CONECTORAS (El truco visual) */
+/* Línea entre tarjetas de la misma fila (excepto la última) */
+.pipeline-grid .step-card:not(:last-child)::after {
+  content: ""; position: absolute;
+  top: 50%; right: -22px; /* Ajustar según el gap */
+  width: 24px; height: 1px;
+  background: linear-gradient(90deg, var(--inv-border), transparent);
+  z-index: 0;
+}
+
+/* --- PARTE 4: CIERRE METODOLOGÍA --- */
+.inv-footer-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(11, 16, 34, 1) 100%);
+  border: 1px solid var(--inv-border);
+  border-radius: 12px; padding: 24px 30px;
+  display: flex; gap: 20px; align-items: center;
+}
+.footer-icon-box {
+  width: 50px; height: 50px; background: rgba(255, 159, 26, 0.1); border: 1px solid var(--inv-accent);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--inv-accent); font-size: 1.5rem; flex-shrink: 0;
+}
+.footer-text { color: var(--inv-text); font-size: 0.95rem; line-height: 1.6; margin: 0; }
+.footer-text strong { color: #fff; }
+
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .inv-manifesto-grid { grid-template-columns: 1fr; }
+  .pipeline-grid { grid-template-columns: 1fr; gap: 16px; }
+  /* En móvil quitamos las líneas conectoras horizontales */
+  .pipeline-grid .step-card:not(:last-child)::after { display: none; }
+  /* Y añadimos una pequeña flecha hacia abajo entre pasos */
+  .pipeline-grid .step-card:not(:last-child) { margin-bottom: 10px; border-bottom: 2px solid var(--inv-border); padding-bottom: 25px; }
+  .inv-footer-card { flex-direction: column; text-align: center; }
+}
