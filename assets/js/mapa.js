@@ -1,143 +1,156 @@
-/* LÓGICA DE INTERFAZ DE BASE DE DATOS (SQL CLIENT) */
+/* LÓGICA DEL KNOWLEDGE HUB (Sencillo y Profesional) */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const treeContainer = document.getElementById('db-tree-root');
-    const tableBody = document.getElementById('db-table-body');
-    const queryDisplay = document.getElementById('sql-query-display');
+    const container = document.getElementById('hub-grid');
+    const breadcrumbs = document.getElementById('hub-breadcrumbs');
+    const backBtnContainer = document.getElementById('hub-back-container');
     
-    if (!treeContainer) return;
+    if (!container) return;
 
-    /* --- DATOS (Esquema de Base de Datos simulado) --- */
-    const dbSchema = {
-        name: "aom_lab_db",
-        type: "root",
-        expanded: true,
+    /* --- DATOS (Tu estructura) --- */
+    const knowledgeBase = {
+        name: "Inicio",
+        type: "folder",
         children: [
             {
-                name: "teoria_fundamentos",
-                type: "schema",
+                name: "Teoría y Fundamentos",
+                icon: "fa-solid fa-book-journal-whills",
+                desc: "Documentación técnica sobre protocolos, redes y sistemas operativos.",
+                type: "folder",
                 children: [
-                    { name: "tbl_ciberseguridad", type: "table", rows: 15, updated: "2025-01-10" },
-                    { name: "tbl_sistemas_linux", type: "table", rows: 8, updated: "2024-12-20" },
-                    { name: "view_protocolos_red", type: "view", rows: 12, updated: "2024-11-05" }
+                    {
+                        name: "Ciberseguridad",
+                        icon: "fa-solid fa-shield-halved",
+                        desc: "Blue Team, Red Team, Metodologías y Normativas.",
+                        type: "folder",
+                        children: [
+                            { name: "Hacking Ético - Guía.pdf", desc: "Metodología de pentesting", type: "file" },
+                            { name: "Gestión de Incidentes.md", desc: "Playbooks de respuesta", type: "file" }
+                        ]
+                    },
+                    {
+                        name: "Sistemas & Redes",
+                        icon: "fa-solid fa-server",
+                        desc: "Administración Linux/Windows y arquitectura de redes.",
+                        type: "folder",
+                        children: [
+                            { name: "Linux Hardening.pdf", desc: "Guía de aseguramiento", type: "file" },
+                            { name: "Directorio Activo.md", desc: "Estructura y seguridad", type: "file" }
+                        ]
+                    }
                 ]
             },
             {
-                name: "portafolio_proyectos",
-                type: "schema",
+                name: "Portafolio de Proyectos",
+                icon: "fa-solid fa-rocket",
+                desc: "Casos prácticos, despliegues reales y laboratorios.",
+                type: "folder",
                 children: [
-                    { name: "deploy_kubernetes", type: "procedure", size: "45 KB", updated: "Yesterday" },
-                    { name: "audit_report_2024", type: "blob", size: "1.2 MB", updated: "2 days ago" }
+                    { name: "Laboratorio K8s", icon: "fa-solid fa-cubes", desc: "Cluster local", type: "file" },
+                    { name: "Auditoría Web", icon: "fa-solid fa-globe", desc: "Informe anonimizado", type: "file" }
                 ]
             },
             {
-                name: "logs_investigacion",
-                type: "schema",
+                name: "Artículos y Notas",
+                icon: "fa-regular fa-newspaper",
+                desc: "Investigaciones personales y curiosidades técnicas.",
+                type: "folder",
                 children: [
-                    { name: "case_crowdstrike", type: "log", size: "200 KB", updated: "Active" },
-                    { name: "incidents_q4", type: "log", size: "500 KB", updated: "Archived" }
+                    { name: "Análisis CrowdStrike", type: "file", desc: "Post-mortem del incidente" },
+                    { name: "Zero Trust 101", type: "file", desc: "Introducción al concepto" }
                 ]
             }
         ]
     };
 
-    /* --- RENDER TREE (IZQUIERDA) --- */
-    function renderTree(node, container, level = 0) {
-        // Crear elemento del árbol
-        const item = document.createElement('div');
-        item.className = 'tree-item';
-        item.style.paddingLeft = `${level * 15 + 10}px`;
-        
-        let icon = 'fa-database';
-        if (node.type === 'schema') icon = 'fa-folder';
-        if (node.type === 'table') icon = 'fa-table';
-        if (node.type === 'view') icon = 'fa-eye';
-        if (node.type === 'log') icon = 'fa-file-lines';
+    /* --- ESTADO --- */
+    let currentFolder = knowledgeBase;
+    let pathStack = [knowledgeBase];
 
-        item.innerHTML = `<i class="fa-solid ${icon} tree-icon"></i> ${node.name}`;
-        
-        // Evento Click
-        item.onclick = (e) => {
-            e.stopPropagation();
-            // Resaltar activo
-            document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
-            item.classList.add('active');
-            
-            // Simular Query y Cargar Datos
-            updateQuery(node);
-            loadTableData(node);
-        };
-
-        container.appendChild(item);
-
-        // Renderizar hijos si existen
-        if (node.children) {
-            node.children.forEach(child => renderTree(child, container, level + 1));
-        }
+    /* --- UTILIDAD: CONTAR ITEMS --- */
+    function countItems(node) {
+        if (!node.children) return 0;
+        return node.children.length;
     }
 
-    /* --- SIMULADOR DE QUERY (ESCRITURA) --- */
-    function updateQuery(node) {
-        const tableName = node.name;
-        let query = '';
+    /* --- RENDER --- */
+    function render() {
+        container.innerHTML = '';
         
-        if (node.type === 'root') query = `SHOW DATABASES;`;
-        else if (node.type === 'schema') query = `USE ${tableName}; SHOW TABLES;`;
-        else query = `<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> ${tableName} <span class="sql-keyword">LIMIT</span> 100;`;
-
-        queryDisplay.innerHTML = `${query}<span class="cursor-blink"></span>`;
-    }
-
-    /* --- RENDER TABLA (DERECHA) --- */
-    function loadTableData(node) {
-        tableBody.innerHTML = '';
-        
-        // Si es una carpeta/schema, mostramos sus hijos
-        let dataToShow = [];
-        if (node.children) {
-            dataToShow = node.children;
-        } else {
-            // Si es un archivo final, inventamos filas "dummy" para que parezca una tabla de DB real
-            // Esto es pura estética para vender la idea de DB
-            dataToShow = [
-                { id: 1, name: "config_main.yml", type: "VARCHAR", val: "Active" },
-                { id: 2, name: "security_policy", type: "JSON", val: "{...}" },
-                { id: 3, name: "user_access", type: "INT", val: "775" }
-            ];
-        }
-
-        if (dataToShow.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">// 0 rows returned in 0.04ms</td></tr>`;
-            return;
-        }
-
-        dataToShow.forEach((row, index) => {
-            const tr = document.createElement('tr');
-            
-            // Columnas simuladas
-            const id = index + 1;
-            const name = row.name || "data_row_" + id;
-            const type = row.type || "TABLE";
-            const extra = row.updated || row.val || "NULL";
-            
-            // Badge color
-            let badgeClass = 'badge-folder';
-            if(type !== 'table' && type !== 'schema') badgeClass = 'badge-file';
-
-            tr.innerHTML = `
-                <td style="color: #64748b;">${id}</td>
-                <td style="color: #ff9f1a; font-weight:600;">${name}</td>
-                <td><span class="type-badge ${badgeClass}">${type}</span></td>
-                <td>${extra}</td>
-                <td style="color: #64748b;">root</td>
+        // 1. Breadcrumbs
+        let crumbsHTML = '';
+        pathStack.forEach((folder, index) => {
+            const isLast = index === pathStack.length - 1;
+            crumbsHTML += `
+                <div class="crumb-item ${isLast ? 'crumb-current' : ''}" onclick="navigateTo(${index})">
+                    ${index === 0 ? '<i class="fa-solid fa-house"></i>' : ''} 
+                    ${folder.name}
+                </div>
+                ${!isLast ? '<span class="crumb-sep">/</span>' : ''}
             `;
-            tableBody.appendChild(tr);
         });
+        breadcrumbs.innerHTML = crumbsHTML;
+
+        // 2. Botón Atrás
+        backBtnContainer.innerHTML = '';
+        if (pathStack.length > 1) {
+            const backBtn = document.createElement('button');
+            backBtn.className = 'back-btn';
+            backBtn.innerHTML = `<i class="fa-solid fa-arrow-left"></i> Volver`;
+            backBtn.onclick = () => {
+                pathStack.pop();
+                currentFolder = pathStack[pathStack.length - 1];
+                render();
+            };
+            backBtnContainer.appendChild(backBtn);
+        }
+
+        // 3. Grid de Contenido
+        if (currentFolder.children && currentFolder.children.length > 0) {
+            currentFolder.children.forEach(item => {
+                const card = document.createElement('div');
+                card.className = `hub-card ${item.type === 'file' ? 'is-file' : ''}`;
+                
+                // Iconos por defecto
+                let icon = item.icon || (item.type === 'folder' ? 'fa-solid fa-folder' : 'fa-regular fa-file-lines');
+                
+                // Badge
+                const count = countItems(item);
+                const badge = item.type === 'folder' ? `<span class="card-badge">${count} items</span>` : '';
+
+                card.innerHTML = `
+                    <div class="card-top">
+                        <div class="card-icon"><i class="${icon}"></i></div>
+                        ${badge}
+                    </div>
+                    <h3 class="card-title">${item.name}</h3>
+                    <p class="card-desc">${item.desc || 'Documento técnico'}</p>
+                `;
+
+                card.onclick = () => {
+                    if (item.type === 'folder') {
+                        pathStack.push(item);
+                        currentFolder = item;
+                        render();
+                    } else {
+                        alert(`Abriendo documento: ${item.name}`);
+                        // window.open(item.link, '_blank');
+                    }
+                };
+
+                container.appendChild(card);
+            });
+        } else {
+            container.innerHTML = `<div class="hub-empty">Carpeta vacía</div>`;
+        }
+        
+        // Exponer función al objeto window para el onclick del breadcrumb
+        window.navigateTo = (index) => {
+            pathStack = pathStack.slice(0, index + 1);
+            currentFolder = pathStack[pathStack.length - 1];
+            render();
+        };
     }
 
-    // Inicializar
-    renderTree(dbSchema, treeContainer);
-    // Cargar estado inicial
-    updateQuery(dbSchema);
-    loadTableData(dbSchema);
+    render();
 });
