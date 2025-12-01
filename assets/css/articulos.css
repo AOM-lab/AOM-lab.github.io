@@ -2,7 +2,7 @@
 
 #articulos {
   --art-bg: transparent;
-  --art-card-bg: #0a0f1c; /* Fondo oscuro */
+  --art-card-bg: #0a0f1c;
   --art-border: rgba(255, 255, 255, 0.1);
   --art-accent: #ff9f1a;
   --art-text: #94a3b8;
@@ -95,12 +95,11 @@
 }
 .art-track::-webkit-scrollbar { display: none; }
 
-/* --- TARJETA (Aquí estaba el error) --- */
+/* --- TARJETA (Ajuste Matemático) --- */
 .art-card {
-  /* CÁLCULO MATEMÁTICO: (100% ancho - 48px de huecos) / 3 tarjetas */
-  /* Esto asegura que SIEMPRE entren 3, sin importar el tamaño de pantalla */
+  /* Esto calcula el ancho exacto para que quepan 3 tarjetas restando los huecos */
   flex: 0 0 calc((100% - 48px) / 3);
-  max-width: calc((100% - 48px) / 3);
+  width: calc((100% - 48px) / 3);
   
   scroll-snap-align: start;
   background: var(--art-card-bg);
@@ -122,7 +121,7 @@
   box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6);
 }
 
-/* --- IMAGEN TÉCNICA --- */
+/* --- IMAGEN --- */
 .art-img-box {
   height: 200px; 
   width: 100%;
@@ -216,10 +215,16 @@
   border: 1px dashed var(--art-border);
 }
 
+/* ¡ESTO ERA LO QUE FALTABA! ANIMACIÓN DE ENTRADA */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  /* En móvil sí queremos ancho fijo para deslizar */
-  .art-card { flex: 0 0 280px; max-width: 280px; } 
+  /* En móvil sí queremos ancho fijo para deslizar con el dedo */
+  .art-card { flex: 0 0 280px; width: 280px; max-width: 280px; } 
   .art-header { flex-direction: column; align-items: flex-start; }
   .art-filters { overflow-x: auto; width: 100%; padding-bottom: 5px; }
 }
