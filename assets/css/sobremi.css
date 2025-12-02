@@ -98,13 +98,35 @@
   display: flex; justify-content: space-between;
   margin-bottom: 10px; padding-bottom: 10px;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+  align-items: center; /* Asegura alineación vertical si hay saltos de línea */
 }
 .monitor-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-.key { color: #94a3b8; }
+.key { color: #94a3b8; flex-shrink: 0; margin-right: 10px; }
 .val { color: #e2e8f0; font-weight: 600; text-align: right; }
 .val.highlight { color: var(--sm-accent); }
 .val.online { color: var(--sm-code); display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+
+/* --- NUEVOS ESTILOS PARA LINKS DE CONTACTO (PROFESIONAL) --- */
+a.val {
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+a.val:hover {
+  color: var(--sm-accent);
+  text-shadow: 0 0 8px rgba(255, 159, 26, 0.4);
+  cursor: pointer;
+}
+
+/* Ajuste específico para correos largos */
+.val.email-fit {
+  font-size: 0.72rem;       /* Ligeramente más pequeño para que quepa */
+  word-break: break-all;    /* Evita que rompa el layout en móviles */
+  max-width: 65%;           /* Controla el ancho máximo */
+  line-height: 1.3;
+}
+/* ----------------------------------------------------------- */
 
 /* Animación parpadeo status */
 .blink { animation: blinkStatus 2s infinite; width: 6px; height: 6px; background: currentColor; border-radius: 50%; display: inline-block; }
