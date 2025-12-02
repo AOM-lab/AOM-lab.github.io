@@ -1,156 +1,110 @@
 /* ===============================
-   ESTILOS DEL MAPA VISUAL (NETWORK PRO) - VERSIÓN FINAL
+   ESTILOS DEL MAPA VISUAL (NETWORK PRO)
    =============================== */
 
 .vault-network {
   position: relative;
-  height: 650px; /* Altura fija para que luzca bien */
+  height: 600px;
   width: 100%;
   /* Fondo sutil y tecnológico */
-  background: radial-gradient(ellipse at 30% 30%, rgba(139, 92, 246, 0.05) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 70%, rgba(6, 182, 212, 0.05) 0%, transparent 60%),
-              linear-gradient(180deg, #080c14 0%, #0d1526 100%);
+  background: radial-gradient(ellipse at 20% 30%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 70%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+              linear-gradient(180deg, #060a12 0%, #0b1022 100%);
   overflow: hidden;
   border-radius: 0 0 14px 14px;
-  cursor: grab; /* Cursor de mano para mover */
 }
-.vault-network:active { cursor: grabbing; }
 
 #networkCanvas {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   pointer-events: none; z-index: 1;
 }
 
-/* Contenedor del Mundo (donde viven los nodos) */
-.network-world {
-  position: absolute;
-  left: 0; top: 0;
-  width: 4000px; height: 4000px; /* Mundo gigante */
-  transform-origin: 0 0; 
-  transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); /* Movimiento suave */
-  z-index: 2;
-  pointer-events: none; /* Para que el click pase a los nodos */
-}
-
-/* ===== NODOS (Círculos) ===== */
-.map-node {
-  position: absolute;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer; pointer-events: auto;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  z-index: 10;
-  
-  /* Animación de entrada */
-  animation: nodePop 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67) backwards;
-}
-
-@keyframes nodePop {
-  from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
-
-/* Estilos Nivel Root (Central) */
-.map-node.node-root {
-  width: 140px; height: 140px;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 159, 26, 0.25) 0%, rgba(255, 159, 26, 0.05) 70%);
-  border: 2px solid #ff9f1a;
-  box-shadow: 0 0 60px rgba(255, 159, 26, 0.3), inset 0 0 30px rgba(255, 159, 26, 0.1);
-  z-index: 50;
-  animation: rootPulse 4s ease-in-out infinite;
-}
-@keyframes rootPulse {
-  0%, 100% { box-shadow: 0 0 60px rgba(255, 159, 26, 0.3); }
-  50% { box-shadow: 0 0 100px rgba(255, 159, 26, 0.5); }
-}
-
-.map-node.node-root .node-icon { font-size: 42px; color: #ff9f1a; margin-bottom: 4px; filter: drop-shadow(0 0 10px rgba(255,159,26,0.8)); }
-.map-node.node-root .node-label { font-size: 14px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
-
-/* Estilos Nivel 1 (Categorías) */
-.map-node.node-level-1 {
-  width: 100px; height: 100px;
-  background: radial-gradient(circle at 30% 30%, rgba(var(--node-rgb), 0.3) 0%, rgba(var(--node-rgb), 0.1) 100%);
-  border: 2px solid var(--node-color);
-  box-shadow: 0 0 30px rgba(var(--node-rgb), 0.2);
-  z-index: 40;
-}
-.map-node.node-level-1:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 100; box-shadow: 0 0 50px rgba(var(--node-rgb), 0.5); }
-.map-node.node-level-1 .node-icon { font-size: 32px; color: var(--node-color); margin-bottom: 4px; }
-.map-node.node-level-1 .node-label { font-size: 11px; font-weight: 700; color: #fff; text-align: center; line-height: 1.1; max-width: 90px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-
-/* Estilos Nivel 2 (Subcategorías) */
-.map-node.node-level-2 {
-  width: 60px; height: 60px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid var(--node-color);
-  z-index: 30;
-}
-.map-node.node-level-2:hover { transform: translate(-50%, -50%) scale(1.2); z-index: 90; background: var(--node-color); border-color: #fff; }
-.map-node.node-level-2:hover .node-icon { color: #000; }
-.map-node.node-level-2 .node-icon { font-size: 20px; color: var(--node-color); transition: 0.2s; }
-/* Etiqueta oculta hasta hover */
-.map-node.node-level-2 .node-label { 
-  position: absolute; top: 110%; 
-  background: rgba(0,0,0,0.8); padding: 4px 8px; border-radius: 4px;
-  font-size: 10px; color: #fff; white-space: nowrap; 
-  opacity: 0; transition: 0.2s; pointer-events: none;
-}
-.map-node.node-level-2:hover .node-label { opacity: 1; top: 120%; }
-
-/* Estilos Nivel 3 (Archivos Finales) */
-.map-node.node-file {
-  width: 12px; height: 12px;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4);
-  z-index: 20;
-}
-.map-node.node-file:hover { transform: translate(-50%, -50%) scale(2); background: var(--node-color); border-color: #fff; }
-
-/* ESTADOS DE FOCO (Dimming) */
-.map-node.dimmed { opacity: 0.1; filter: blur(1px); pointer-events: none; }
-.map-node.active { opacity: 1; filter: none; }
-
-/* COLORES DINÁMICOS (Variables CSS) */
-.map-node[data-category="teoria"] { --node-color: #8b5cf6; --node-rgb: 139, 92, 246; }
-.map-node[data-category="ciberseguridad"] { --node-color: #ef4444; --node-rgb: 239, 68, 68; }
-.map-node[data-category="programacion"] { --node-color: #22c55e; --node-rgb: 34, 197, 94; }
-.map-node[data-category="sistemas"] { --node-color: #3b82f6; --node-rgb: 59, 130, 246; }
-.map-node[data-category="fundamentos"] { --node-color: #f59e0b; --node-rgb: 245, 158, 11; }
-.map-node[data-category="proyectos"] { --node-color: #ec4899; --node-rgb: 236, 72, 153; }
-.map-node[data-category="laboratorio"] { --node-color: #06b6d4; --node-rgb: 6, 182, 212; }
-
-/* ===== UI FLOTANTE (HUD) ===== */
-
-/* 1. Stats (Esquina Superior Derecha) */
+/* WIDGET DE ESTADÍSTICAS */
 .network-stats {
-  position: absolute; top: 20px; right: 20px;
-  display: flex; gap: 25px;
-  background: rgba(15, 23, 42, 0.8);
-  padding: 12px 24px; border-radius: 12px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 20px;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 12px 20px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -5px rgba(0,0,0,0.5);
   backdrop-filter: blur(10px);
-  z-index: 500;
+  z-index: 50;
   pointer-events: none;
 }
-.network-stat { text-align: center; }
-.network-stat-value { font-size: 1.4rem; font-weight: 700; color: #ff9f1a; font-family: 'Source Code Pro', monospace; line-height: 1; }
-.network-stat-label { font-size: 0.6rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
 
-/* 2. Leyenda (Esquina Inferior Izquierda) */
-.map-legend {
-  position: absolute; bottom: 20px; left: 20px;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px; padding: 15px;
-  backdrop-filter: blur(10px);
-  z-index: 500; max-width: 220px;
+.network-stat {
+  display: flex; flex-direction: column; align-items: center;
 }
-.legend-title { font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 10px; }
+
+.network-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ff9f1a;
+  font-family: 'Source Code Pro', monospace;
+  line-height: 1;
+}
+
+.network-stat-label {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* HINT */
+.network-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex; align-items: center; gap: 8px;
+  pointer-events: none;
+  z-index: 40;
+}
+.network-hint i { color: #ff9f1a; }
+
+/* LEYENDA */
+.map-legend {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  z-index: 50;
+  max-width: 220px;
+}
+
+.legend-title {
+  font-size: 0.7rem; font-weight: 700; color: #94a3b8;
+  text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;
+}
+
 .legend-items { display: flex; flex-wrap: wrap; gap: 8px; }
-.legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #e2e8f0; }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.7rem; color: #e2e8f0;
+  background: rgba(255,255,255,0.05);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+.legend-dot { width: 6px; height: 6px; border-radius: 50%; }
+
 /* Colores Leyenda */
 .legend-dot.teoria { background: #8b5cf6; }
 .legend-dot.ciberseguridad { background: #ef4444; }
@@ -160,29 +114,79 @@
 .legend-dot.proyectos { background: #ec4899; }
 .legend-dot.laboratorio { background: #06b6d4; }
 
-/* 3. Hint (Centro Abajo) */
-.network-hint {
-  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-  background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 30px; padding: 8px 16px;
-  font-size: 0.75rem; color: rgba(255,255,255,0.7);
-  display: flex; align-items: center; gap: 8px; pointer-events: none; z-index: 400;
-}
-.network-hint i { color: #ff9f1a; }
 
-/* 4. Botón Reset (Esquina Superior Izquierda) */
-.map-reset-btn {
-  position: absolute; top: 20px; left: 20px;
-  background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #e2e8f0; padding: 10px 16px; border-radius: 8px;
-  cursor: pointer; z-index: 500; font-size: 0.8rem; display: flex; gap: 8px; align-items: center;
-  transition: 0.2s;
+/* --- ESTILOS DE LOS NODOS (Círculos) --- */
+.network-nodes {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
 }
-.map-reset-btn:hover { border-color: #ff9f1a; color: #ff9f1a; }
+
+.map-node {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: 50%; cursor: pointer; pointer-events: auto;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 10;
+  /* CORRECCIÓN: Asegurar opacidad base por si la animación falla */
+  opacity: 1; 
+  /* Animación */
+  animation: popIn 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67) both;
+}
+
+@keyframes popIn { 
+  from { transform: translate(-50%, -50%) scale(0); opacity: 0; } 
+  to { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
+}
+
+/* Estilos Nivel Root */
+.map-node.node-root {
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(255,159,26,0.2) 0%, rgba(255,159,26,0.05) 70%);
+  border: 2px solid #ff9f1a;
+  box-shadow: 0 0 30px rgba(255, 159, 26, 0.3);
+  z-index: 50;
+}
+.map-node.node-root .node-icon { font-size: 40px; color: #ff9f1a; margin-bottom: 5px; }
+.map-node.node-root .node-label { font-size: 14px; font-weight: 700; color: #fff; text-align: center; }
+
+/* Estilos Nivel 1 (Categorías) */
+.map-node.node-level-1 {
+  width: 90px; height: 90px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid var(--node-color);
+  box-shadow: 0 0 20px rgba(var(--node-rgb), 0.2);
+  z-index: 40;
+}
+.map-node.node-level-1:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 100; }
+.map-node.node-level-1 .node-icon { font-size: 28px; color: var(--node-color); margin-bottom: 4px; }
+.map-node.node-level-1 .node-label { font-size: 11px; font-weight: 600; color: #fff; text-align: center; line-height: 1.1; max-width: 80px; }
+
+/* Estilos Nivel 2 (Subcategorías) */
+.map-node.node-level-2 {
+  width: 60px; height: 60px;
+  background: #0f172a;
+  border: 1px solid var(--node-color);
+  z-index: 30;
+}
+.map-node.node-level-2:hover { transform: translate(-50%, -50%) scale(1.2); z-index: 90; }
+.map-node.node-level-2 .node-icon { font-size: 18px; color: var(--node-color); }
+.map-node.node-level-2 .node-label { font-size: 9px; color: #cbd5e1; margin-top: 2px; text-align: center; display: none; }
+.map-node.node-level-2:hover .node-label { display: block; position: absolute; top: 100%; background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px; width: max-content; z-index: 10; }
+
+
+/* Colores Dinámicos */
+.map-node[data-category="teoria"] { --node-color: #8b5cf6; }
+.map-node[data-category="ciberseguridad"] { --node-color: #ef4444; }
+.map-node[data-category="programacion"] { --node-color: #22c55e; }
+.map-node[data-category="sistemas"] { --node-color: #3b82f6; }
+.map-node[data-category="fundamentos"] { --node-color: #f59e0b; }
+.map-node[data-category="proyectos"] { --node-color: #ec4899; }
+.map-node[data-category="laboratorio"] { --node-color: #06b6d4; }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .network-stats { top: auto; bottom: 80px; left: 20px; right: 20px; justify-content: center; }
-  .map-legend { display: none; } /* Ocultar leyenda en móvil para limpiar */
-  .network-hint { display: none; }
+  .network-stats { top: 10px; right: 10px; left: 10px; justify-content: center; }
+  .map-legend { display: none; }
+  .vault-network { height: 500px; }
 }
