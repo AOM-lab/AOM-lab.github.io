@@ -1,284 +1,241 @@
-/* --- ESTILOS BASE DEL VAULT Y PANEL DE CONTENIDO (EXPLORADOR) --- */
+/* ===============================
+   TABLA DE CONTENIDO (KNOWLEDGE VAULT)
+   Diseño exacto de las capturas
+   =============================== */
 
-/* Contenedor principal */
+/* VARIABLES */
 .knowledge-vault {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    min-height: 600px;
-    background: rgba(11, 18, 32, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 20px;
-    backdrop-filter: blur(10px);
+  --vault-bg: #111a2d;
+  --vault-bg-light: #1a2540;
+  --vault-border: rgba(255, 255, 255, 0.06);
+  --vault-accent: #ff9f1a;
+  --vault-accent-soft: #ffd79a;
+  --vault-text: #e9eef6;
+  --vault-muted: #a8b2c2;
+  --vault-radius: 14px;
+  
+  /* Colores de Categorías */
+  --cat-teoria: #8b5cf6;
+  --cat-ciber: #ef4444;
+  --cat-programacion: #22c55e;
+  --cat-sistemas: #3b82f6;
+  --cat-fundamentos: #f59e0b;
+  --cat-proyectos: #ec4899;
+  --cat-laboratorio: #06b6d4;
 }
 
-/* --- Header (Stats, Toggle, Search) --- */
+/* CONTENEDOR PRINCIPAL */
+.knowledge-vault {
+  background: linear-gradient(180deg, var(--vault-bg-light) 0%, var(--vault-bg) 100%);
+  border: 1px solid var(--vault-border);
+  border-radius: var(--vault-radius);
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+/* HEADER */
 .vault-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(180deg, rgba(255, 159, 26, 0.04) 0%, transparent 100%);
+  border-bottom: 1px solid var(--vault-border);
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .vault-header-left {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    flex-wrap: wrap;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
 }
 
-/* Stats */
-.vault-stats {
-    display: flex;
-    gap: 20px;
-}
+.vault-stats { display: flex; align-items: center; gap: 20px; }
+.stat-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--vault-muted); }
+.stat-item i { color: var(--vault-accent); font-size: 14px; }
+.stat-value { font-weight: 600; color: var(--vault-text); }
 
-.stat-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #94a3b8;
-    font-size: 0.85rem;
-    font-family: 'Source Code Pro', monospace;
-}
-
-.stat-item i { color: #ff9f1a; }
-.stat-value { font-weight: 700; color: #fff; }
-
-/* Toggle Buttons */
+/* TOGGLE DE VISTAS */
 .vault-view-toggle {
-    display: flex;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    padding: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
 }
 
 .view-toggle-btn {
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  background: transparent; border: none; border-radius: 7px;
+  color: var(--vault-muted); font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all 0.25s ease; font-family: inherit;
 }
+.view-toggle-btn:hover { color: var(--vault-text); background: rgba(255, 255, 255, 0.05); }
+.view-toggle-btn.active { background: rgba(255, 159, 26, 0.15); color: var(--vault-accent); box-shadow: 0 2px 8px rgba(255, 159, 26, 0.2); }
+.view-toggle-btn i { font-size: 14px; }
 
-.view-toggle-btn:hover { color: #fff; }
-
-.view-toggle-btn.active {
-    background: rgba(255, 159, 26, 0.15);
-    color: #ff9f1a;
-}
-
-/* Search */
+/* BUSCADOR */
 .vault-search {
-    position: relative;
-    width: 250px;
+  position: relative; flex: 1; max-width: 320px; min-width: 200px;
 }
-
 .vault-search input {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 6px;
-    padding: 8px 12px 8px 35px;
-    color: #fff;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.85rem;
-    transition: 0.2s;
+  width: 100%; padding: 10px 16px 10px 40px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--vault-border); border-radius: 10px;
+  color: var(--vault-text); font-size: 13px; font-family: inherit;
+  transition: all 0.25s ease;
 }
+.vault-search input::placeholder { color: var(--vault-muted); opacity: 0.6; }
+.vault-search input:focus { outline: none; border-color: rgba(255, 159, 26, 0.4); box-shadow: 0 0 0 3px rgba(255, 159, 26, 0.1); }
+.vault-search > i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--vault-muted); font-size: 14px; pointer-events: none; }
 
-.vault-search input:focus {
-    border-color: #ff9f1a;
-    outline: none;
-}
+/* CONTENEDOR VISTAS */
+.vault-views-container { position: relative; overflow: hidden; }
+.vault-view { display: none; opacity: 0; transition: opacity 0.4s ease; }
+.vault-view.active { display: block; opacity: 1; }
 
-.vault-search i {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    font-size: 0.8rem;
-}
-
-/* --- Contenedor de Vistas --- */
-.vault-views-container {
-    flex-grow: 1;
-    position: relative;
-    overflow: hidden;
-}
-
-.vault-view {
-    display: none; /* Oculto por defecto */
-    height: 100%;
-    animation: fadeView 0.3s ease;
-}
-
-.vault-view.active {
-    display: block; /* Solo el activo se muestra */
-}
-
-@keyframes fadeView {
-    from { opacity: 0; } to { opacity: 1; }
-}
-
-/* =========================================
-   ESTILOS ESPECÍFICOS DEL PANEL EXPLORADOR
-   ========================================= */
+/* LAYOUT EXPLORADOR */
 .vault-layout {
-    display: flex;
-    height: 100%;
-    gap: 20px;
+  display: grid; grid-template-columns: 260px 1fr;
+  min-height: 450px; max-height: 550px;
 }
 
-/* Sidebar (Tree View) */
+/* SIDEBAR (Árbol) */
 .vault-sidebar {
-    width: 220px;
-    flex-shrink: 0;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    overflow-y: auto;
-    padding-right: 10px;
+  background: rgba(0, 0, 0, 0.15); border-right: 1px solid var(--vault-border);
+  overflow-y: auto; padding: 12px 0;
 }
+.vault-sidebar::-webkit-scrollbar { width: 6px; }
+.vault-sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
 
-.vault-tree-item {
-    padding: 6px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #94a3b8;
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.1s;
-    margin-bottom: 2px;
-    font-family: 'Inter', sans-serif;
-}
+.tree-root { list-style: none; padding: 0; margin: 0; }
+.tree-item { user-select: none; }
 
-.vault-tree-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
+.tree-item-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; cursor: pointer;
+  transition: all 0.2s ease; border-left: 3px solid transparent;
 }
+.tree-item-header:hover { background: rgba(255, 255, 255, 0.04); }
+.tree-item-header.active { background: rgba(255, 159, 26, 0.08); border-left-color: var(--vault-accent); }
 
-.vault-tree-item.active {
-    background: rgba(255, 159, 26, 0.1);
-    color: #ff9f1a;
-}
+.tree-toggle { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--vault-muted); font-size: 10px; transition: transform 0.25s ease; }
+.tree-item.expanded > .tree-item-header .tree-toggle { transform: rotate(90deg); }
+.tree-item:not(.has-children) .tree-toggle { visibility: hidden; }
 
-/* Main Content (Table View) */
-.vault-main {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
+.tree-icon { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.tree-label { font-size: 13px; color: var(--vault-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tree-count { margin-left: auto; font-size: 10px; color: var(--vault-muted); background: rgba(255, 255, 255, 0.06); padding: 2px 6px; border-radius: 10px; }
+.tree-children { list-style: none; padding: 0 0 0 20px; margin: 0; display: none; }
+.tree-item.expanded > .tree-children { display: block; }
+
+/* Colores Sidebar */
+.tree-item[data-category="teoria"] > .tree-item-header .tree-icon { color: var(--cat-teoria); }
+.tree-item[data-category="ciberseguridad"] > .tree-item-header .tree-icon { color: var(--cat-ciber); }
+.tree-item[data-category="programacion"] > .tree-item-header .tree-icon { color: var(--cat-programacion); }
+.tree-item[data-category="sistemas"] > .tree-item-header .tree-icon { color: var(--cat-sistemas); }
+.tree-item[data-category="fundamentos"] > .tree-item-header .tree-icon { color: var(--cat-fundamentos); }
+.tree-item[data-category="proyectos"] > .tree-item-header .tree-icon { color: var(--cat-proyectos); }
+.tree-item[data-category="laboratorio"] > .tree-item-header .tree-icon { color: var(--cat-laboratorio); }
+
+/* MAIN CONTENT */
+.vault-main { display: flex; flex-direction: column; overflow: hidden; }
 
 .vault-breadcrumb {
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.85rem;
-    color: #94a3b8;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px; background: rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--vault-border); font-size: 13px; flex-wrap: wrap;
+}
+.breadcrumb-item { display: flex; align-items: center; gap: 8px; color: var(--vault-muted); cursor: pointer; transition: color 0.2s ease; }
+.breadcrumb-item:hover { color: var(--vault-accent); }
+.breadcrumb-item.current { color: var(--vault-text); cursor: default; }
+.breadcrumb-separator { color: var(--vault-muted); opacity: 0.4; font-size: 10px; }
+
+.vault-content { flex: 1; overflow-y: auto; padding: 20px; }
+.vault-content::-webkit-scrollbar { width: 8px; }
+.vault-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+
+.content-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
 }
 
-.bread-item { cursor: pointer; transition: 0.2s; }
-.bread-item:hover { color: #fff; text-decoration: underline; }
-.bread-sep { margin: 0 8px; opacity: 0.5; }
-.bread-current { color: #ff9f1a; font-weight: 600; }
-
-.vault-content {
-    flex-grow: 1;
-    overflow-y: auto;
+/* CARDS (Carpetas y Archivos) */
+.vault-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  border: 1px solid var(--vault-border);
+  border-radius: 12px; padding: 16px;
+  cursor: pointer; transition: all 0.25s ease;
+  position: relative; overflow: hidden;
+  animation: cardFadeIn 0.4s ease backwards;
 }
 
-/* Table Styles */
-.vault-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-    font-family: 'Inter', sans-serif;
+.vault-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+  background: var(--card-color, var(--vault-accent));
+  opacity: 0; transition: opacity 0.25s ease;
 }
 
-.vault-table th {
-    text-align: left;
-    padding: 10px;
-    color: #94a3b8;
-    font-weight: 600;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    position: sticky;
-    top: 0;
-    background: rgba(11, 18, 32, 0.95); /* Para tapar al hacer scroll */
-    z-index: 1;
+.vault-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.vault-card:hover::before { opacity: 1; }
+
+@keyframes cardFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.vault-card:nth-child(1) { animation-delay: 0s; }
+.vault-card:nth-child(2) { animation-delay: 0.05s; }
+.vault-card:nth-child(3) { animation-delay: 0.1s; }
+
+/* Colores Cards */
+.vault-card[data-category="teoria"] { --card-color: var(--cat-teoria); }
+.vault-card[data-category="ciberseguridad"] { --card-color: var(--cat-ciber); }
+.vault-card[data-category="programacion"] { --card-color: var(--cat-programacion); }
+.vault-card[data-category="sistemas"] { --card-color: var(--cat-sistemas); }
+.vault-card[data-category="fundamentos"] { --card-color: var(--cat-fundamentos); }
+.vault-card[data-category="proyectos"] { --card-color: var(--cat-proyectos); }
+.vault-card[data-category="laboratorio"] { --card-color: var(--cat-laboratorio); }
+
+.card-icon {
+  width: 44px; height: 44px;
+  background: rgba(255, 159, 26, 0.08);
+  border: 1px solid rgba(255, 159, 26, 0.15);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px; font-size: 20px;
+  color: var(--card-color, var(--vault-accent));
+  transition: all 0.25s ease;
+}
+.vault-card:hover .card-icon { transform: scale(1.05); }
+
+.card-title {
+  font-size: 14px; font-weight: 600; color: var(--vault-text);
+  margin-bottom: 4px; line-height: 1.3;
+}
+.card-meta {
+  display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--vault-muted);
+}
+.card-count {
+  margin-left: auto; background: rgba(255, 255, 255, 0.06);
+  padding: 2px 8px; border-radius: 8px;
 }
 
-.vault-table td {
-    padding: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    color: #e2e8f0;
-    vertical-align: middle;
-}
+/* Card "Volver" */
+.vault-card.back-card { background: transparent; border-style: dashed; border-color: rgba(255, 255, 255, 0.1); }
+.vault-card.back-card:hover { border-color: var(--vault-accent); background: rgba(255, 159, 26, 0.03); }
+.vault-card.back-card .card-icon { background: transparent; border: none; color: var(--vault-muted); }
 
-.vault-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.02);
-}
+/* Búsqueda y Empty */
+.search-results-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: rgba(255, 159, 26, 0.05); border-bottom: 1px solid var(--vault-border); }
+.search-clear { background: none; border: none; color: var(--vault-accent); font-size: 12px; cursor: pointer; padding: 4px 10px; border-radius: 6px; }
+.search-clear:hover { background: rgba(255, 159, 26, 0.1); }
+.highlight { background: rgba(255, 159, 26, 0.25); color: var(--vault-accent-soft); padding: 0 2px; border-radius: 2px; }
+.vault-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; color: var(--vault-muted); }
+.vault-empty i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
 
-.col-icon { width: 30px; text-align: center; font-size: 1.1rem; }
-.col-name { font-weight: 500; cursor: pointer; }
-.col-name:hover { color: #ff9f1a; text-decoration: underline; }
-.col-type, .col-date, .col-size { color: #94a3b8; font-family: 'Source Code Pro', monospace; font-size: 0.75rem; }
-
-.type-badge {
-    display: inline-block;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Botón "Subir Nivel" */
-.up-level-row td {
-    color: #ff9f1a;
-    cursor: pointer;
-    font-weight: 600;
-}
-.up-level-row:hover td { background: rgba(255, 159, 26, 0.05) !important; }
-
-/* Empty State */
-.vault-empty {
-    padding: 40px;
-    text-align: center;
-    color: #94a3b8;
-    font-style: italic;
-}
-
-/* Responsive para el Explorador */
-@media (max-width: 768px) {
-    .vault-header-left { gap: 15px; }
-    .vault-stats { display: none; /* Ocultar stats en móvil si falta espacio */ }
-    .vault-search { width: 100%; order: 3; }
-
-    .vault-layout { flex-direction: column; }
-    .vault-sidebar {
-        width: 100%;
-        height: 120px; /* Altura fija para el árbol en móvil */
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-    }
-    
-    /* Ocultar columnas menos relevantes en móvil */
-    .col-date, .col-size { display: none; }
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .vault-layout { grid-template-columns: 1fr; }
+  .vault-sidebar { display: none; }
+  .content-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 }
