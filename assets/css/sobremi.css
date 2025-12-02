@@ -1,68 +1,62 @@
-/* --- ESTILOS SOBRE MÍ: VERSIÓN PROFESIONAL (HTML FIJO) --- */
+/* --- SOBRE MÍ: ESTILO CORPORATIVO (Igual al resto de la web) --- */
 
-/* Ajustes generales de la sección */
+/* 1. Ajustes Generales */
 #sobre-mi {
-  --sm-panel: #111a2d;       /* Tu azul corporativo */
-  --sm-bg-dark: #0b1220;     /* Fondo más oscuro */
-  --sm-accent: #ff9f1a;      /* Tu naranja */
-  --sm-text-main: #e9eef6;   /* Texto blanco */
-  --sm-text-muted: #94a3b8;  /* Texto gris */
-  --sm-border: rgba(255, 255, 255, 0.05);
-
-  padding-top: 40px;
+  padding-top: 60px;
   padding-bottom: 60px;
-  width: 100%;
+  /* Usamos las variables globales de tu web */
+  --panel-bg: #111a2d;       /* El azul de tus tarjetas */
+  --accent: #ff9f1a;         /* Tu naranja oficial */
+  --text-main: #e9eef6;
+  --text-muted: #a8b2c2;
+  --border-color: rgba(255, 255, 255, 0.05);
 }
 
 #sobre-mi .section-title {
-  color: var(--sm-accent);
-  margin-bottom: 10px;
+  color: #fff; /* Título en blanco como en otras secciones */
+}
+#sobre-mi .section-title::after {
+  content: "."; color: var(--accent); /* Punto naranja estético */
 }
 
 #sobre-mi .kicker {
-  color: var(--sm-text-muted);
-  border-left: 3px solid var(--sm-accent);
-  padding-left: 15px;
-  margin-bottom: 40px;
+  color: var(--text-muted);
+  border-left: 2px solid var(--accent);
+  padding-left: 12px;
+  margin-bottom: 30px;
   font-family: 'Inter', sans-serif;
 }
 
-/* === CONTENEDOR PRINCIPAL === */
+/* 2. Contenedor Principal (Tarjeta Grande) */
 .cyber-profile-wrapper {
-  background: var(--sm-panel);
-  border: 1px solid var(--sm-border);
-  border-radius: 16px;
-  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.4);
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3); /* Sombra suave, no neón */
   position: relative;
   overflow: hidden;
 }
 
-/* Ocultamos los efectos "Cyber" exagerados para que sea pro */
+/* OCULTAR efectos cyber que no queremos */
 .cyber-fx-layer, 
 .screen-reflection,
-.cyber-glow-border {
-  display: none; 
+.cursor-blink { 
+  display: none !important; 
 }
 
-/* Grid del contenido */
 .cyber-profile-content {
   display: grid;
-  grid-template-columns: 1fr 350px; /* Texto flexible | Monitor fijo */
-  gap: 50px;
-  padding: 45px;
+  grid-template-columns: 1fr 340px; /* Estructura sólida */
+  gap: 40px;
+  padding: 40px;
   align-items: start;
 }
 
-/* === COLUMNA IZQUIERDA: BIO === */
-.bio-column {
-  display: flex; 
-  flex-direction: column;
-}
-
+/* 3. Columna Izquierda: Biografía */
 .bio-header {
-  margin-bottom: 25px;
-  border-bottom: 1px solid var(--sm-border);
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .bio-name {
@@ -70,190 +64,147 @@
   color: #fff;
   font-size: 2rem;
   font-weight: 700;
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
 }
 
 .bio-role {
+  color: var(--accent); /* Naranja */
   font-family: 'Source Code Pro', monospace;
-  color: var(--sm-accent);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   display: flex; align-items: center; gap: 10px;
 }
+.bio-role i { color: var(--accent); }
 
-/* Cursor parpadeante sutil */
-.cursor-blink { animation: blink 1s step-end infinite; }
-@keyframes blink { 50% { opacity: 0; } }
-
+/* Texto descriptivo */
 .bio-text {
-  color: #cbd5e1;
-  font-size: 1rem;
+  color: var(--text-muted);
   line-height: 1.7;
-  margin-bottom: 35px;
-  font-family: 'Inter', sans-serif;
+  margin-bottom: 30px;
+  font-size: 1rem;
 }
 
-/* Reemplazamos los colores neón por estilos limpios */
-.highlight-cyan { color: #fff; font-weight: 600; }
-.highlight-orange { color: var(--sm-accent); font-weight: 600; }
+/* FORZAMOS EL COLOR DE LAS NEGRITAS PARA QUE NO SEAN CIAN */
+.highlight-cyan { color: #fff !important; font-weight: 600; }
+.highlight-orange { color: var(--accent) !important; font-weight: 600; }
 
-/* === TARJETAS DE FORMACIÓN (Badges) === */
+/* 4. Badges de Formación (Chips) */
 .cyber-badges-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
-  margin-top: auto;
 }
 
 .cyber-badge {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--sm-border);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03); /* Fondo sutil */
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
   padding: 15px;
   display: flex; align-items: center; gap: 15px;
-  transition: all 0.2s ease;
+  transition: 0.3s;
 }
-
 .cyber-badge:hover {
+  border-color: rgba(255, 159, 26, 0.3);
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .chip-icon {
-  font-size: 1.1rem;
   width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(255, 159, 26, 0.1); /* Fondo naranja sutil */
-  color: var(--sm-accent);
+  background: rgba(255, 159, 26, 0.1); /* Fondo naranja muy suave */
+  color: var(--accent);
   border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
   flex-shrink: 0;
-  /* Anulamos bordes neón */
-  border: none !important; 
+  border: none !important; /* Quitamos bordes raros */
 }
 
-.chip-info h4 { margin: 0; color: #fff; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif; }
-.chip-info span { color: var(--sm-text-muted); font-size: 0.75rem; display: block; margin-top: 2px; }
+.chip-info h4 { margin: 0; color: #fff; font-size: 0.85rem; font-weight: 600; }
+.chip-info span { color: var(--text-muted); font-size: 0.75rem; }
 
-/* Anulamos colores específicos de borde neón */
-.data-chip-cyan, .data-chip-orange { border-color: var(--sm-border); }
+/* Quitamos bordes de colores específicos */
+.data-chip-cyan, .data-chip-orange { border-color: var(--border-color); }
 
 
-/* === COLUMNA DERECHA: MONITOR (Estilo Dashboard) === */
-.monitor-column {
-  width: 100%;
-  min-width: 0;
-}
+/* 5. Columna Derecha: Tarjeta de Contacto (Ya no parece un monitor viejo) */
+.monitor-column { width: 100%; min-width: 0; }
 
 .cyber-monitor-screen {
-  background: #080c15; /* Negro profundo */
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #080c15; /* Fondo un poco más oscuro para resaltar */
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 25px;
   font-family: 'Source Code Pro', monospace;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  box-shadow: none; /* Quitamos sombras internas raras */
 }
 
 .monitor-header {
   display: flex; justify-content: space-between; align-items: center;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .terminal-prompt {
-  color: #64748b;
-  font-size: 0.75rem;
-  letter-spacing: 1px;
+  color: #64748b; font-size: 0.7rem; letter-spacing: 1px; font-weight: 600;
   text-transform: uppercase;
-  font-weight: 600;
+}
+/* Cambiamos el texto "UPLINK..." por algo pro mediante CSS */
+.terminal-prompt { visibility: hidden; position: relative; }
+.terminal-prompt::after {
+  content: "INFORMACIÓN DE CONTACTO";
+  visibility: visible; position: absolute; left: 0; top: 0;
+  white-space: nowrap; color: #64748b;
 }
 
 .monitor-indicators { display: flex; gap: 5px; }
-.indicator { 
-  width: 6px; height: 6px; 
-  background: #334155; 
-  border-radius: 50%; 
-}
-.indicator.active { background: var(--sm-accent); box-shadow: none; }
+.indicator { width: 6px; height: 6px; background: #334155; border-radius: 50%; }
+.indicator.active { background: var(--accent); box-shadow: none; }
 
-.hud-title {
-  color: var(--sm-accent);
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
-  text-shadow: none; /* Quitamos brillo neón */
-}
+.hud-title { display: none; } /* Ocultamos el título interno redundante */
 
 /* Filas de datos */
 .data-row {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 12px;
-  padding: 8px 0;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed rgba(255,255,255,0.05);
 }
-.data-row:last-child { border-bottom: none; }
+.data-row:last-child { border-bottom: none; margin-bottom: 0; }
 
 .label {
-  color: #64748b;
-  font-size: 0.75rem;
-  font-weight: 600;
+  color: #64748b; font-size: 0.75rem; font-weight: 600; 
   display: flex; align-items: center; gap: 8px;
 }
-.label i { color: var(--sm-text-muted); font-size: 0.9em; }
+.label i { color: var(--accent); opacity: 0.8; }
 
 .value {
-  color: #e2e8f0;
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-align: right;
+  color: #e2e8f0; font-weight: 600; font-size: 0.85rem; text-align: right;
 }
 
-/* Enlaces interactivos */
-a.value.link {
-  text-decoration: none;
-  transition: color 0.2s;
-}
-a.value.link:hover {
-  color: var(--sm-accent);
-  text-shadow: none;
-}
+/* Enlaces */
+a.value.link { text-decoration: none; transition: 0.2s; }
+a.value.link:hover { color: var(--accent); text-shadow: none; }
 
-.email-fit {
-  font-size: 0.75rem;
-  word-break: break-all;
-}
+.email-fit { font-size: 0.75rem; word-break: break-all; }
 
-/* Estado del Sistema */
+/* Status */
 .system-status-row {
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color);
   display: flex; justify-content: space-between; align-items: center;
 }
-
 .status-value.online {
-  color: #34d399; /* Verde semáforo */
-  font-weight: 700;
-  font-size: 0.8rem;
-  display: flex; align-items: center; gap: 8px;
+  color: #34d399; /* Verde discreto */
+  font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; gap: 8px;
 }
-
 .status-beacon {
-  position: relative; width: 8px; height: 8px;
-  background: currentColor;
-  border-radius: 50%;
-  display: inline-block;
+  width: 8px; height: 8px; background: #34d399; border-radius: 50%; display: block;
 }
-/* Eliminamos ondas expansivas exageradas */
-.beacon-wave { display: none; }
+.core, .wave { display: none; } /* Quitamos animación de ondas */
 
 /* RESPONSIVE */
-@media (max-width: 968px) {
-  .cyber-profile-content {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    padding: 30px;
-  }
-  .monitor-column { order: -1; }
-  .
+@media (max-width: 900px) {
+  .cyber-profile-content { grid-template-columns: 1fr; gap: 30px; padding: 25px; }
+  .monitor-column { order: -1; margin-bottom: 10px; }
+  .cyber-badges-grid { grid-template-columns: 1fr; }
+}
