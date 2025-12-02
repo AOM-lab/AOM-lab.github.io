@@ -1,0 +1,284 @@
+/* --- ESTILOS BASE DEL VAULT Y PANEL DE CONTENIDO (EXPLORADOR) --- */
+
+/* Contenedor principal */
+.knowledge-vault {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 600px;
+    background: rgba(11, 18, 32, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+/* --- Header (Stats, Toggle, Search) --- */
+.vault-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 20px;
+}
+
+.vault-header-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* Stats */
+.vault-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.stat-item i { color: #ff9f1a; }
+.stat-value { font-weight: 700; color: #fff; }
+
+/* Toggle Buttons */
+.vault-view-toggle {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.view-toggle-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.view-toggle-btn:hover { color: #fff; }
+
+.view-toggle-btn.active {
+    background: rgba(255, 159, 26, 0.15);
+    color: #ff9f1a;
+}
+
+/* Search */
+.vault-search {
+    position: relative;
+    width: 250px;
+}
+
+.vault-search input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 8px 12px 8px 35px;
+    color: #fff;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.85rem;
+    transition: 0.2s;
+}
+
+.vault-search input:focus {
+    border-color: #ff9f1a;
+    outline: none;
+}
+
+.vault-search i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+/* --- Contenedor de Vistas --- */
+.vault-views-container {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.vault-view {
+    display: none; /* Oculto por defecto */
+    height: 100%;
+    animation: fadeView 0.3s ease;
+}
+
+.vault-view.active {
+    display: block; /* Solo el activo se muestra */
+}
+
+@keyframes fadeView {
+    from { opacity: 0; } to { opacity: 1; }
+}
+
+/* =========================================
+   ESTILOS ESPECÍFICOS DEL PANEL EXPLORADOR
+   ========================================= */
+.vault-layout {
+    display: flex;
+    height: 100%;
+    gap: 20px;
+}
+
+/* Sidebar (Tree View) */
+.vault-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.vault-tree-item {
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.1s;
+    margin-bottom: 2px;
+    font-family: 'Inter', sans-serif;
+}
+
+.vault-tree-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.vault-tree-item.active {
+    background: rgba(255, 159, 26, 0.1);
+    color: #ff9f1a;
+}
+
+/* Main Content (Table View) */
+.vault-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.vault-breadcrumb {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.bread-item { cursor: pointer; transition: 0.2s; }
+.bread-item:hover { color: #fff; text-decoration: underline; }
+.bread-sep { margin: 0 8px; opacity: 0.5; }
+.bread-current { color: #ff9f1a; font-weight: 600; }
+
+.vault-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Table Styles */
+.vault-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.vault-table th {
+    text-align: left;
+    padding: 10px;
+    color: #94a3b8;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    background: rgba(11, 18, 32, 0.95); /* Para tapar al hacer scroll */
+    z-index: 1;
+}
+
+.vault-table td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+    vertical-align: middle;
+}
+
+.vault-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.col-icon { width: 30px; text-align: center; font-size: 1.1rem; }
+.col-name { font-weight: 500; cursor: pointer; }
+.col-name:hover { color: #ff9f1a; text-decoration: underline; }
+.col-type, .col-date, .col-size { color: #94a3b8; font-family: 'Source Code Pro', monospace; font-size: 0.75rem; }
+
+.type-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Botón "Subir Nivel" */
+.up-level-row td {
+    color: #ff9f1a;
+    cursor: pointer;
+    font-weight: 600;
+}
+.up-level-row:hover td { background: rgba(255, 159, 26, 0.05) !important; }
+
+/* Empty State */
+.vault-empty {
+    padding: 40px;
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* Responsive para el Explorador */
+@media (max-width: 768px) {
+    .vault-header-left { gap: 15px; }
+    .vault-stats { display: none; /* Ocultar stats en móvil si falta espacio */ }
+    .vault-search { width: 100%; order: 3; }
+
+    .vault-layout { flex-direction: column; }
+    .vault-sidebar {
+        width: 100%;
+        height: 120px; /* Altura fija para el árbol en móvil */
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+    
+    /* Ocultar columnas menos relevantes en móvil */
+    .col-date, .col-size { display: none; }
+}
