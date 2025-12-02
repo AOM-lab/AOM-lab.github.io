@@ -3,71 +3,75 @@
    =============================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Escuchar evento de cambio de vista para iniciar
     window.addEventListener('initNetworkMap', initMap);
 
-    // Si el usuario recarga y la vista activa es network, iniciamos
-    if(document.getElementById('networkView')?.classList.contains('active')) {
-        setTimeout(initMap, 100);
-    }
-
     let nodes = [];
-    let activeNodeId = 'root';
-    let canvas, ctx;
-    let animationFrameId;
+    const container = document.getElementById('networkContainer');
+    const world = document.getElementById('networkNodes');
+    const canvas = document.getElementById('networkCanvas');
+    let ctx;
     
-    // Configuración del Mundo Virtual
-    const CENTER_X = 2000; 
+    // Configuración Radial
+    const CENTER_X = 2000; // Centro del mundo virtual
     const CENTER_Y = 2000;
-    const RADII = [0, 280, 550, 800]; // Distancias de los anillos
+    const RADII = [0, 350, 600, 850]; // Distancias de los anillos (N0, N1, N2, N3)
+
+    // CORRECCIÓN: Observer para detectar cuando la pestaña se hace visible
+    // Esto evita el error de nodos invisibles cuando width=0
+    if (container) {
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+                    // Solo inicializar si no se ha hecho ya o si se necesita redibujar
+                    if (nodes.length === 0 || !window.mapCamera) {
+                         initMap();
+                    }
+                }
+            }
+        });
+        resizeObserver.observe(container);
+    }
 
     function initMap() {
-        const container = document.getElementById('networkContainer');
-        const world = document.getElementById('networkNodes');
-        canvas = document.getElementById('networkCanvas');
+        if (!world || !window.knowledgeData) return;
         
-        if (!container || !canvas || !world || !window.knowledgeData) return;
+        // Seguridad: Si el contenedor está oculto (display:none), abortar para evitar error de coords
+        if (container.offsetWidth === 0 || container.offsetHeight === 0) return;
 
         ctx = canvas.getContext('2d');
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
 
-        // 1. Construir Nodos (si no existen ya)
-        if(nodes.length === 0) {
-            buildNodes();
-            renderDOM(world);
-        }
+        // Limpiar mundo previo por si se llama varias veces
+        world.innerHTML = '';
+        nodes = [];
+
+        // 1. Construir Nodos
+        buildNodes();
         
-        // 2. Centrar cámara
+        // 2. Renderizar DOM
+        renderDOM();
+        
+        // 3. Centrar cámara
         focusNode('root');
         
-        // 3. Iniciar loop de líneas
-        if (animationFrameId) cancelAnimationFrame(animationFrameId);
-        drawConnections();
-
-        // Botón Reset
-        document.getElementById('mapReset')?.addEventListener('click', () => focusNode('root'));
-    }
-
-    function resizeCanvas() {
-        const container = document.getElementById('networkContainer');
-        if(container) {
-            canvas.width = container.offsetWidth;
-            canvas.height = container.offsetHeight;
+        // 4. Iniciar loop de líneas (solo una vez)
+        if (!window.isLooping) {
+            window.isLooping = true;
+            requestAnimationFrame(drawConnections);
         }
     }
 
     function buildNodes() {
-        nodes = [];
         let idCounter = 0;
-        
-        // --- NODO RAÍZ ---
+
+        // Nodo Raíz
         nodes.push({
             id: 'root', name: 'Knowledge Vault', level: 0,
             x: CENTER_X, y: CENTER_Y, color: '#ff9f1a', icon: 'fa-solid fa-brain'
         });
 
-        // --- PROCESAMIENTO RECURSIVO (Abanico) ---
+        // Función recursiva para posicionar hijos en abanico
         function processLevel(items, parent, startAngle, endAngle, level) {
             if (!items || items.length === 0) return;
 
@@ -77,20 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
             items.forEach((item, i) => {
                 // Ángulo medio del sector
                 const angle = startAngle + (i * step) + (step / 2);
-                const radius = RADII[level] || (RADII[level-1] + 200);
+                const radius = RADII[level];
                 
-                // Coordenadas
+                // Posición polar -> cartesiana
                 const x = CENTER_X + Math.cos(angle) * radius;
                 const y = CENTER_Y + Math.sin(angle) * radius;
-
-                // Determinar icono y tipo
-                let icon = item.icon;
-                if (!icon) {
-                    icon = item.type === 'folder' ? 'fa-solid fa-folder' : 'fa-solid fa-file';
-                }
-
-                // Determinar color (hereda del padre si no tiene)
-                const color = item.color || parent.color;
 
                 const newNode = {
                     id: item.id || `n_${idCounter++}`,
@@ -98,15 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     level: level,
                     x: x, y: y,
                     parent: parent,
-                    color: color,
-                    icon: icon,
-                    isFile: item.type === 'file',
-                    category: item.category || parent.category
+                    color: item.color || parent.color, // Hereda color
+                    icon: item.icon || (level === 3 ? 'fa-solid fa-file' : 'fa-solid fa-folder'),
+                    isFile: level === 3 // Nivel 3 son archivos finales
                 };
 
                 nodes.push(newNode);
 
-                // Hijos (restringiendo ángulo)
+                // Procesar hijos (restringiendo el ángulo al sector del padre)
                 if (item.children) {
                     const subStart = startAngle + (i * step);
                     const subEnd = subStart + step;
@@ -115,25 +109,33 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Arrancar Nivel 1 (360 grados)
-        // window.knowledgeData es el array de categorías principales
+        // Empezar Nivel 1 (360 grados completos)
         processLevel(window.knowledgeData, nodes[0], 0, Math.PI * 2, 1);
     }
 
-    function renderDOM(world) {
+    function renderDOM() {
         world.innerHTML = '';
         nodes.forEach(node => {
             const el = document.createElement('div');
             
-            // Clases
-            let cls = `map-node`;
-            if (node.level === 0) cls += ' node-root';
-            else if (node.isFile) cls += ' node-file level-3';
-            else cls += ` node-level-${node.level}`;
+            // CORRECCIÓN PRINCIPAL DE CLASES:
+            // Antes: level-${node.level} (incorrecto)
+            // Ahora: node-level-${node.level} (coincide con CSS)
+            el.className = `map-node node-level-${node.level} ${node.isFile ? 'is-file' : ''}`;
+            
+            // Asignar categoría para colores si es Nivel 1
+            if (node.level === 1) {
+                // Simplificación para extraer categoría del nombre o ID si es necesario
+                // O usar el color directamente en el style inline
+                const category = node.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                el.dataset.category = category;
+            } else if (node.parent && node.parent.level >= 1) {
+                // Heredar categoría del padre
+                const parentEl = document.querySelector(`.map-node[data-id="${node.parent.id}"]`);
+                if (parentEl) el.dataset.category = parentEl.dataset.category;
+            }
 
-            el.className = cls;
             el.dataset.id = node.id;
-            if (node.category) el.dataset.category = node.category;
             
             // Posición
             el.style.left = `${node.x}px`;
@@ -142,20 +144,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Variables CSS
             el.style.setProperty('--node-color', node.color);
             
-            // Convertir Hex a RGB para sombras (simple)
-            // (Esto es un helper visual, idealmente vendría calculado)
-            el.style.setProperty('--node-rgb', hexToRgb(node.color));
+            // HTML Interno
+            el.innerHTML = `
+                <div class="node-circle">
+                    <i class="node-icon ${node.icon}"></i>
+                </div>
+                ${!node.isFile ? `<div class="node-label">${node.name}</div>` : ''}
+                ${node.isFile ? `<div class="node-label file-label">${node.name}</div>` : ''}
+            `;
 
-            // Contenido HTML
-            if (node.level === 0) {
-                el.innerHTML = `<i class="node-icon ${node.icon}"></i><div class="node-label">${node.name}</div><div class="node-sublabel">Interactive Graph</div>`;
-            } else if (node.isFile) {
-                // Archivo: solo punto pequeño
-            } else {
-                el.innerHTML = `<i class="node-icon ${node.icon}"></i><div class="node-label">${node.name}</div>`;
-            }
-
-            // Evento Click (Foco)
+            // Click
             el.onclick = (e) => {
                 e.stopPropagation();
                 focusNode(node.id);
@@ -166,23 +164,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function focusNode(targetId) {
-        activeNodeId = targetId;
         const target = nodes.find(n => n.id === targetId);
         if (!target) return;
 
-        // 1. Calcular qué nodos mostrar (Active / Dimmed)
+        // 1. Efecto visual (Dimming)
         const activeIds = new Set([target.id]);
         
-        // Ancestros
+        // Hacia arriba (padres)
         let curr = target;
         while (curr.parent) {
             activeIds.add(curr.parent.id);
             curr = curr.parent;
         }
-        // Hijos directos
+        // Hacia abajo (hijos directos)
         nodes.filter(n => n.parent === target).forEach(c => activeIds.add(c.id));
 
-        // Aplicar clases
         document.querySelectorAll('.map-node').forEach(el => {
             if (activeIds.has(el.dataset.id)) {
                 el.classList.remove('dimmed');
@@ -193,64 +189,56 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 2. Mover Cámara (Transform CSS)
-        const world = document.getElementById('networkNodes');
-        const container = document.getElementById('networkContainer');
+        // 2. Cámara
+        const zoom = target.level === 0 ? 0.6 : (target.level === 1 ? 1 : 1.5);
+        const containerW = container.offsetWidth;
+        const containerH = container.offsetHeight;
         
-        // Zoom dinámico según nivel
-        let zoom = 0.65; // Root view
-        if (target.level === 1) zoom = 1.2;
-        if (target.level >= 2) zoom = 1.8;
-
-        // Centrar nodo en pantalla
-        const tx = (container.offsetWidth / 2) - (target.x * zoom);
-        const ty = (container.offsetHeight / 2) - (target.y * zoom);
+        // Centrar el nodo objetivo
+        const tx = (containerW / 2) - (target.x * zoom);
+        const ty = (containerH / 2) - (target.y * zoom);
 
         world.style.transform = `translate(${tx}px, ${ty}px) scale(${zoom})`;
         
-        // Guardar datos para el canvas
+        // Guardar para canvas
         window.mapCamera = { tx, ty, zoom };
     }
 
     function drawConnections() {
-        // Loop de animación
+        // Siempre limpiar primero
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
         if (!window.mapCamera) {
             requestAnimationFrame(drawConnections);
             return;
         }
 
         const { tx, ty, zoom } = window.mapCamera;
-        
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.lineCap = 'round';
 
+        ctx.lineWidth = 2;
+        
         nodes.forEach(node => {
             if (node.parent) {
-                const parent = node.parent; // Es el objeto referencia
+                const parent = node.parent;
                 
-                // ¿Está activa esta conexión?
-                // Solo si ambos nodos NO están dimmed
-                const nodeEl = document.querySelector(`.map-node[data-id="${node.id}"]`);
-                const parentEl = document.querySelector(`.map-node[data-id="${parent.id}"]`);
-                
-                const isDimmed = nodeEl?.classList.contains('dimmed') || parentEl?.classList.contains('dimmed');
-
                 // Proyectar coordenadas
                 const x1 = parent.x * zoom + tx;
                 const y1 = parent.y * zoom + ty;
                 const x2 = node.x * zoom + tx;
                 const y2 = node.y * zoom + ty;
 
+                // Si el nodo está "dimmed" (oscuro en el DOM), la línea también
+                const el = document.querySelector(`.map-node[data-id="${node.id}"]`);
+                const isDimmed = el && el.classList.contains('dimmed');
+
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
-
+                
                 if (isDimmed) {
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
-                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
                 } else {
-                    ctx.strokeStyle = node.color;
-                    ctx.lineWidth = node.level === 1 ? 3 : (node.level === 2 ? 2 : 1);
+                    ctx.strokeStyle = node.color; 
                     ctx.globalAlpha = 0.4;
                 }
                 
@@ -260,15 +248,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         requestAnimationFrame(drawConnections);
-    }
-
-    // Helper Hex a RGB
-    function hexToRgb(hex) {
-        if(!hex) return '255, 255, 255';
-        const bigint = parseInt(hex.slice(1), 16);
-        const r = (bigint >> 16) & 255;
-        const g = (bigint >> 8) & 255;
-        const b = bigint & 255;
-        return `${r}, ${g}, ${b}`;
     }
 });
