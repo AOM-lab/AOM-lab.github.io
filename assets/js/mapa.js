@@ -3,28 +3,36 @@
    =============================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.addEventListener('initNetworkMap', initMap);
+    // Escuchar evento personalizado
+    window.addEventListener('initNetworkMap', () => {
+        console.log("Evento initNetworkMap recibido. Intentando iniciar...");
+        initMap();
+    });
 
     let nodes = [];
     const container = document.getElementById('networkContainer');
     const world = document.getElementById('networkNodes');
     const canvas = document.getElementById('networkCanvas');
     let ctx;
+    let initialized = false;
     
     // Configuración Radial
-    const CENTER_X = 2000; // Centro del mundo virtual
+    const CENTER_X = 2000; 
     const CENTER_Y = 2000;
-    const RADII = [0, 350, 600, 850]; // Distancias de los anillos (N0, N1, N2, N3)
+    const RADII = [0, 350, 600, 850]; 
 
-    // CORRECCIÓN: Observer para detectar cuando la pestaña se hace visible
-    // Esto evita el error de nodos invisibles cuando width=0
+    // 1. OBSERVER: Detecta cuando la pestaña deja de estar oculta (display: none)
     if (container) {
         const resizeObserver = new ResizeObserver(entries => {
             for (let entry of entries) {
+                // Solo si tiene dimensiones reales (es visible)
                 if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
-                    // Solo inicializar si no se ha hecho ya o si se necesita redibujar
-                    if (nodes.length === 0 || !window.mapCamera) {
-                         initMap();
+                    if (!initialized || nodes.length === 0) {
+                        console.log("Contenedor visible detectado. Iniciando mapa...");
+                        initMap();
+                    } else {
+                        // Si ya existe, solo recentramos la cámara por si cambió el tamaño
+                        focusNode('root');
                     }
                 }
             }
@@ -33,29 +41,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function initMap() {
-        if (!world || !window.knowledgeData) return;
+        // Chequeo de seguridad de datos
+        if (!window.knowledgeData) {
+            console.error("❌ Error: window.knowledgeData no existe. Verifica que graph-data.js se ha cargado.");
+            return;
+        }
+        if (!world || !canvas) return;
         
-        // Seguridad: Si el contenedor está oculto (display:none), abortar para evitar error de coords
-        if (container.offsetWidth === 0 || container.offsetHeight === 0) return;
+        // Chequeo de visibilidad (evita errores de coordenadas si la pestaña está oculta)
+        if (container.offsetWidth === 0 || container.offsetHeight === 0) {
+            console.warn("⚠️ El contenedor tiene ancho 0. Esperando a que sea visible.");
+            return;
+        }
+
+        console.log("✅ Iniciando renderizado del mapa con", window.knowledgeData.length, "categorías raíz.");
 
         ctx = canvas.getContext('2d');
         canvas.width = container.offsetWidth;
         canvas.height = container.offsetHeight;
 
-        // Limpiar mundo previo por si se llama varias veces
         world.innerHTML = '';
         nodes = [];
 
-        // 1. Construir Nodos
         buildNodes();
-        
-        // 2. Renderizar DOM
         renderDOM();
         
-        // 3. Centrar cámara
-        focusNode('root');
+        // Pequeño delay para asegurar que el DOM pintó antes de calcular centro
+        setTimeout(() => {
+            focusNode('root');
+            initialized = true;
+        }, 50);
         
-        // 4. Iniciar loop de líneas (solo una vez)
         if (!window.isLooping) {
             window.isLooping = true;
             requestAnimationFrame(drawConnections);
@@ -71,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
             x: CENTER_X, y: CENTER_Y, color: '#ff9f1a', icon: 'fa-solid fa-brain'
         });
 
-        // Función recursiva para posicionar hijos en abanico
         function processLevel(items, parent, startAngle, endAngle, level) {
             if (!items || items.length === 0) return;
 
@@ -79,11 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const step = totalArc / items.length;
 
             items.forEach((item, i) => {
-                // Ángulo medio del sector
                 const angle = startAngle + (i * step) + (step / 2);
                 const radius = RADII[level];
                 
-                // Posición polar -> cartesiana
                 const x = CENTER_X + Math.cos(angle) * radius;
                 const y = CENTER_Y + Math.sin(angle) * radius;
 
@@ -93,14 +106,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     level: level,
                     x: x, y: y,
                     parent: parent,
-                    color: item.color || parent.color, // Hereda color
+                    color: item.color || parent.color, 
                     icon: item.icon || (level === 3 ? 'fa-solid fa-file' : 'fa-solid fa-folder'),
-                    isFile: level === 3 // Nivel 3 son archivos finales
+                    isFile: level === 3 
                 };
 
                 nodes.push(newNode);
 
-                // Procesar hijos (restringiendo el ángulo al sector del padre)
                 if (item.children) {
                     const subStart = startAngle + (i * step);
                     const subEnd = subStart + step;
@@ -109,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Empezar Nivel 1 (360 grados completos)
         processLevel(window.knowledgeData, nodes[0], 0, Math.PI * 2, 1);
     }
 
@@ -118,33 +129,27 @@ document.addEventListener('DOMContentLoaded', () => {
         nodes.forEach(node => {
             const el = document.createElement('div');
             
-            // CORRECCIÓN PRINCIPAL DE CLASES:
-            // Antes: level-${node.level} (incorrecto)
-            // Ahora: node-level-${node.level} (coincide con CSS)
-            el.className = `map-node node-level-${node.level} ${node.isFile ? 'is-file' : ''}`;
+            // --- CORRECCIÓN CLAVE ---
+            // Añadimos 'node-root' explícitamente si es nivel 0 para que el CSS lo pille
+            let className = `map-node node-level-${node.level} ${node.isFile ? 'is-file' : ''}`;
+            if (node.level === 0) className += ' node-root'; 
             
-            // Asignar categoría para colores si es Nivel 1
+            el.className = className;
+            
+            // Categorías para colores
             if (node.level === 1) {
-                // Simplificación para extraer categoría del nombre o ID si es necesario
-                // O usar el color directamente en el style inline
                 const category = node.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 el.dataset.category = category;
             } else if (node.parent && node.parent.level >= 1) {
-                // Heredar categoría del padre
                 const parentEl = document.querySelector(`.map-node[data-id="${node.parent.id}"]`);
                 if (parentEl) el.dataset.category = parentEl.dataset.category;
             }
 
             el.dataset.id = node.id;
-            
-            // Posición
             el.style.left = `${node.x}px`;
             el.style.top = `${node.y}px`;
-            
-            // Variables CSS
             el.style.setProperty('--node-color', node.color);
             
-            // HTML Interno
             el.innerHTML = `
                 <div class="node-circle">
                     <i class="node-icon ${node.icon}"></i>
@@ -153,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${node.isFile ? `<div class="node-label file-label">${node.name}</div>` : ''}
             `;
 
-            // Click
             el.onclick = (e) => {
                 e.stopPropagation();
                 focusNode(node.id);
@@ -167,16 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = nodes.find(n => n.id === targetId);
         if (!target) return;
 
-        // 1. Efecto visual (Dimming)
         const activeIds = new Set([target.id]);
-        
-        // Hacia arriba (padres)
         let curr = target;
         while (curr.parent) {
             activeIds.add(curr.parent.id);
             curr = curr.parent;
         }
-        // Hacia abajo (hijos directos)
         nodes.filter(n => n.parent === target).forEach(c => activeIds.add(c.id));
 
         document.querySelectorAll('.map-node').forEach(el => {
@@ -189,23 +189,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 2. Cámara
+        // Calculamos Zoom y Centro
         const zoom = target.level === 0 ? 0.6 : (target.level === 1 ? 1 : 1.5);
         const containerW = container.offsetWidth;
         const containerH = container.offsetHeight;
         
-        // Centrar el nodo objetivo
+        // Si el container mide 0, paramos para evitar poner coordenadas infinitas
+        if (containerW === 0) return;
+
         const tx = (containerW / 2) - (target.x * zoom);
         const ty = (containerH / 2) - (target.y * zoom);
 
         world.style.transform = `translate(${tx}px, ${ty}px) scale(${zoom})`;
-        
-        // Guardar para canvas
         window.mapCamera = { tx, ty, zoom };
     }
 
     function drawConnections() {
-        // Siempre limpiar primero
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         if (!window.mapCamera) {
@@ -214,20 +213,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const { tx, ty, zoom } = window.mapCamera;
-
         ctx.lineWidth = 2;
         
         nodes.forEach(node => {
             if (node.parent) {
                 const parent = node.parent;
-                
-                // Proyectar coordenadas
                 const x1 = parent.x * zoom + tx;
                 const y1 = parent.y * zoom + ty;
                 const x2 = node.x * zoom + tx;
                 const y2 = node.y * zoom + ty;
 
-                // Si el nodo está "dimmed" (oscuro en el DOM), la línea también
                 const el = document.querySelector(`.map-node[data-id="${node.id}"]`);
                 const isDimmed = el && el.classList.contains('dimmed');
 
@@ -238,15 +233,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isDimmed) {
                     ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
                 } else {
-                    ctx.strokeStyle = node.color; 
-                    ctx.globalAlpha = 0.4;
+                    ctx.strokeStyle = node.color || '#fff'; 
+                    ctx.globalAlpha = 0.3;
                 }
-                
                 ctx.stroke();
                 ctx.globalAlpha = 1;
             }
         });
-
         requestAnimationFrame(drawConnections);
     }
 });
