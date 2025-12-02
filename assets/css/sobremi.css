@@ -1,62 +1,69 @@
-/* --- SOBRE MÍ: ESTILO CORPORATIVO (Igual al resto de la web) --- */
+/* --- ESTILOS PRO: SOBRE MÍ (Versión Corporativa Final) --- */
 
-/* 1. Ajustes Generales */
 #sobre-mi {
+  /* Paleta de colores oficial de tu web */
+  --panel-bg: #111a2d;       /* Azul oscuro de las tarjetas */
+  --panel-dark: #0e1525;     /* Azul más profundo para contraste */
+  --accent: #ff9f1a;         /* Naranja corporativo */
+  --text-main: #e9eef6;      /* Blanco roto */
+  --text-muted: #94a3b8;     /* Gris azulado */
+  --border-color: rgba(255, 255, 255, 0.06);
+  --success: #34d399;        /* Verde para el estado "Open to work" */
+
   padding-top: 60px;
   padding-bottom: 60px;
-  /* Usamos las variables globales de tu web */
-  --panel-bg: #111a2d;       /* El azul de tus tarjetas */
-  --accent: #ff9f1a;         /* Tu naranja oficial */
-  --text-main: #e9eef6;
-  --text-muted: #a8b2c2;
-  --border-color: rgba(255, 255, 255, 0.05);
+  position: relative;
 }
 
 #sobre-mi .section-title {
-  color: #fff; /* Título en blanco como en otras secciones */
-}
-#sobre-mi .section-title::after {
-  content: "."; color: var(--accent); /* Punto naranja estético */
+  color: var(--accent);
+  margin-bottom: 10px;
 }
 
 #sobre-mi .kicker {
   color: var(--text-muted);
-  border-left: 2px solid var(--accent);
-  padding-left: 12px;
-  margin-bottom: 30px;
+  border-left: 3px solid var(--accent);
+  padding-left: 15px;
+  margin-bottom: 40px;
   font-family: 'Inter', sans-serif;
 }
 
-/* 2. Contenedor Principal (Tarjeta Grande) */
+/* === CONTENEDOR PRINCIPAL (Tarjeta Grande) === */
 .cyber-profile-wrapper {
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
-  border-radius: 14px;
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3); /* Sombra suave, no neón */
+  border-radius: 16px;
+  /* Sombra suave y profesional */
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.4);
   position: relative;
   overflow: hidden;
 }
 
-/* OCULTAR efectos cyber que no queremos */
+/* OCULTAR efectos "Gamer/Matrix" sobrantes */
 .cyber-fx-layer, 
 .screen-reflection,
-.cursor-blink { 
+.cursor-blink,
+.beacon-wave,
+.core { 
   display: none !important; 
 }
 
+/* Layout Grid */
 .cyber-profile-content {
   display: grid;
-  grid-template-columns: 1fr 340px; /* Estructura sólida */
-  gap: 40px;
-  padding: 40px;
+  grid-template-columns: 1fr 350px; /* Texto flexible | Tarjeta contacto fija */
+  gap: 50px;
+  padding: 45px;
   align-items: start;
 }
 
-/* 3. Columna Izquierda: Biografía */
+/* === COLUMNA IZQUIERDA: BIOGRAFÍA === */
+.bio-column { display: flex; flex-direction: column; }
+
 .bio-header {
+  margin-bottom: 25px;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 20px;
-  margin-bottom: 20px;
 }
 
 .bio-name {
@@ -64,147 +71,225 @@
   color: #fff;
   font-size: 2rem;
   font-weight: 700;
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.5px;
 }
 
 .bio-role {
-  color: var(--accent); /* Naranja */
   font-family: 'Source Code Pro', monospace;
-  font-size: 0.9rem;
+  color: var(--accent);
+  font-size: 0.95rem;
   font-weight: 600;
   display: flex; align-items: center; gap: 10px;
 }
-.bio-role i { color: var(--accent); }
+/* Icono del rol */
+.bio-role i { font-size: 0.9em; }
 
-/* Texto descriptivo */
 .bio-text {
-  color: var(--text-muted);
+  color: #cbd5e1;
+  font-size: 1.05rem;
   line-height: 1.7;
-  margin-bottom: 30px;
-  font-size: 1rem;
+  margin-bottom: 35px;
+  font-family: 'Inter', sans-serif;
 }
 
-/* FORZAMOS EL COLOR DE LAS NEGRITAS PARA QUE NO SEAN CIAN */
+/* Forzar colores corporativos en las negritas (anulando el cian) */
 .highlight-cyan { color: #fff !important; font-weight: 600; }
 .highlight-orange { color: var(--accent) !important; font-weight: 600; }
 
-/* 4. Badges de Formación (Chips) */
+/* === BADGES DE FORMACIÓN (Tarjetas pequeñas) === */
 .cyber-badges-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
+  margin-top: auto;
 }
 
 .cyber-badge {
-  background: rgba(255, 255, 255, 0.03); /* Fondo sutil */
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 15px;
   display: flex; align-items: center; gap: 15px;
-  transition: 0.3s;
+  transition: all 0.2s ease;
 }
+
 .cyber-badge:hover {
-  border-color: rgba(255, 159, 26, 0.3);
   background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 159, 26, 0.3); /* Borde naranja al pasar ratón */
+  transform: translateY(-2px);
 }
 
 .chip-icon {
-  width: 40px; height: 40px;
-  background: rgba(255, 159, 26, 0.1); /* Fondo naranja muy suave */
+  width: 42px; height: 42px;
+  background: rgba(255, 159, 26, 0.1); /* Fondo naranja muy sutil */
   color: var(--accent);
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.1rem;
   flex-shrink: 0;
-  border: none !important; /* Quitamos bordes raros */
+  border: none !important; /* Quitar bordes heredados */
 }
 
-.chip-info h4 { margin: 0; color: #fff; font-size: 0.85rem; font-weight: 600; }
-.chip-info span { color: var(--text-muted); font-size: 0.75rem; }
+.chip-info h4 { 
+  margin: 0; 
+  color: #fff; 
+  font-size: 0.85rem; 
+  font-weight: 600; 
+  font-family: 'Inter', sans-serif; 
+}
+.chip-info span { 
+  color: var(--text-muted); 
+  font-size: 0.75rem; 
+  display: block; 
+  margin-top: 3px; 
+}
 
-/* Quitamos bordes de colores específicos */
+/* Limpieza de clases antiguas */
 .data-chip-cyan, .data-chip-orange { border-color: var(--border-color); }
 
 
-/* 5. Columna Derecha: Tarjeta de Contacto (Ya no parece un monitor viejo) */
+/* === COLUMNA DERECHA: TARJETA DE CONTACTO (Estilo Widget) === */
 .monitor-column { width: 100%; min-width: 0; }
 
 .cyber-monitor-screen {
-  background: #080c15; /* Fondo un poco más oscuro para resaltar */
+  background: var(--panel-dark); /* Fondo un poco más oscuro para resaltar */
   border: 1px solid var(--border-color);
+  /* Borde superior naranja elegante */
+  border-top: 3px solid var(--accent);
   border-radius: 12px;
-  padding: 25px;
+  padding: 30px;
   font-family: 'Source Code Pro', monospace;
-  box-shadow: none; /* Quitamos sombras internas raras */
+  box-shadow: 0 20px 50px -10px rgba(0,0,0,0.3);
+  position: relative;
 }
 
 .monitor-header {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
   border-bottom: 1px solid var(--border-color);
 }
 
-.terminal-prompt {
-  color: #64748b; font-size: 0.7rem; letter-spacing: 1px; font-weight: 600;
-  text-transform: uppercase;
-}
-/* Cambiamos el texto "UPLINK..." por algo pro mediante CSS */
-.terminal-prompt { visibility: hidden; position: relative; }
+/* Reemplazo visual del texto "UPLINK..." */
+.terminal-prompt { font-size: 0; }
 .terminal-prompt::after {
   content: "INFORMACIÓN DE CONTACTO";
-  visibility: visible; position: absolute; left: 0; top: 0;
-  white-space: nowrap; color: #64748b;
+  font-size: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-.monitor-indicators { display: flex; gap: 5px; }
-.indicator { width: 6px; height: 6px; background: #334155; border-radius: 50%; }
-.indicator.active { background: var(--accent); box-shadow: none; }
+/* Indicadores visuales (puntitos) */
+.monitor-indicators { display: flex; gap: 6px; }
+.indicator { 
+  width: 8px; height: 8px; 
+  background: #334155; 
+  border-radius: 50%; 
+  opacity: 0.6;
+}
+.indicator.active { 
+  background: var(--accent); 
+  opacity: 1; 
+  box-shadow: 0 0 8px rgba(255, 159, 26, 0.4); 
+}
 
-.hud-title { display: none; } /* Ocultamos el título interno redundante */
+.hud-title { display: none; } /* Ocultamos título redundante */
 
-/* Filas de datos */
+/* --- FILAS DE DATOS --- */
 .data-row {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 5px;
-  border-bottom: 1px dashed rgba(255,255,255,0.05);
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
 }
-.data-row:last-child { border-bottom: none; margin-bottom: 0; }
+/* Hover suave solo en elementos interactivos */
+.data-row.interactive:hover { background: rgba(255, 255, 255, 0.03); }
 
 .label {
-  color: #64748b; font-size: 0.75rem; font-weight: 600; 
-  display: flex; align-items: center; gap: 8px;
+  color: #94a3b8; /* Gris azulado */
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 10px;
+  text-transform: uppercase;
 }
-.label i { color: var(--accent); opacity: 0.8; }
+.label i { color: var(--accent); font-size: 1rem; opacity: 0.9; }
 
 .value {
-  color: #e2e8f0; font-weight: 600; font-size: 0.85rem; text-align: right;
+  color: #f1f5f9;
+  font-weight: 500;
+  font-size: 0.85rem;
+  text-align: right;
 }
 
-/* Enlaces */
-a.value.link { text-decoration: none; transition: 0.2s; }
-a.value.link:hover { color: var(--accent); text-shadow: none; }
+/* Estilos de Enlaces */
+a.value.link {
+  text-decoration: none;
+  transition: all 0.2s;
+}
+a.value.link:hover {
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(255, 159, 26, 0.2);
+}
 
-.email-fit { font-size: 0.75rem; word-break: break-all; }
+/* Ajuste para que el correo quepa bien */
+.email-fit {
+  font-size: 0.75rem;
+  word-break: break-all;
+}
 
-/* Status */
+/* --- FILA DE ESTADO --- */
 .system-status-row {
-  margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color);
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border-color);
   display: flex; justify-content: space-between; align-items: center;
+  padding-left: 12px; padding-right: 12px;
 }
+
+.system-status-row .label { color: #fff; }
+
 .status-value.online {
-  color: #34d399; /* Verde discreto */
-  font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; gap: 8px;
+  background: rgba(52, 211, 153, 0.1);
+  color: var(--success);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  display: flex; align-items: center; gap: 8px;
 }
+
+/* Animación del punto de estado */
 .status-beacon {
-  width: 8px; height: 8px; background: #34d399; border-radius: 50%; display: block;
+  width: 8px; height: 8px;
+  background: currentColor;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 0 8px currentColor;
+  animation: pulseBeacon 2s infinite;
 }
-.core, .wave { display: none; } /* Quitamos animación de ondas */
+
+@keyframes pulseBeacon {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .cyber-profile-content { grid-template-columns: 1fr; gap: 30px; padding: 25px; }
-  .monitor-column { order: -1; margin-bottom: 10px; }
+  .cyber-profile-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 30px;
+  }
+  .monitor-column { order: -1; } /* Monitor arriba en móvil */
   .cyber-badges-grid { grid-template-columns: 1fr; }
 }
