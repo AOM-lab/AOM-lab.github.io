@@ -69,68 +69,76 @@
 }
 .profile-bio-text strong { color: #fff; font-weight: 600; }
 
-/* --- COLUMNA DERECHA: MONITOR DE ESTADO (HUD) --- */
-.profile-monitor {
-  background: var(--sm-monitor-bg);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 20px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 0.85rem;
+/* --- ESTILOS PRO: SOBRE MÍ (Versión: Cyber-HUD Senior V3) --- */
+
+#sobre-mi {
+  --sm-bg: #0b1022;
+  --sm-card-bg: rgba(255, 255, 255, 0.02);
+  --sm-border: rgba(255, 255, 255, 0.06);
+  --sm-accent: #ff9f1a;
+  --sm-text: #94a3b8;
+  --sm-monitor-bg: #05080f;
+  --sm-code: #34d399;
+  
+  padding-top: 40px; padding-bottom: 40px;
+}
+
+#sobre-mi .section-title { color: var(--sm-accent); margin-bottom: 10px; }
+
+#sobre-mi .kicker {
+  color: var(--sm-text); margin-bottom: 30px;
+  border-left: 2px solid var(--sm-accent); padding-left: 12px;
+}
+
+/* TARJETA PRINCIPAL (Layout Grid) */
+.profile-card {
+  background: var(--sm-card-bg);
+  border: 1px solid var(--sm-border);
+  border-radius: 16px;
+  padding: 40px;
+  display: grid;
+  /* Columna texto flexible | Columna monitor fija de 340px para más presencia */
+  grid-template-columns: 1fr 340px; 
+  gap: 40px;
+  align-items: start;
   position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
 }
 
-/* Barra superior decorativa del monitor */
-.profile-monitor::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--sm-accent), transparent);
+/* --- COLUMNA IZQUIERDA: TEXTO --- */
+.profile-main {
+  display: flex; flex-direction: column;
 }
 
-.monitor-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 16px; color: #64748b; font-size: 0.75rem; letter-spacing: 1px;
-}
-.monitor-dots { display: flex; gap: 4px; }
-.monitor-dot { width: 6px; height: 6px; background: #334155; border-radius: 50%; }
-.monitor-dot:first-child { background: var(--sm-code); box-shadow: 0 0 5px var(--sm-code); }
-
-.monitor-row {
-  display: flex; justify-content: space-between;
-  margin-bottom: 10px; padding-bottom: 10px;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
-  align-items: center; /* Asegura alineación vertical si hay saltos de línea */
-}
-.monitor-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-.key { color: #94a3b8; flex-shrink: 0; margin-right: 10px; }
-.val { color: #e2e8f0; font-weight: 600; text-align: right; }
-.val.highlight { color: var(--sm-accent); }
-.val.online { color: var(--sm-code); display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
-
-/* --- NUEVOS ESTILOS PARA LINKS DE CONTACTO (PROFESIONAL) --- */
-a.val {
-  text-decoration: none;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+.profile-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 20px;
 }
 
-a.val:hover {
-  color: var(--sm-accent);
-  text-shadow: 0 0 8px rgba(255, 159, 26, 0.4);
-  cursor: pointer;
+.profile-name {
+  font-family: 'Inter', sans-serif;
+  color: #fff; font-size: 1.8rem; font-weight: 700;
+  margin: 0 0 8px 0; letter-spacing: -0.02em;
 }
 
-/* Ajuste específico para correos largos */
-.val.email-fit {
-  font-size: 0.72rem;       /* Ligeramente más pequeño para que quepa */
-  word-break: break-all;    /* Evita que rompa el layout en móviles */
-  max-width: 65%;           /* Controla el ancho máximo */
-  line-height: 1.3;
+.profile-role {
+  font-family: 'Source Code Pro', monospace;
+  color: var(--sm-accent); font-size: 0.95rem; font-weight: 600;
+  display: flex; align-items: center; gap: 10px;
 }
-/* ----------------------------------------------------------- */
+.profile-role::before {
+  content: ""; display: block; width: 8px; height: 8px;
+  background: var(--sm-accent); border-radius: 50%;
+  box-shadow: 0 0 10px var(--sm-accent);
+}
 
-/* Animación parpadeo status */
-.blink { animation: blinkStatus 2s infinite; width: 6px; height: 6px; background: currentColor; border-radius: 50%; display: inline-block; }
-@keyframes blinkStatus { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.profile-bio-text {
+  color: #cbd5e1; font-size: 1rem; line-height: 1.7;
+  margin-bottom: 30px;
+}
+.profile-bio-text strong { color: #fff; font-weight: 600; }
 
 /* --- BLOQUE FORMACIÓN (Debajo del texto) --- */
 .edu-grid {
@@ -150,10 +158,8 @@ a.val:hover {
 }
 .edu-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1); }
 
-/* Icono Glass (Mejorado) */
 .edu-icon-box {
   width: 36px; height: 36px;
-  /* Fondo transparente con borde sutil en lugar de bloque sólido */
   background: rgba(255, 159, 26, 0.1); 
   border: 1px solid rgba(255, 159, 26, 0.3);
   border-radius: 8px;
@@ -166,9 +172,203 @@ a.val:hover {
 .edu-info h4 { margin: 0; color: #fff; font-size: 0.85rem; font-weight: 600; line-height: 1.4; }
 .edu-info span { display: block; color: var(--sm-text); font-size: 0.75rem; }
 
+
+/* ==========================================================================
+   COLUMNA DERECHA: MONITOR CYBER-HUD PRO (DISEÑO AVANZADO)
+   ========================================================================== */
+.profile-monitor.cyber-hud {
+  --hud-bg: #05080f;
+  --hud-border: rgba(255, 159, 26, 0.3);
+  --hud-accent: #ff9f1a;
+  --hud-text-muted: #64748b;
+  --hud-text-bright: #e2e8f0;
+  --hud-success: #34d399;
+  
+  background: var(--hud-bg);
+  /* Borde con profundidad y brillo */
+  border: 1px solid var(--hud-border);
+  box-shadow: 
+    0 0 0 1px rgba(0,0,0,0.5), /* Borde negro fino interno */
+    inset 0 0 20px rgba(255, 159, 26, 0.05), /* Brillo interno sutil */
+    0 15px 35px -10px rgba(0,0,0,0.6); /* Sombra externa profunda */
+  border-radius: 12px;
+  padding: 24px;
+  font-family: 'Source Code Pro', monospace;
+  position: relative;
+  overflow: hidden;
+  min-width: 0; /* Previene desbordamiento en grid */
+  
+  /* Fondo tecnológico sutil (Grid pattern) */
+  background-image: 
+    linear-gradient(rgba(255, 159, 26, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 159, 26, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Destello decorativo superior */
+.hud-glare {
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hud-accent), transparent);
+  box-shadow: 0 0 15px var(--hud-accent);
+  opacity: 0.8;
+  z-index: 2;
+}
+
+/* --- HEADER DEL MONITOR --- */
+.monitor-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 159, 26, 0.15);
+  padding-bottom: 12px;
+}
+
+.header-title {
+  color: var(--hud-text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600;
+}
+/* Cursor parpadeante estilo terminal */
+.header-title::before { 
+  content: ">"; 
+  color: var(--hud-accent); 
+  animation: blink 1s step-end infinite; 
+}
+
+.monitor-dots { display: flex; gap: 6px; }
+.monitor-dot { width: 6px; height: 6px; background: #334155; border-radius: 50%; }
+.monitor-dot.pulse { 
+  background: var(--hud-accent); 
+  box-shadow: 0 0 8px var(--hud-accent);
+  animation: pulseDot 2s infinite;
+}
+
+/* --- CUERPO DEL MONITOR --- */
+.hud-main-title {
+  color: var(--hud-accent);
+  font-size: 1rem; 
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-shadow: 0 0 15px rgba(255, 159, 26, 0.25);
+  letter-spacing: -0.02em;
+}
+
+/* Estructura de filas (Grid/Flex híbrido para alineación perfecta) */
+.monitor-row {
+  display: flex; 
+  align-items: stretch;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(10, 15, 30, 0.6);
+  border-radius: 6px;
+  overflow: hidden; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Caja de la etiqueta (IZQUIERDA) */
+.key-box {
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--hud-text-muted);
+  font-size: 0.7rem; 
+  font-weight: 600;
+  padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  width: 105px;
+  transition: color 0.3s ease;
+}
+.key-box i { color: var(--hud-accent); opacity: 0.6; font-size: 0.9em; transition: opacity 0.3s ease; }
+
+/* Caja del valor (DERECHA) */
+.val-box {
+  flex-grow: 1;
+  padding: 12px 14px;
+  display: flex; align-items: center; justify-content: flex-end;
+  color: var(--hud-text-bright);
+  font-weight: 500; 
+  font-size: 0.85rem;
+  text-align: right;
+  position: relative;
+}
+
+/* --- INTERACTIVIDAD (Hover effects) --- */
+.interactive-row { cursor: pointer; }
+
+.interactive-row:hover {
+  border-color: rgba(255, 159, 26, 0.5);
+  background: rgba(255, 159, 26, 0.04);
+  box-shadow: inset 0 0 20px rgba(255, 159, 26, 0.05);
+  transform: translateX(2px); /* Sutil movimiento */
+}
+
+.interactive-row:hover .key-box { color: #fff; background: rgba(0, 0, 0, 0.4); }
+.interactive-row:hover .key-box i { opacity: 1; text-shadow: 0 0 8px var(--hud-accent); }
+
+/* Enlaces dentro de las cajas */
+a.link-val {
+  text-decoration: none; 
+  color: inherit;
+  transition: color 0.3s ease;
+  width: 100%; text-align: right;
+}
+.interactive-row:hover a.link-val {
+  color: var(--hud-accent);
+  text-shadow: 0 0 5px rgba(255, 159, 26, 0.5);
+}
+
+/* Ajuste para emails largos */
+.email-fit {
+  font-size: 0.7rem;
+  word-break: break-all;
+  line-height: 1.3;
+}
+
+/* --- FILA DE ESTADO (Verde) --- */
+.status-row {
+  margin-top: 20px;
+  border-color: rgba(52, 211, 153, 0.25);
+  background: linear-gradient(90deg, rgba(52, 211, 153, 0.04), transparent);
+}
+.status-row .key-box { color: var(--hud-success); }
+.status-row .key-box i { color: var(--hud-success); opacity: 0.8; }
+.online-status { 
+  color: var(--hud-success); 
+  font-weight: 700; 
+  letter-spacing: 0.5px; 
+  font-size: 0.75rem;
+}
+
+/* Baliza Animada */
+.blink-beacon {
+  display: inline-block; width: 8px; height: 8px;
+  background: var(--hud-success); border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 0 rgba(52, 211, 153, 0.4);
+  animation: beaconPulse 2s infinite;
+}
+
+/* Animaciones */
+@keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes beaconPulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .profile-card { grid-template-columns: 1fr; gap: 30px; }
-  .profile-monitor { width: 100%; order: -1; /* Poner monitor arriba en móvil o quitar con display:none */ }
+  .profile-monitor.cyber-hud { order: -1; margin-bottom: 10px; } /* Poner monitor primero en móvil */
   .edu-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 450px) {
+  .key-box { width: auto; padding: 10px; font-size: 0.65rem; }
+  .key-box i { display: none; } /* En pantallas muy pequeñas, ocultar icono para ganar espacio */
+  .val-box { padding: 10px; font-size: 0.75rem; }
+  .profile-monitor.cyber-hud { padding: 15px; }
 }
