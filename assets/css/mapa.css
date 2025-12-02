@@ -1,153 +1,186 @@
 /* ===============================
-   MAPA VISUAL PRO (Network Graph)
+   ESTILOS DEL MAPA VISUAL (NETWORK PRO)
    =============================== */
 
 .vault-network {
   position: relative;
-  height: 650px; /* Altura del lienzo */
+  height: 600px;
   width: 100%;
-  background: radial-gradient(circle at center, #1a2540 0%, #0b1022 70%);
+  /* Fondo sutil y tecnológico */
+  background: radial-gradient(ellipse at 20% 30%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 70%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+              linear-gradient(180deg, #060a12 0%, #0b1022 100%);
   overflow: hidden;
   border-radius: 0 0 14px 14px;
-  cursor: grab;
 }
-.vault-network:active { cursor: grabbing; }
 
-/* Lienzo para las líneas conectoras */
 #networkCanvas {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   pointer-events: none; z-index: 1;
 }
 
-/* Contenedor del Mundo (donde viven los nodos) */
-.network-world {
+/* WIDGET DE ESTADÍSTICAS (Ahora a la DERECHA y encapsulado) */
+.network-stats {
   position: absolute;
-  left: 50%; top: 50%;
-  width: 0; height: 0; /* Se expande desde el centro */
-  transform-origin: 0 0; /* El JS controlará el transform (pan/zoom) */
-  transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1); /* Movimiento de cámara ultra suave */
-  z-index: 2;
+  top: 20px;
+  right: 20px; /* Mover a la derecha */
+  display: flex;
+  gap: 20px;
+  background: rgba(15, 23, 42, 0.85); /* Fondo oscuro glass */
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -5px rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+  z-index: 50;
+  pointer-events: none; /* Para que no bloquee clicks si pasas el ratón rápido */
 }
 
-/* ===== NODOS (Círculos) ===== */
+.network-stat {
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.network-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ff9f1a; /* Naranja */
+  font-family: 'Source Code Pro', monospace;
+  line-height: 1;
+}
+
+.network-stat-label {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* HINT (El mensaje de "Pasa el cursor") - CENTRADO ABAJO */
+.network-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex; align-items: center; gap: 8px;
+  pointer-events: none;
+  z-index: 40;
+}
+.network-hint i { color: #ff9f1a; }
+
+/* LEYENDA (Izquierda Abajo - Oculta si molesta, o estilizada) */
+.map-legend {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  z-index: 50;
+  max-width: 220px;
+}
+
+.legend-title {
+  font-size: 0.7rem; font-weight: 700; color: #94a3b8;
+  text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;
+}
+
+.legend-items { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.7rem; color: #e2e8f0;
+  background: rgba(255,255,255,0.05);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+.legend-dot { width: 6px; height: 6px; border-radius: 50%; }
+/* Colores Leyenda */
+.legend-dot.teoria { background: #8b5cf6; }
+.legend-dot.ciberseguridad { background: #ef4444; }
+.legend-dot.programacion { background: #22c55e; }
+.legend-dot.sistemas { background: #3b82f6; }
+.legend-dot.fundamentos { background: #f59e0b; }
+.legend-dot.proyectos { background: #ec4899; }
+.legend-dot.laboratorio { background: #06b6d4; }
+
+
+/* --- ESTILOS DE LOS NODOS (Círculos) --- */
+.network-nodes {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+
 .map-node {
   position: absolute;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border-radius: 50%;
+  border-radius: 50%; cursor: pointer; pointer-events: auto;
   transform: translate(-50%, -50%);
-  cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 10;
-  /* Variables CSS dinámicas inyectadas por JS */
-  --node-color: #888; 
-  --node-size: 50px;
 }
 
-/* Círculo Principal */
-.node-body {
-  width: var(--node-size); height: var(--node-size);
-  border-radius: 50%;
-  background: rgba(11, 16, 34, 0.9); /* Fondo oscuro semi-transparente */
+/* Animación de entrada */
+.map-node { animation: popIn 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67) backwards; }
+@keyframes popIn { from { transform: translate(-50%, -50%) scale(0); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+
+/* Estilos Nivel Root */
+.map-node.node-root {
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(255,159,26,0.2) 0%, rgba(255,159,26,0.05) 70%);
+  border: 2px solid #ff9f1a;
+  box-shadow: 0 0 30px rgba(255, 159, 26, 0.3);
+  z-index: 50;
+}
+.map-node.node-root .node-icon { font-size: 40px; color: #ff9f1a; margin-bottom: 5px; }
+.map-node.node-root .node-label { font-size: 14px; font-weight: 700; color: #fff; text-align: center; }
+
+/* Estilos Nivel 1 (Categorías) */
+.map-node.node-level-1 {
+  width: 90px; height: 90px;
+  background: rgba(15, 23, 42, 0.9);
   border: 2px solid var(--node-color);
-  box-shadow: 0 0 15px rgba(var(--node-rgb), 0.2), inset 0 0 10px rgba(var(--node-rgb), 0.1);
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s;
-  position: relative;
+  box-shadow: 0 0 20px rgba(var(--node-rgb), 0.2);
+  z-index: 40;
 }
+.map-node.node-level-1:hover { transform: translate(-50%, -50%) scale(1.15); z-index: 100; }
+.map-node.node-level-1 .node-icon { font-size: 28px; color: var(--node-color); margin-bottom: 4px; }
+.map-node.node-level-1 .node-label { font-size: 11px; font-weight: 600; color: #fff; text-align: center; line-height: 1.1; max-width: 80px; }
 
-/* Icono dentro del nodo */
-.node-icon {
-  font-size: calc(var(--node-size) * 0.4);
-  color: var(--node-color);
-  transition: 0.3s;
+/* Estilos Nivel 2 (Subcategorías) */
+.map-node.node-level-2 {
+  width: 60px; height: 60px;
+  background: #0f172a;
+  border: 1px solid var(--node-color);
+  z-index: 30;
 }
+.map-node.node-level-2:hover { transform: translate(-50%, -50%) scale(1.2); z-index: 90; }
+.map-node.node-level-2 .node-icon { font-size: 18px; color: var(--node-color); }
+.map-node.node-level-2 .node-label { font-size: 9px; color: #cbd5e1; margin-top: 2px; text-align: center; display: none; /* Ocultar texto n2 por defecto para limpieza */ }
+.map-node.node-level-2:hover .node-label { display: block; position: absolute; top: 100%; background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px; width: max-content; z-index: 10; }
 
-/* Etiqueta de Texto */
-.node-label {
-  position: absolute;
-  top: calc(100% + 8px);
-  font-family: 'Inter', sans-serif;
-  font-size: 10px; font-weight: 600;
-  color: #e2e8f0;
-  text-align: center;
-  width: 120px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  pointer-events: none;
-  opacity: 0.8;
-  transition: 0.3s;
-}
 
-/* ===== ESTADOS DE INTERACCIÓN (La clave del efecto) ===== */
-
-/* 1. ESTADO ACTIVO (Ruta seleccionada) */
-.map-node.active .node-body {
-  background: var(--node-color); /* Se rellena de color */
-  box-shadow: 0 0 30px var(--node-color);
-  border-color: #fff;
-}
-.map-node.active .node-icon { color: #000; } /* Icono oscuro sobre fondo claro */
-.map-node.active .node-label { color: #fff; opacity: 1; font-size: 11px; }
-.map-node.active { z-index: 50; }
-
-/* 2. ESTADO "SLEEPING" (Atenuado) */
-.map-node.dimmed {
-  opacity: 0.15;
-  filter: grayscale(0.8);
-  transform: translate(-50%, -50%) scale(0.8);
-}
-
-/* 3. ESTADO HOVER */
-.map-node:hover:not(.dimmed) {
-  transform: translate(-50%, -50%) scale(1.15);
-  z-index: 100;
-}
-.map-node:hover:not(.dimmed) .node-body {
-  border-color: #fff;
-  box-shadow: 0 0 25px var(--node-color);
-}
-.map-node:hover:not(.dimmed) .node-label {
-  opacity: 1; color: #fff; font-weight: 700;
-}
-
-/* ===== TAMAÑOS POR NIVEL ===== */
-.map-node[data-level="0"] { --node-size: 90px; z-index: 40; } /* Root */
-.map-node[data-level="1"] { --node-size: 60px; z-index: 30; }
-.map-node[data-level="2"] { --node-size: 40px; z-index: 20; }
-.map-node[data-level="3"] { --node-size: 20px; z-index: 10; } /* Artículos finales */
-
-/* El nivel 3 es especial (Archivos) */
-.map-node[data-level="3"] .node-body { border-width: 1px; background: rgba(255,255,255,0.05); }
-.map-node[data-level="3"] .node-label { display: none; } /* Ocultar texto n3 para no ensuciar, mostrar solo al hover */
-.map-node[data-level="3"]:hover .node-label, 
-.map-node[data-level="3"].active .node-label { display: block; width: 180px; background: rgba(0,0,0,0.8); padding: 4px; border-radius: 4px; z-index: 200; }
-
-/* ===== UI FLOTANTE ===== */
-.map-ui-layer {
-  position: absolute; bottom: 20px; left: 20px; right: 20px;
-  pointer-events: none; display: flex; justify-content: space-between; align-items: flex-end;
-}
-
-.map-legend {
-  background: rgba(11, 16, 34, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 15px; border-radius: 12px;
-  pointer-events: auto; backdrop-filter: blur(10px);
-}
-.legend-title { font-size: 10px; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; }
-.legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #e2e8f0; margin-bottom: 4px; }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-/* Botón de Reset Cámara */
-.map-reset-btn {
-  background: rgba(255, 159, 26, 0.1); border: 1px solid #ff9f1a;
-  color: #ff9f1a; padding: 8px 16px; border-radius: 8px;
-  cursor: pointer; pointer-events: auto; font-family: 'Source Code Pro', monospace; font-size: 0.8rem;
-  transition: 0.2s; display: flex; align-items: center; gap: 8px;
-}
-.map-reset-btn:hover { background: #ff9f1a; color: #000; }
+/* Colores Dinámicos */
+.map-node[data-category="teoria"] { --node-color: #8b5cf6; }
+.map-node[data-category="ciberseguridad"] { --node-color: #ef4444; }
+.map-node[data-category="programacion"] { --node-color: #22c55e; }
+.map-node[data-category="sistemas"] { --node-color: #3b82f6; }
+.map-node[data-category="fundamentos"] { --node-color: #f59e0b; }
+.map-node[data-category="proyectos"] { --node-color: #ec4899; }
+.map-node[data-category="laboratorio"] { --node-color: #06b6d4; }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+  .network-stats { top: 10px; right: 10px; left: 10px; justify-content: center; }
   .map-legend { display: none; } /* Ocultar leyenda en móvil */
-  .map-node[data-level="0"] { --node-size: 70px; }
+  .vault-network { height: 500px; }
 }
