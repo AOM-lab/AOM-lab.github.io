@@ -52,5 +52,3 @@ body {
   padding: 28px 0; color: #64748b; text-align: center;
   border-top: 1px solid var(--border-subtle); margin-top: 40px; font-size: 0.9rem;
 }
-
-/* Los estilos de #tools-pro ahora están en tools.css */
