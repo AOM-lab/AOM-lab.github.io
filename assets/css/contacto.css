@@ -1,0 +1,196 @@
+/* =========================================
+   SECCIÓN CONTACTO (PROFESSIONAL TECH STACK)
+   ========================================= */
+
+#contacto {
+  padding: 80px 0; /* Más aire arriba y abajo da elegancia */
+  position: relative;
+  width: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* Contenedor Grid: Izquierda Texto / Derecha Formulario */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr; /* El formulario ocupa un pelín más */
+  gap: 60px; /* Separación generosa entre columnas */
+  align-items: start; /* Alineamos arriba para orden */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- COLUMNA IZQUIERDA: INFO --- */
+.contact-info {
+  padding-top: 10px; /* Pequeño ajuste visual */
+}
+
+/* Título de Sección con estilo de "Bloque de Código" */
+.section-header {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  color: #e2e8f0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* Una pequeña barra naranja debajo del título */
+.title-bar {
+  width: 60px;
+  height: 4px;
+  background: #ff9f1a;
+  margin-top: 15px;
+  border-radius: 2px;
+}
+
+.contact-desc {
+  color: #94a3b8; /* Gris azulado muy legible */
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  max-width: 90%;
+}
+
+.contact-desc .highlight {
+  color: #ff9f1a;
+  font-weight: 500;
+}
+
+/* Lista de razones (Toque visual extra) */
+.contact-reasons {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-reasons li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #cbd5e1;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.95rem;
+}
+
+.contact-reasons li i {
+  color: #ff9f1a;
+  font-size: 0.9rem;
+}
+
+/* --- COLUMNA DERECHA: FORMULARIO --- */
+.contact-form-box {
+  background: #0f141f; /* Fondo muy oscuro, casi negro */
+  border: 1px solid #1e293b; /* Borde sutil */
+  border-radius: 8px;
+  padding: 40px;
+  position: relative;
+  /* Sombra suave pero profunda */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Pequeño detalle visual de "Consola" arriba a la derecha del form */
+.contact-form-box::after {
+  content: 'INPUT_MODE';
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.7rem;
+  color: #334155;
+  letter-spacing: 1px;
+}
+
+.tech-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilos de los campos */
+.tech-form input,
+.tech-form textarea {
+  width: 100%;
+  background: #1a202c; /* Ligeramente más claro que la caja */
+  border: 1px solid #2d3748;
+  border-radius: 4px;
+  padding: 14px 16px;
+  color: #f1f5f9;
+  font-family: 'Source Code Pro', monospace; /* Fuente monoespaciada para sensación técnica */
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.tech-form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+/* Efecto Focus: Borde naranja y fondo iluminado */
+.tech-form input:focus,
+.tech-form textarea:focus {
+  border-color: #ff9f1a;
+  background: #1e2532;
+  box-shadow: 0 0 0 3px rgba(255, 159, 26, 0.1);
+}
+
+.tech-form input::placeholder,
+.tech-form textarea::placeholder {
+  color: #475569;
+  font-family: 'Inter', sans-serif; /* Placeholder en fuente normal para legibilidad */
+}
+
+/* --- BOTÓN --- */
+.submit-btn {
+  background: #ff9f1a;
+  color: #000;
+  border: none;
+  width: 100%;
+  padding: 16px;
+  border-radius: 4px;
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+  background: #ffb347;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 159, 26, 0.3);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+  .contact-wrapper {
+    grid-template-columns: 1fr; /* Apilar en vertical */
+    gap: 40px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .contact-form-box {
+    padding: 25px;
+  }
+}
