@@ -1,141 +1,150 @@
-/* --- ESTILOS PRO: INVESTIGACIÓN (Layout Bento Grid) --- */
+/* --- ESTILO DASHBOARD: INVESTIGACIÓN V2 (Clean & Tech) --- */
 
 #investigacion {
   --inv-bg: #0b1022;
-  --inv-card-bg: rgba(255, 255, 255, 0.02);
-  --inv-border: rgba(255, 255, 255, 0.06);
+  --inv-card: rgba(15, 23, 42, 0.6);
+  --inv-border: rgba(255, 255, 255, 0.08);
   --inv-accent: #ff9f1a;
-  --inv-alert: #ef4444;
-  --inv-secure: #3b82f6;
-  --inv-text: #94a3b8;
+  --inv-red: #f43f5e;     /* Rojo moderno */
+  --inv-blue: #3b82f6;    /* Azul técnico */
+  --font-mono: 'Source Code Pro', monospace;
+  --font-body: 'Inter', sans-serif;
   
-  padding: 40px 0;
+  padding: 60px 0;
 }
 
-/* HEADER */
+/* HEADER SIMPLE */
 #investigacion .section-header {
-  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
   border-bottom: 1px solid var(--inv-border);
   padding-bottom: 15px;
-  display: flex; justify-content: space-between; align-items: end;
-}
-#investigacion .section-title { margin: 0; color: var(--inv-accent); font-size: 1.8rem; }
-#investigacion .section-tag { 
-  font-family: 'Source Code Pro', monospace; color: var(--inv-text); font-size: 0.75rem; 
-  background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px;
 }
 
-/* --- GRID PRINCIPAL (BENTO) --- */
-/* Fila 1: Manifiesto (2 columnas) */
-.inv-top-grid {
+#investigacion .section-title { margin: 0; color: var(--inv-accent); font-size: 1.8rem; font-weight: 800; }
+
+#investigacion .section-tag {
+  font-family: var(--font-mono); font-size: 0.75rem; 
+  background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 4px;
+  color: #64748b; letter-spacing: 1px;
+}
+
+/* --- BLOQUE 1: CONTEXTO (2 TARJETAS) --- */
+.inv-context-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-.inv-card {
-  background: var(--inv-card-bg);
+.context-card {
+  background: var(--inv-card);
   border: 1px solid var(--inv-border);
   border-radius: 12px;
-  padding: 24px;
+  padding: 25px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s;
-}
-.inv-card:hover { transform: translateY(-2px); }
-
-/* Estilos de Alerta y Seguridad */
-.inv-card.alert { border-left: 3px solid var(--inv-alert); }
-.inv-card.secure { border-left: 3px solid var(--inv-secure); }
-
-/* Icono de fondo decorativo grande */
-.inv-bg-icon {
-  position: absolute; right: -10px; bottom: -10px;
-  font-size: 5rem; opacity: 0.03; transform: rotate(-15deg);
 }
 
-.inv-card h3 {
-  font-size: 1.1rem; font-weight: 700; margin: 0 0 10px 0;
-  display: flex; align-items: center; gap: 10px;
-}
-.alert h3 { color: var(--inv-alert); }
-.secure h3 { color: var(--inv-secure); }
+/* Bordes laterales de color */
+.context-card.problem { border-left: 4px solid var(--inv-red); }
+.context-card.solution { border-left: 4px solid var(--inv-blue); }
 
-.inv-text { font-size: 0.9rem; line-height: 1.6; color: var(--inv-text); margin: 0; }
-
-/* Fila 2: Pipeline (Grid 3x2) */
-.pipeline-container {
-  margin-bottom: 20px;
+.card-title-sm {
+  font-size: 1.1rem; font-weight: 700; margin: 0 0 15px 0;
+  font-family: var(--font-body);
 }
+.text-red { color: var(--inv-red); }
+.text-blue { color: var(--inv-blue); }
+
+.context-text {
+  font-size: 0.95rem; line-height: 1.6; color: #cbd5e1; margin: 0;
+  position: relative; z-index: 2;
+}
+.context-text strong { color: #fff; font-weight: 600; }
+
+/* Icono de fondo sutil */
+.bg-icon {
+  position: absolute; right: -10px; bottom: -20px;
+  font-size: 6rem; opacity: 0.03; z-index: 1; transform: rotate(-10deg);
+}
+
+
+/* --- BLOQUE 2: PIPELINE (GRID 3x2) --- */
+.pipeline-section { margin-bottom: 30px; }
+
 .pipeline-label {
-  font-family: 'Source Code Pro', monospace; color: var(--inv-accent); 
-  font-size: 0.8rem; margin-bottom: 12px; display: block; opacity: 0.9;
+  display: block; font-family: var(--font-mono); color: var(--inv-accent);
+  font-size: 0.85rem; margin-bottom: 20px; letter-spacing: 1px;
 }
 
-.steps-grid {
+.pipeline-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
 }
 
-.step-card {
-  background: var(--inv-card-bg);
+.pipe-card {
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--inv-border);
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 20px;
   position: relative;
-  overflow: hidden; /* Para recortar el número gigante */
   transition: all 0.2s ease;
 }
 
-.step-card:hover {
-  background: rgba(255, 159, 26, 0.03);
-  border-color: rgba(255, 159, 26, 0.3);
+.pipe-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* NÚMERO DE AGUA (WATERMARK) */
-.step-watermark {
-  position: absolute;
-  top: -15px; right: -10px;
-  font-size: 4rem;
-  font-weight: 800;
-  font-family: 'Inter', sans-serif;
-  color: rgba(255, 255, 255, 0.03);
-  pointer-events: none;
-  z-index: 0;
+/* Número de fondo grande */
+.pipe-num {
+  position: absolute; top: 10px; right: 15px;
+  font-size: 2.5rem; font-weight: 900; color: rgba(255, 255, 255, 0.02);
+  font-family: var(--font-body); line-height: 1;
 }
 
-.step-content { position: relative; z-index: 1; }
+.pipe-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.pipe-header i { color: var(--inv-accent); font-size: 1rem; }
+.pipe-header h4 { margin: 0; color: #fff; font-size: 1rem; font-weight: 700; }
 
-.step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.step-icon { color: var(--inv-accent); font-size: 1rem; }
-.step-title { color: #fff; font-weight: 700; font-size: 0.95rem; margin: 0; }
-.step-desc { color: var(--inv-text); font-size: 0.85rem; line-height: 1.45; margin: 0; }
+.pipe-card p {
+  font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0;
+}
+.pipe-card strong { color: #fff; }
 
-/* Fila 3: Footer (Barra inferior unificada) */
-.inv-footer {
-  background: linear-gradient(90deg, rgba(255, 159, 26, 0.05) 0%, transparent 100%);
-  border: 1px solid var(--inv-border);
+
+/* --- FOOTER: CASO REAL --- */
+.case-study-bar {
+  background: rgba(11, 16, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-left: 3px solid var(--inv-accent);
-  border-radius: 8px;
-  padding: 16px 20px;
+  border-radius: 6px;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.footer-highlight {
-  font-family: 'Source Code Pro', monospace;
-  color: var(--inv-accent); font-weight: 700; font-size: 0.9rem;
-  white-space: nowrap;
+.case-icon {
+  font-family: var(--font-mono); font-weight: 700; color: var(--inv-accent);
+  font-size: 0.85rem; white-space: nowrap; display: flex; align-items: center; gap: 8px;
 }
-.footer-text { font-size: 0.85rem; color: #cbd5e1; margin: 0; line-height: 1.5; }
-.footer-text strong { color: #fff; }
+
+.case-study-bar p {
+  margin: 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;
+}
+.case-study-bar strong { color: #fff; }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .inv-top-grid { grid-template-columns: 1fr; }
-  .steps-grid { grid-template-columns: 1fr; } /* En móvil 1 columna */
-  .inv-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .inv-context-grid { grid-template-columns: 1fr; }
+  .pipeline-grid { grid-template-columns: 1fr; } /* 1 columna en móvil */
+  .case-study-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
