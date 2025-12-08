@@ -42,8 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="left-panel">
                 
                 <div class="search-bar-wrapper">
-                    <span class="terminal-prompt">root@lab:~/tools# grep</span>
+                    <div class="terminal-prompt-group">
+                        root@AOM:~/stack# grep
+                    </div>
                     <input type="text" id="tech-search" class="search-input" placeholder="buscar..." autocomplete="off">
+                    <span class="blinking-cursor">▋</span>
                 </div>
 
                 <div class="filters-row">
@@ -60,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <aside class="right-panel">
                 <div class="stack-panel">
                     <div class="panel-title">
-                        <i class="fa-solid fa-code"></i> Core Stack
+                        SYSTEM_LANGUAGES
                     </div>
                     <div class="lang-list" id="lang-list-container">
                         </div>
@@ -77,15 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentFilter = 'all';
 
-    /* --- 4. FUNCIÓN RENDER HERRAMIENTAS (CORREGIDA) --- */
+    /* --- 4. FUNCIÓN RENDER HERRAMIENTAS --- */
     function renderTools(searchTerm = '') {
-        gridContainer.innerHTML = ''; // Limpiamos el grid antes de pintar
+        gridContainer.innerHTML = ''; 
         
         const term = searchTerm.toLowerCase().trim();
         let foundCount = 0;
 
         tools.forEach((tool, index) => {
-            // Lógica de filtrado
             const matchesFilter = currentFilter === 'all' || tool.cat === currentFilter;
             const matchesSearch = tool.name.toLowerCase().includes(term);
 
@@ -95,8 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = 'tool-card animate-in';
                 card.style.animationDelay = `${index * 0.05}s`;
 
-                // Asignar color según categoría
-                let tagClass = 'tag-orange'; // por defecto (multi)
+                let tagClass = 'tag-orange'; 
                 if (tool.cat === 'linux') tagClass = 'tag-green';
                 if (tool.cat === 'windows') tagClass = 'tag-blue';
 
@@ -105,13 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="tool-name">${tool.name}</span>
                     <span class="tool-tag ${tagClass}">${tool.cat.toUpperCase()}</span>
                 `;
-                
-                // ESTA ES LA LÍNEA QUE FALTABA: Añadir la tarjeta al grid
                 gridContainer.appendChild(card);
             }
         });
 
-        // Mensaje si no hay resultados
         if (foundCount === 0) {
             gridContainer.innerHTML = `
                 <div style="grid-column:1/-1; text-align:center; padding:40px; color:#64748b; font-family:'Source Code Pro'">
@@ -122,20 +120,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* --- 5. FUNCIÓN RENDER LENGUAJES --- */
     function renderLanguages() {
-        langContainer.innerHTML = languages.map(lang => {
-            let dotsHTML = '';
-            for(let i=1; i<=3; i++) {
-                const isActive = i <= lang.level ? 'active' : '';
-                dotsHTML += `<span class="dot ${isActive}"></span>`;
+        langContainer.innerHTML = languages.map((lang, index) => {
+            const totalBlocks = 5;
+            const activeBlocks = lang.level === 3 ? 5 : (lang.level === 2 ? 3 : 2);
+            
+            let colorClass = 'fill-orange';
+            if (lang.name === 'Python' || lang.name === 'Bash') colorClass = 'fill-green';
+            if (lang.name === 'PowerShell' || lang.name === 'SQL') colorClass = 'fill-blue';
+
+            let blocksHTML = '';
+            for(let i=0; i < totalBlocks; i++) {
+                const isActive = i < activeBlocks ? `active ${colorClass}` : '';
+                const delay = (index * 0.1) + (i * 0.05); 
+                blocksHTML += `<div class="meter-block ${isActive}" style="animation: fadeBlock 0.3s ease forwards ${delay}s"></div>`;
             }
 
             return `
-                <div class="lang-row">
-                    <div class="lang-info">
+                <div class="lang-item">
+                    <span class="lang-name">
                         <i class="${lang.icon}"></i> ${lang.name}
-                    </div>
-                    <div class="level-dots" title="Nivel ${lang.level}/3">
-                        ${dotsHTML}
+                    </span>
+                    <div class="tech-meter" title="Nivel de dominio">
+                        ${blocksHTML}
                     </div>
                 </div>
             `;
@@ -156,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* --- INICIO AUTOMÁTICO --- */
+    /* --- INICIO --- */
     renderTools(); 
     renderLanguages();
 });
