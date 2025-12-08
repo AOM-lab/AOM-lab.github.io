@@ -1,110 +1,148 @@
-/* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Versión Compacta & Técnica) --- */
+/* --- ESTILOS PRO: SECCIÓN ESPECIALIDADES (Versión Final Desktop) --- */
 
 #especialidades {
+  /* Variables locales para facilitar ajustes */
   --sp-bg-base: #0b1022;
-  --sp-card-bg: rgba(255, 255, 255, 0.02); /* Fondo más sutil */
-  --sp-border: rgba(255, 255, 255, 0.06);
+  --sp-card-bg: #111a2d; 
+  --sp-border: rgba(255, 255, 255, 0.08);
   --sp-accent: #ff9f1a;
   --sp-text: #94a3b8;
   --sp-title: #e2e8f0;
+  --sp-glow: rgba(255, 159, 26, 0.15);
+
+  padding: 60px 0;
+  position: relative;
 }
 
-/* Intro Text (Ajustado) */
+/* Intro Text (Más limpio y legible) */
 #especialidades .spec-intro-text {
   max-width: 800px;
-  margin-bottom: 30px; /* Menos margen */
+  margin-bottom: 40px;
   color: #cbd5e1;
-  font-size: 1rem;     /* Fuente un pelín más pequeña */
-  line-height: 1.6;
-  border-left: 2px solid var(--sp-accent);
-  padding-left: 16px;
+  font-size: 1.1rem;
+  line-height: 1.8; /* Más aire para leer mejor */
+  border-left: 3px solid var(--sp-accent);
+  padding-left: 20px;
+  font-family: 'Inter', sans-serif;
 }
 
-/* GRID 2x2 (Más ajustado) */
+/* GRID 2x2 (Espacioso y simétrico) */
 #spec-grid-pro {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px; /* Gap reducido de 24px a 16px */
+  gap: 30px; /* Más espacio entre tarjetas = Más elegancia */
 }
 
-/* TARJETA COMPACTA */
+/* TARJETA PROFESIONAL */
 .spec-card-pro {
-  background: var(--sp-card-bg);
+  /* Fondo con un degradado muy sutil para dar volumen */
+  background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
   border: 1px solid var(--sp-border);
-  border-radius: 8px; /* Bordes menos redondeados (más técnico) */
-  padding: 20px;      /* REDUCCIÓN DRÁSTICA: De 36px a 20px */
+  border-radius: 12px;
+  padding: 30px; /* Espacio interno generoso */
   
   display: flex;
-  flex-direction: column; /* Icono arriba, texto abajo */
+  flex-direction: column; 
   align-items: flex-start;
+  justify-content: flex-start;
   
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   position: relative;
   height: 100%;
+  overflow: hidden;
 }
 
-/* Hover: Sutil y rápido */
+/* Efecto de brillo superior (Luz cenital) */
+.spec-card-pro::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  opacity: 0.5;
+}
+
+/* INTERACCIÓN HOVER (Elegante) */
 .spec-card-pro:hover {
-  transform: translateY(-3px); /* Movimiento más corto */
-  border-color: rgba(255, 159, 26, 0.5);
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px); 
+  border-color: rgba(255, 159, 26, 0.4);
+  background: linear-gradient(145deg, rgba(255, 159, 26, 0.05) 0%, rgba(11, 16, 34, 0.8) 100%);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
-/* CONTENIDO DE LA TARJETA (Flex para alinear mejor) */
-.spec-content {
-  width: 100%;
-}
-
-/* ICONO (Más pequeño y discreto) */
+/* ICONO (Contenedor con presencia) */
 .spec-icon-box {
-  width: 40px; height: 40px; /* Reducido de 54px a 40px */
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
+  width: 52px; height: 52px; /* Tamaño contundente */
+  background: rgba(11, 18, 32, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 14px; /* Menos espacio debajo */
-  transition: all 0.2s;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
 }
 
+/* Al pasar el ratón, el icono se ilumina */
 .spec-card-pro:hover .spec-icon-box {
   border-color: var(--sp-accent);
   background: rgba(255, 159, 26, 0.1);
+  box-shadow: 0 0 15px var(--sp-glow);
+  transform: scale(1.05);
 }
 
 .spec-icon-img {
-  width: 20px; height: 20px; /* Icono más fino */
-  filter: invert(1) brightness(1.5);
-  opacity: 0.8;
-  transition: 0.2s;
+  width: 24px; height: 24px;
+  filter: invert(1) brightness(2); /* Blanco puro */
+  opacity: 0.7;
+  transition: 0.3s;
 }
 
 .spec-card-pro:hover .spec-icon-img {
-  filter: sepia(1) saturate(5) hue-rotate(-20deg);
   opacity: 1;
+  filter: none; /* Recupera su color o se pone blanco brillante según el SVG */
+  /* Si tus SVG son negros, usa esto para ponerlos naranjas: */
+  /* filter: invert(58%) sepia(61%) saturate(2334%) hue-rotate(349deg) brightness(101%) contrast(101%); */
 }
 
-/* TÍTULOS (Más compactos) */
+/* TÍTULOS */
 .spec-title {
-  font-family: 'Inter', sans-serif;
-  color: var(--sp-title);
-  font-size: 1.05rem; /* Reducido de 1.35rem a 1.05rem */
+  font-family: 'Tomorrow', sans-serif; /* Fuente técnica para títulos */
+  color: #fff;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 8px; /* Pegado al texto */
-  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
 }
 
-/* TEXTO (Más denso) */
+.spec-card-pro:hover .spec-title {
+  color: var(--sp-accent); /* El título se vuelve naranja al hover */
+}
+
+/* TEXTO DESCRIPTIVO */
 .spec-body {
   color: var(--sp-text);
-  font-size: 0.85rem; /* Letra más pequeña tipo interfaz */
-  line-height: 1.5;   /* Menos altura de línea */
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
   margin: 0;
+  font-weight: 400;
 }
 
-/* RESPONSIVE */
+/* =========================================
+   RESPONSIVE DESIGN (MÓVIL)
+   Se activa cuando la pantalla baja de 768px
+   ========================================= */
 @media (max-width: 768px) {
   #spec-grid-pro {
-    grid-template-columns: 1fr; /* 1 columna en móvil */
+    grid-template-columns: 1fr; /* Una sola columna */
+    gap: 20px; /* Menos espacio vertical */
+  }
+  
+  .spec-card-pro {
+    padding: 20px; /* Tarjetas más compactas en móvil */
+  }
+  
+  .spec-title {
+    font-size: 1.15rem;
   }
 }
