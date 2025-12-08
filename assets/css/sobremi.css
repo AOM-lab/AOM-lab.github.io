@@ -1,632 +1,413 @@
-/* === SOBRE MÍ - VERSIÓN ULTRA PROFESIONAL === */
-/* Diseño refinado para máximo impacto en reclutadores */
+/* --- ESTILOS PRO: SOBRE MÍ (Versión Final con Hover Potente) --- */
 
 #sobre-mi {
-  /* Sistema de colores */
+  /* Paleta de colores */
   --panel-bg: #111a2d;
-  --panel-dark: #0a0f1a;
-  --panel-elevated: #152238;
+  --panel-dark: #0e1525;
   --accent: #ff9f1a;
-  --accent-glow: rgba(255, 159, 26, 0.15);
-  --accent-subtle: rgba(255, 159, 26, 0.08);
-  --text-main: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
+  --text-main: #e9eef6;
+  --text-muted: #94a3b8;
   --border-color: rgba(255, 255, 255, 0.06);
-  --border-accent: rgba(255, 159, 26, 0.2);
-  --success: #22c55e;
-  --success-glow: rgba(34, 197, 94, 0.15);
-  
-  /* Espaciado generoso */
-  padding: 80px 0 100px;
+  --success: #34d399;
+
+  padding-top: 60px;
+  padding-bottom: 60px;
   position: relative;
-  overflow: hidden;
 }
 
-/* Fondo con textura sutil */
-#sobre-mi::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse 80% 50% at 50% -20%, var(--accent-glow), transparent),
-    radial-gradient(circle at 90% 80%, rgba(255, 159, 26, 0.03), transparent 40%);
-  pointer-events: none;
-}
-
-/* Grid de ruido sutil */
-#sobre-mi::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.015;
-  pointer-events: none;
-}
-
-/* === ENCABEZADO DE SECCIÓN === */
 #sobre-mi .section-title {
   color: var(--accent);
-  font-family: 'Tomorrow', 'Inter', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  position: relative;
-  display: inline-block;
+  margin-bottom: 10px;
 }
 
 #sobre-mi .kicker {
   color: var(--text-muted);
   border-left: 3px solid var(--accent);
-  padding-left: 16px;
-  margin-bottom: 50px;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-/* === CONTENEDOR PRINCIPAL === */
-.cyber-profile-wrapper {
-  background: linear-gradient(135deg, var(--panel-bg) 0%, var(--panel-dark) 100%);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.02) inset;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Línea decorativa superior */
-.cyber-profile-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50px;
-  right: 50px;
-  height: 1px;
-  background: linear-gradient(90deg, 
-    transparent, 
-    var(--accent) 20%, 
-    var(--accent) 80%, 
-    transparent
-  );
-  opacity: 0.5;
-}
-
-/* Ocultar efectos innecesarios */
-.cyber-fx-layer, 
-.screen-reflection,
-.cursor-blink,
-.beacon-wave,
-.core { 
-  display: none !important; 
-}
-
-/* === LAYOUT GRID === */
-.cyber-profile-content {
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 60px;
-  padding: 55px;
-  align-items: start;
-  position: relative;
-}
-
-/* === COLUMNA BIOGRAFÍA === */
-.bio-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.bio-header {
-  margin-bottom: 30px;
-  padding-bottom: 25px;
-  border-bottom: 1px solid var(--border-color);
-  position: relative;
-}
-
-/* Efecto glow detrás del nombre */
-.bio-header::before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: -30px;
-  width: 200px;
-  height: 100px;
-  background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.bio-name {
-  font-family: 'Tomorrow', sans-serif;
-  color: var(--text-main);
-  font-size: 2.4rem;
-  font-weight: 700;
-  margin: 0 0 14px 0;
-  letter-spacing: -0.5px;
-  line-height: 1.1;
-  position: relative;
-}
-
-.bio-role {
-  font-family: 'Source Code Pro', 'Fira Code', monospace;
-  color: var(--accent);
-  font-size: 0.95rem;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  background: var(--accent-subtle);
-  border-radius: 6px;
-  border: 1px solid var(--border-accent);
-}
-
-.bio-role i {
-  font-size: 0.85em;
-  opacity: 0.8;
-}
-
-/* === TEXTO BIOGRÁFICO === */
-.bio-text {
-  color: var(--text-secondary);
-  font-size: 1.08rem;
-  line-height: 1.8;
+  padding-left: 15px;
   margin-bottom: 40px;
   font-family: 'Inter', sans-serif;
 }
 
-.bio-text p {
-  margin-bottom: 16px;
-}
-
-.bio-text p:last-child {
-  margin-bottom: 0;
-}
-
-/* Keywords destacadas */
-.highlight-cyan {
-  color: var(--text-main) !important;
-  font-weight: 600;
+/* === CONTENEDOR PRINCIPAL === */
+.cyber-profile-wrapper {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.4);
   position: relative;
+  overflow: hidden;
 }
 
-.highlight-cyan::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  opacity: 0.4;
+/* Limpieza de efectos sobrantes */
+.cyber-fx-layer, .screen-reflection, .cursor-blink, .beacon-wave, .core { display: none !important; }
+
+/* LAYOUT GRID */
+.cyber-profile-content {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 50px;
+  padding: 45px;
+  align-items: stretch; 
 }
 
-.highlight-orange {
-  color: var(--accent) !important;
+/* === COLUMNA IZQUIERDA: BIOGRAFÍA === */
+.bio-column { display: flex; flex-direction: column; justify-content: space-between; }
+
+.bio-header {
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+}
+
+.bio-name {
+  font-family: 'Tomorrow', sans-serif;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.5px;
+}
+
+.bio-role {
+  font-family: 'Source Code Pro', monospace;
+  color: var(--accent);
+  font-size: 0.95rem;
   font-weight: 600;
+  display: flex; align-items: center; gap: 10px;
 }
+
+.bio-text {
+  color: #cbd5e1;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 35px;
+  font-family: 'Inter', sans-serif;
+}
+
+.highlight-cyan { color: #fff !important; font-weight: 600; }
+.highlight-orange { color: var(--accent) !important; font-weight: 600; }
 
 /* === BADGES DE FORMACIÓN === */
 .cyber-badges-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 15px;
   margin-top: auto;
 }
 
 .cyber-badge {
-  background: var(--panel-elevated);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.cyber-badge::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--accent-subtle), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex; align-items: center; gap: 15px;
+  transition: all 0.3s ease; 
+  cursor: default;
 }
 
 .cyber-badge:hover {
-  border-color: var(--border-accent);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px -10px rgba(255, 159, 26, 0.15);
-}
-
-.cyber-badge:hover::before {
-  opacity: 1;
+  border-color: var(--accent);
+  transform: translateY(-5px);
+  background: rgba(255, 159, 26, 0.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 .chip-icon {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, var(--accent-subtle), rgba(255, 159, 26, 0.05));
+  width: 42px; height: 42px;
+  background: rgba(255, 159, 26, 0.1);
   color: var(--accent);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
   flex-shrink: 0;
-  border: 1px solid var(--border-accent);
-  position: relative;
-  z-index: 1;
 }
 
-.chip-info {
-  position: relative;
-  z-index: 1;
-}
+.chip-info h4 { margin: 0; color: #fff; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif; }
+.chip-info span { color: var(--text-muted); font-size: 0.75rem; display: block; margin-top: 3px; }
 
-.chip-info h4 {
-  margin: 0;
-  color: var(--text-main);
-  font-size: 0.9rem;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  line-height: 1.3;
-}
 
-.chip-info span {
-  color: var(--text-muted);
-  font-size: 0.78rem;
-  display: block;
-  margin-top: 4px;
-  font-family: 'Source Code Pro', monospace;
-}
-
-/* === TARJETA DE CONTACTO === */
-.monitor-column {
-  width: 100%;
-  min-width: 0;
+/* === COLUMNA DERECHA: MONITOR EXTENDIDO === */
+.monitor-column { 
+  width: 100%; 
+  display: flex; 
+  flex-direction: column; 
 }
 
 .cyber-monitor-screen {
   background: var(--panel-dark);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 0;
+  border-top: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 30px;
   font-family: 'Source Code Pro', monospace;
-  box-shadow: 
-    0 25px 60px -15px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  box-shadow: 0 20px 50px -10px rgba(0,0,0,0.3);
   position: relative;
-  overflow: hidden;
-}
-
-/* Borde superior con gradiente */
-.cyber-monitor-screen::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, 
-    var(--accent), 
-    rgba(255, 159, 26, 0.5) 50%,
-    var(--accent)
-  );
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
 }
 
 .monitor-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
   border-bottom: 1px solid var(--border-color);
-  background: rgba(255, 255, 255, 0.01);
 }
 
-.terminal-prompt {
-  font-size: 0;
-}
-
+.terminal-prompt { font-size: 0; }
 .terminal-prompt::after {
-  content: "INFORMACIÓN DE CONTACTO";
-  font-size: 0.72rem;
+  content: "DATASET // CONTACTO";
+  font-size: 0.75rem;
   font-family: 'Inter', sans-serif;
-  color: var(--text-main);
+  color: #fff;
   font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.monitor-indicators {
-  display: flex;
-  gap: 6px;
-}
+.monitor-indicators { display: flex; gap: 6px; }
+.indicator { width: 8px; height: 8px; background: #334155; border-radius: 50%; opacity: 0.6; }
+.indicator.active { background: var(--accent); opacity: 1; box-shadow: 0 0 8px rgba(255, 159, 26, 0.4); }
 
-.indicator {
-  width: 8px;
-  height: 8px;
-  background: var(--panel-elevated);
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.indicator.active {
-  background: var(--accent);
-  box-shadow: 0 0 12px var(--accent-glow);
-}
-
-.hud-title {
-  display: none;
-}
-
-/* === FILAS DE DATOS === */
 .monitor-body {
-  padding: 24px 28px 28px;
-}
-
-.data-row {
+  flex-grow: 1; 
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  transition: all 0.25s ease;
-  background: transparent;
+  flex-direction: column;
+  gap: 15px; 
 }
 
+.hud-title { display: none; }
+
+/* === FILAS DE DATOS (AQUÍ ESTÁ EL EFECTO FUERTE) === */
+.data-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px;
+  border-radius: 4px;
+  /* Borde izquierdo transparente por defecto (preparado para aparecer) */
+  border-left: 3px solid transparent; 
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Solo aplicamos hover a las filas interactivas (teléfono, email) */
 .data-row.interactive {
   cursor: pointer;
 }
 
+/* EL EFECTO HOVER FUERTE QUE PEDISTE */
 .data-row.interactive:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: linear-gradient(90deg, rgba(255, 159, 26, 0.15) 0%, transparent 100%); /* Fondo degradado naranja */
+  border-left-color: var(--accent); /* Aparece la barra naranja a la izquierda */
+  transform: translateX(5px); /* Se mueve a la derecha con fuerza */
+  padding-left: 15px; /* Ajuste visual al moverse */
 }
 
-.data-row.interactive:hover .label i {
-  transform: scale(1.1);
+/* Cambiar color del valor al hacer hover */
+.data-row.interactive:hover .value,
+.data-row.interactive:hover a.value.link {
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(255, 159, 26, 0.4);
 }
 
 .label {
-  color: var(--text-muted);
+  color: #94a3b8;
   font-family: 'Inter', sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.8px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
   text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.label i { color: var(--accent); font-size: 1rem; }
+
+.value { 
+  color: #f1f5f9; 
+  font-weight: 500; 
+  font-size: 0.85rem; 
+  text-align: right; 
+}
+/* --- BLOQUE NUEVO PARA QUITAR SUBRAYADO TELÉFONO --- */
+a.value.link,
+a.value.link:visited,
+a.value.link:active {
+  text-decoration: none !important; /* Muerte al subrayado */
+  border: none !important;
+  color: #f1f5f9; /* Color blanco inicial */
+  display: inline-block; /* Ayuda a que respete el estilo */
 }
 
-.label i {
-  color: var(--accent);
-  font-size: 1rem;
-  opacity: 0.85;
-  transition: transform 0.2s ease;
-  width: 20px;
-  text-align: center;
-}
-
-.value {
-  color: var(--text-main);
-  font-weight: 500;
-  font-size: 0.88rem;
-  text-align: right;
-  font-family: 'Inter', sans-serif;
-}
-
-a.value.link {
-  text-decoration: none;
-  transition: all 0.25s ease;
-  position: relative;
-}
-
-a.value.link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: width 0.25s ease;
-}
-
+/* Mantener el cambio a naranja al pasar el ratón */
 a.value.link:hover {
-  color: var(--accent);
+  text-decoration: none !important;
+  color: var(--accent) !important;
 }
 
-a.value.link:hover::after {
-  width: 100%;
-}
-
+/* ARREGLO DEL EMAIL: Una sola línea siempre */
 .email-fit {
-  font-size: 0.8rem;
-  word-break: break-all;
+  white-space: nowrap; /* Prohibido saltar de línea */
+  overflow: hidden;    /* Si se sale, se recorta */
+  text-overflow: ellipsis; /* Pone "..." si no cabe */
+  max-width: 180px;    /* Ancho máximo seguro */
+  display: block;
 }
 
-/* === ESTADO - OPEN TO WORK === */
+/* Fila de estado */
 .system-status-row {
   margin-top: 20px;
-  padding: 20px 16px;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(135deg, var(--success-glow), transparent);
-  border-radius: 0 0 14px 14px;
-  margin-left: -28px;
-  margin-right: -28px;
-  margin-bottom: -28px;
-  padding-left: 44px;
-  padding-right: 44px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border-color);
+  display: flex; justify-content: space-between; align-items: center;
+  padding-left: 12px; padding-right: 12px;
 }
 
-.system-status-row .label {
-  color: var(--text-main);
-  font-weight: 700;
-}
+.system-status-row .label { color: #fff; }
 
 .status-value.online {
-  background: rgba(34, 197, 94, 0.12);
+  background: rgba(52, 211, 153, 0.1);
   color: var(--success);
-  padding: 8px 16px;
-  border-radius: 25px;
-  border: 1px solid rgba(34, 197, 94, 0.25);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(52, 211, 153, 0.2);
   font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 0.72rem;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-weight: 600;
+  font-size: 0.7rem;
   text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
 }
 
 .status-beacon {
-  width: 8px;
-  height: 8px;
+  width: 8px; height: 8px;
   background: currentColor;
   border-radius: 50%;
   display: block;
-  box-shadow: 0 0 10px currentColor;
-  animation: pulseBeacon 1.5s ease-in-out infinite;
+  box-shadow: 0 0 8px currentColor;
+  animation: pulseBeacon 2s infinite;
 }
 
 @keyframes pulseBeacon {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(0.85);
-  }
+  0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; }
 }
 
-/* === ANIMACIONES DE ENTRADA === */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+/* === SECCIÓN BOTÓN CV (Ghost Style) === */
+.cv-download-section {
+  margin-top: auto; 
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
 }
 
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.btn-cv-monitor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  background: transparent; 
+  border: 1px solid rgba(255, 159, 26, 0.4); 
+  color: var(--accent); 
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.bio-column {
-  animation: fadeInUp 0.6s ease-out;
+.btn-cv-monitor:hover {
+  background: rgba(255, 159, 26, 0.1); 
+  border-color: var(--accent);
+  color: #fff; 
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(255, 159, 26, 0.15);
 }
 
-.monitor-column {
-  animation: fadeInRight 0.6s ease-out 0.2s both;
-}
-
-.cyber-badge {
-  animation: fadeInUp 0.5s ease-out both;
-}
-
-.cyber-badge:nth-child(1) {
-  animation-delay: 0.3s;
-}
-
-.cyber-badge:nth-child(2) {
-  animation-delay: 0.4s;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 1024px) {
-  .cyber-profile-content {
-    grid-template-columns: 1fr 340px;
-    gap: 40px;
-    padding: 40px;
-  }
-  
-  .bio-name {
-    font-size: 2rem;
-  }
-}
-
+/* RESPONSIVE */
 @media (max-width: 900px) {
-  #sobre-mi {
-    padding: 60px 0 80px;
-  }
-  
   .cyber-profile-content {
     grid-template-columns: 1fr;
-    gap: 35px;
-    padding: 30px;
+    gap: 40px;
   }
+  .monitor-column { order: -1; height: auto; }
+  .cyber-monitor-screen { height: auto; }
+  .cv-download-section { margin-top: 20px; }
   
-  .monitor-column {
-    order: -1;
-  }
-  
-  .cyber-badges-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .bio-name {
-    font-size: 1.8rem;
-  }
-  
-  .system-status-row {
-    margin-left: -30px;
-    margin-right: -30px;
-    margin-bottom: -30px;
-    padding-left: 30px;
-    padding-right: 30px;
-  }
+  /* Ajuste extra para que el email quepa en móviles */
+  .email-fit { max-width: 150px; }
 }
+/* =========================================================
+   RESPONSIVE DESIGN (VERSIÓN MÓVIL PROFESIONAL)
+   Target: Desde iPhone SE (375px) hasta Tablets (900px)
+   ========================================================= */
 
-@media (max-width: 480px) {
+@media (max-width: 950px) {
+  
+  /* 1. AJUSTE DE ESPACIOS GENERALES */
+  #sobre-mi {
+    padding-top: 40px; 
+    padding-bottom: 40px;
+  }
+
+  /* 2. ROMPEMOS EL GRID (DE 2 COLUMNAS A 1) */
   .cyber-profile-content {
-    padding: 24px;
+    grid-template-columns: 1fr !important; /* Una sola columna que ocupa todo */
+    gap: 40px; /* Espacio vertical entre la Bio y el Monitor */
+    padding: 20px; /* Menos relleno lateral para aprovechar la pantalla */
   }
-  
+
+  /* 3. COLUMNA IZQUIERDA (BIO) */
+  .bio-column {
+    order: 1; /* Aseguramos que salga primero */
+  }
+
   .bio-name {
-    font-size: 1.5rem;
+    font-size: 1.6rem; /* Nombre un poco más pequeño para que no se parta */
+    line-height: 1.2;
   }
   
-  .bio-role {
-    font-size: 0.85rem;
-    padding: 6px 12px;
+  .bio-text {
+    font-size: 1rem; /* Texto de lectura cómodo */
+    text-align: left; /* Alineado a la izquierda (más fácil de leer en móvil) */
   }
-  
-  .monitor-body {
-    padding: 20px;
+
+  /* Los badges (formación) uno debajo de otro si la pantalla es muy estrecha */
+  .cyber-badges-grid {
+    grid-template-columns: 1fr; 
+    gap: 10px;
   }
-  
-  .system-status-row {
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
-    margin-left: -24px;
-    margin-right: -24px;
-    margin-bottom: -24px;
-    padding: 20px;
+
+  /* 4. COLUMNA DERECHA (MONITOR) */
+  .monitor-column {
+    order: 2; /* Sale debajo de la bio */
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .cyber-monitor-screen {
+    padding: 20px; /* Menos relleno interno */
+    box-shadow: none; /* Quitamos sombras pesadas en móvil para mejorar rendimiento */
+  }
+
+  /* Ajustamos el texto "DATASET // CONTACTO" */
+  .terminal-prompt::after {
+    font-size: 0.65rem;
+  }
+
+  /* 5. AJUSTES FINOS DE DATOS */
+  .data-row {
+    padding: 12px 10px; /* Botones más altos para que sea fácil tocar con el dedo */
+  }
+
+  .label { font-size: 0.65rem; }
+  .value { font-size: 0.8rem; }
+
+  /* Aseguramos que el email no rompa el diseño */
+  .email-fit {
+    max-width: 180px; /* Límite de ancho para el email */
+  }
+
+  /* Botón de CV fácil de pulsar */
+  .btn-cv-monitor {
+    padding: 14px; /* Zona de toque más grande (dedo gordo friendly) */
+    font-size: 0.9rem;
   }
 }
