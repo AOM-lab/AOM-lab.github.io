@@ -1,196 +1,518 @@
 /* =========================================
-   SECCIÓN CONTACTO (PROFESSIONAL TECH STACK)
+   SECCIÓN CONTACTO - REDISEÑO PRO v2.0
+   Estilo: Cybersecurity / Futurista / Tech
    ========================================= */
 
 #contacto {
-  padding: 80px 0; /* Más aire arriba y abajo da elegancia */
+  padding: 100px 0 80px;
   position: relative;
   width: 100%;
   background: transparent;
   overflow: hidden;
 }
 
-/* Contenedor Grid: Izquierda Texto / Derecha Formulario */
+/* --- TÍTULO DE SECCIÓN (ARRIBA, COMO LAS DEMÁS) --- */
+.contact-section-header {
+  max-width: 1200px;
+  margin: 0 auto 50px;
+  padding: 0 20px;
+}
+
+.contact-section-title {
+  color: #ff9f1a;
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.5px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.contact-section-subtitle {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  border-left: 3px solid #ff9f1a;
+  padding-left: 15px;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
 .contact-wrapper {
   display: grid;
-  grid-template-columns: 1fr 1.1fr; /* El formulario ocupa un pelín más */
-  gap: 60px; /* Separación generosa entre columnas */
-  align-items: start; /* Alineamos arriba para orden */
+  grid-template-columns: 1fr 1.2fr;
+  gap: 50px;
+  align-items: stretch;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* --- COLUMNA IZQUIERDA: INFO --- */
+/* =============================================
+   COLUMNA IZQUIERDA: INFORMACIÓN
+   ============================================= */
 .contact-info {
-  padding-top: 10px; /* Pequeño ajuste visual */
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-/* Título de Sección con estilo de "Bloque de Código" */
-.section-header {
-  margin-bottom: 30px;
+/* --- BLOQUE DE FEEDBACK --- */
+.contact-block {
+  padding: 28px;
+  background: linear-gradient(135deg, rgba(17, 26, 45, 0.8) 0%, rgba(15, 20, 31, 0.9) 100%);
+  border: 1px solid rgba(255, 159, 26, 0.15);
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
 }
 
-.section-title {
+.contact-block:hover {
+  border-color: rgba(255, 159, 26, 0.35);
+  transform: translateX(5px);
+}
+
+/* Indicador lateral tipo terminal */
+.contact-block::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #ff9f1a 0%, #ff6b00 100%);
+  border-radius: 3px 0 0 3px;
+}
+
+/* Icono del bloque */
+.block-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 159, 26, 0.1);
+  border: 1px solid rgba(255, 159, 26, 0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.block-icon i {
+  color: #ff9f1a;
+  font-size: 1.1rem;
+}
+
+.block-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.7rem;
+  color: #ff9f1a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.block-title {
   color: #e2e8f0;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin: 0;
-  letter-spacing: -0.5px;
-}
-
-/* Una pequeña barra naranja debajo del título */
-.title-bar {
-  width: 60px;
-  height: 4px;
-  background: #ff9f1a;
-  margin-top: 15px;
-  border-radius: 2px;
-}
-
-.contact-desc {
-  color: #94a3b8; /* Gris azulado muy legible */
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  margin-bottom: 30px;
-  max-width: 90%;
 }
 
-.contact-desc .highlight {
+.block-text {
+  color: #94a3b8;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.block-text .highlight {
   color: #ff9f1a;
   font-weight: 500;
 }
 
-/* Lista de razones (Toque visual extra) */
-.contact-reasons {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+/* --- BLOQUE DE CONTACTO DIRECTO (especial) --- */
+.contact-block.direct {
+  background: linear-gradient(135deg, rgba(255, 159, 26, 0.08) 0%, rgba(15, 20, 31, 0.95) 100%);
+  border-color: rgba(255, 159, 26, 0.25);
 }
 
-.contact-reasons li {
-  display: flex;
+.email-direct {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  color: #cbd5e1;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 0.95rem;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 12px 18px;
+  border-radius: 6px;
+  margin-top: 15px;
+  border: 1px solid rgba(255, 159, 26, 0.2);
+  transition: all 0.2s ease;
+  text-decoration: none;
 }
 
-.contact-reasons li i {
+.email-direct:hover {
+  background: rgba(255, 159, 26, 0.15);
+  border-color: rgba(255, 159, 26, 0.4);
+  transform: translateY(-2px);
+}
+
+.email-direct i {
   color: #ff9f1a;
   font-size: 0.9rem;
 }
 
-/* --- COLUMNA DERECHA: FORMULARIO --- */
-.contact-form-box {
-  background: #0f141f; /* Fondo muy oscuro, casi negro */
-  border: 1px solid #1e293b; /* Borde sutil */
-  border-radius: 8px;
-  padding: 40px;
-  position: relative;
-  /* Sombra suave pero profunda */
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+.email-direct span {
+  color: #e2e8f0;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.88rem;
+  letter-spacing: 0.5px;
 }
 
-/* Pequeño detalle visual de "Consola" arriba a la derecha del form */
-.contact-form-box::after {
-  content: 'INPUT_MODE';
-  position: absolute;
-  top: 15px;
-  right: 20px;
+/* --- INDICADOR DE STATUS --- */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 25px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse-status 2s infinite;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+@keyframes pulse-status {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.9); }
+}
+
+.status-text {
   font-family: 'Source Code Pro', monospace;
-  font-size: 0.7rem;
-  color: #334155;
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.status-text strong {
+  color: #22c55e;
+}
+
+/* =============================================
+   COLUMNA DERECHA: FORMULARIO
+   ============================================= */
+.contact-form-box {
+  background: linear-gradient(180deg, #0c111c 0%, #0a0f18 100%);
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 0;
+  position: relative;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 159, 26, 0.05);
+  overflow: hidden;
+}
+
+/* Header del formulario tipo terminal */
+.form-terminal-header {
+  background: linear-gradient(90deg, #151c2c 0%, #1a2235 100%);
+  padding: 14px 20px;
+  border-bottom: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-dots span:nth-child(1) { background: #ff5f57; }
+.terminal-dots span:nth-child(2) { background: #ffbd2e; }
+.terminal-dots span:nth-child(3) { background: #28ca42; }
+
+.terminal-title {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.75rem;
+  color: #475569;
+  letter-spacing: 1px;
+}
+
+/* Cuerpo del formulario */
+.form-body {
+  padding: 30px;
 }
 
 .tech-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
-/* Estilos de los campos */
+/* Grupos de input */
+.input-group {
+  position: relative;
+}
+
+.input-label {
+  display: block;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.72rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.input-label i {
+  margin-right: 6px;
+  color: #ff9f1a;
+  opacity: 0.7;
+}
+
+/* Campos de entrada */
 .tech-form input,
 .tech-form textarea {
   width: 100%;
-  background: #1a202c; /* Ligeramente más claro que la caja */
-  border: 1px solid #2d3748;
-  border-radius: 4px;
+  background: #0f1420;
+  border: 1px solid #252d3d;
+  border-radius: 6px;
   padding: 14px 16px;
   color: #f1f5f9;
-  font-family: 'Source Code Pro', monospace; /* Fuente monoespaciada para sensación técnica */
+  font-family: 'Source Code Pro', monospace;
   font-size: 0.95rem;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   outline: none;
 }
 
 .tech-form textarea {
   resize: vertical;
-  min-height: 140px;
+  min-height: 120px;
+  line-height: 1.6;
 }
 
-/* Efecto Focus: Borde naranja y fondo iluminado */
+/* Focus states */
 .tech-form input:focus,
 .tech-form textarea:focus {
   border-color: #ff9f1a;
-  background: #1e2532;
-  box-shadow: 0 0 0 3px rgba(255, 159, 26, 0.1);
+  background: #111827;
+  box-shadow: 
+    0 0 0 3px rgba(255, 159, 26, 0.1),
+    inset 0 0 20px rgba(255, 159, 26, 0.03);
 }
 
 .tech-form input::placeholder,
 .tech-form textarea::placeholder {
-  color: #475569;
-  font-family: 'Inter', sans-serif; /* Placeholder en fuente normal para legibilidad */
+  color: #3f4a5c;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
 }
 
-/* --- BOTÓN --- */
+/* Row de doble input */
+.input-row-double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+/* Checkbox de respuesta */
+.response-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  background: rgba(255, 159, 26, 0.05);
+  border: 1px solid rgba(255, 159, 26, 0.15);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.response-check:hover {
+  background: rgba(255, 159, 26, 0.1);
+}
+
+.response-check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff9f1a;
+  cursor: pointer;
+}
+
+.response-check span {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-family: 'Inter', sans-serif;
+}
+
+/* --- BOTÓN SUBMIT --- */
 .submit-btn {
-  background: #ff9f1a;
+  background: linear-gradient(135deg, #ff9f1a 0%, #ff8c00 100%);
   color: #000;
   border: none;
   width: 100%;
-  padding: 16px;
-  border-radius: 4px;
+  padding: 16px 24px;
+  border-radius: 6px;
   font-family: 'Source Code Pro', monospace;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 12px;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
 }
 
 .submit-btn:hover {
-  background: #ffb347;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 159, 26, 0.3);
+  background: linear-gradient(135deg, #ffb340 0%, #ff9f1a 100%);
+  transform: translateY(-3px);
+  box-shadow: 
+    0 10px 30px rgba(255, 159, 26, 0.3),
+    0 0 0 1px rgba(255, 159, 26, 0.5);
+}
+
+.submit-btn:hover::before {
+  left: 100%;
 }
 
 .submit-btn:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
 }
 
-/* --- RESPONSIVE --- */
+.submit-btn i {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.submit-btn:hover i {
+  transform: translateX(3px) rotate(-15deg);
+}
+
+/* Footer del formulario */
+.form-footer {
+  padding: 15px 30px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-footer-text {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.7rem;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-footer-text i {
+  color: #22c55e;
+}
+
+.powered-by {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.65rem;
+  color: #334155;
+  letter-spacing: 0.5px;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
 @media (max-width: 900px) {
-  .contact-wrapper {
-    grid-template-columns: 1fr; /* Apilar en vertical */
-    gap: 40px;
-  }
-  
-  .section-title {
-    font-size: 1.8rem;
+  #contacto {
+    padding: 60px 0;
   }
 
-  .contact-form-box {
-    padding: 25px;
+  .contact-section-header {
+    margin-bottom: 35px;
+    text-align: center;
+  }
+
+  .contact-section-title {
+    font-size: 1.9rem;
+  }
+
+  .contact-section-subtitle {
+    border-left: none;
+    padding-left: 0;
+    border-bottom: 2px solid #ff9f1a;
+    padding-bottom: 10px;
+    display: inline-block;
+  }
+
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .contact-block {
+    padding: 22px;
+  }
+
+  .input-row-double {
+    grid-template-columns: 1fr;
+  }
+
+  .form-body {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section-title {
+    font-size: 1.6rem;
+  }
+
+  .contact-block {
+    padding: 18px;
+  }
+
+  .block-title {
+    font-size: 1.05rem;
+  }
+
+  .email-direct {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .form-footer {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
   }
 }
