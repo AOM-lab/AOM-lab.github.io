@@ -778,47 +778,126 @@
     </section>
 
 
-    <section id="contacto">
+    <!-- =============================================
+     SECCIÓN CONTACTO - REDISEÑO PRO v2.0
+     ============================================= -->
+<section id="contacto">
+  
+  <!-- TÍTULO ARRIBA (como las demás secciones) -->
+  <div class="contact-section-header">
+    <h2 class="contact-section-title">Contacto & Feedback</h2>
+    <p class="contact-section-subtitle">Canal directo para feedback técnico y propuestas profesionales.</p>
+  </div>
+
   <div class="contact-wrapper">
     
+    <!-- COLUMNA IZQUIERDA: INFORMACIÓN -->
     <div class="contact-info">
-      <div class="section-header">
-        <h2 class="section-title">Contacto & Feedback</h2>
-        <div class="title-bar"></div>
+      
+      <!-- Bloque 1: Feedback -->
+      <div class="contact-block">
+        <div class="block-icon">
+          <i class="fas fa-terminal"></i>
+        </div>
+        <span class="block-label">// Feedback</span>
+        <h3 class="block-title">¿Encontraste algo?</h3>
+        <p class="block-text">
+          ¿Una errata en <span class="highlight">Teoría</span> o <span class="highlight">Portafolio</span>? 
+          ¿Fuentes incorrectas o sugerencias de mejora? Escríbeme. 
+          Puede ser anónimo, pero si esperas respuesta, incluye un correo válido.
+        </p>
       </div>
-      
-      <p class="contact-desc">
-        La infraestructura y la seguridad son disciplinas vivas. Si has revisado mi 
-        <span class="highlight">Base de Conocimiento</span> y quieres debatir sobre una implementación específica, 
-        o has detectado una errata en algún artículo, este es el canal directo.
-      </p>
-      
-      <ul class="contact-reasons">
-        <li><i class="fas fa-bug"></i> Reporte de bugs o erratas</li>
-        <li><i class="fas fa-code-branch"></i> Sugerencias de refactorización</li>
-        <li><i class="fas fa-handshake"></i> Propuestas profesionales</li>
-      </ul>
+
+      <!-- Bloque 2: Contacto Directo -->
+      <div class="contact-block direct">
+        <div class="block-icon">
+          <i class="fas fa-briefcase"></i>
+        </div>
+        <span class="block-label">// Profesional</span>
+        <h3 class="block-title">Propuestas & Colaboraciones</h3>
+        <p class="block-text">
+          Para oportunidades laborales o proyectos de colaboración, 
+          contacta directamente:
+        </p>
+        <a href="mailto:aorcajadameseguer@gmail.com" class="email-direct">
+          <i class="fas fa-envelope"></i>
+          <span>aorcajadameseguer@gmail.com</span>
+        </a>
+      </div>
+
+      <!-- Status Indicator -->
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span class="status-text">Estado: <strong>Open to Work</strong> · Respuesta en ~24h</span>
+      </div>
+
     </div>
 
+    <!-- COLUMNA DERECHA: FORMULARIO -->
     <div class="contact-form-box">
-      <form class="tech-form">
-        <div class="input-row">
-            <input type="text" placeholder="ID / Nombre" required>
+      
+      <!-- Header tipo terminal -->
+      <div class="form-terminal-header">
+        <div class="terminal-dots">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div class="input-row">
-            <input type="email" placeholder="email@dominio.com" required>
-        </div>
-        <div class="input-row">
-            <textarea placeholder="Init message sequence... (Comentarios sobre artículos, feedback técnico o propuestas)" rows="5"></textarea>
-        </div>
-        
-        <div class="btn-container">
-            <button type="submit" class="submit-btn">
-              <span>INIT_TRANSMISSION</span>
-              <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-      </form>
+        <span class="terminal-title">SECURE_TRANSMISSION.sh</span>
+      </div>
+
+      <!-- Cuerpo del formulario -->
+      <div class="form-body">
+        <form class="tech-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          
+          <!-- Nombre y Email en fila -->
+          <div class="input-row-double">
+            <div class="input-group">
+              <label class="input-label"><i class="fas fa-user"></i> Identificador</label>
+              <input type="text" name="name" placeholder="Tu nombre o alias">
+            </div>
+            <div class="input-group">
+              <label class="input-label"><i class="fas fa-at"></i> Email</label>
+              <input type="email" name="email" placeholder="correo@dominio.com">
+            </div>
+          </div>
+
+          <!-- Asunto -->
+          <div class="input-group">
+            <label class="input-label"><i class="fas fa-tag"></i> Asunto</label>
+            <input type="text" name="subject" placeholder="Feedback / Propuesta / Otro">
+          </div>
+
+          <!-- Mensaje -->
+          <div class="input-group">
+            <label class="input-label"><i class="fas fa-code"></i> Mensaje</label>
+            <textarea name="message" placeholder="Escribe tu mensaje aquí..."></textarea>
+          </div>
+
+          <!-- Checkbox respuesta -->
+          <label class="response-check">
+            <input type="checkbox" name="wants_response" value="yes">
+            <span>Espero una respuesta a este mensaje</span>
+          </label>
+
+          <!-- Botón Submit -->
+          <button type="submit" class="submit-btn">
+            <span>Enviar Transmisión</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+
+        </form>
+      </div>
+
+      <!-- Footer del formulario -->
+      <div class="form-footer">
+        <span class="form-footer-text">
+          <i class="fas fa-shield-alt"></i>
+          Conexión segura · Sin spam
+        </span>
+        <span class="powered-by">via Formspree</span>
+      </div>
+
     </div>
 
   </div>
