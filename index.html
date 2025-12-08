@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="assets/css/hero-glitch.css"/>
   <link rel="stylesheet" href="assets/css/graph.css"/>
   <link rel="stylesheet" href="assets/css/articulos.css"/>
-  <link rel="stylesheet" href="assets/css/sections.css"/>
+  <link rel="stylesheet" href="assets/css/herraLengu.css"/>
   <link rel="stylesheet" href="assets/css/menu-cyber.css">
   
   <link rel="stylesheet" href="assets/css/Atecnico.css"> 
@@ -27,35 +27,173 @@
   <link rel="stylesheet" href="assets/css/investigacion.css">
   <link rel="stylesheet" href="assets/css/mapa.css">
   <link rel="stylesheet" href="assets/css/panelContenido.css">
+  <link rel="stylesheet" href="assets/css/contacto.css">
   <style>
-    /* Estilos mínimos globales que pueden quedar aquí */
-    :root{
-      --bg:#0b1220; --panel:#111a2d; --text:#e9eef6; --muted:#a8b2c2;
-      --accent:#ff9f1a; --accent-soft:#ffd79a; --radius:14px;
-      --nav-font:15.5px; --nav-pad-y:12px; --nav-gap:12px; --hero-offset:12vh;
+    /* =========================================================
+       ESTILOS GLOBALES (Base, Layout, Menu, Hero, Footer)
+       ========================================================= */
+
+    :root {
+      --bg: #0b1220;
+      --panel: #111a2d;
+      --text: #e9eef6;
+      --muted: #a8b2c2;
+      --accent: #ff9f1a;       /* Naranja Corporativo */
+      --accent-soft: #ffd79a;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --radius: 14px;
+      --nav-font: 15.5px;
+      --nav-pad-y: 12px;
+      --nav-gap: 12px;
+      --hero-offset: 12vh;
     }
-    *{box-sizing:border-box} html,body{margin:0}
-    body{
-      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       background:
         radial-gradient(1400px 800px at 80% -100px, rgba(255,159,26,.06), transparent 60%),
         radial-gradient(1200px 700px at -200px 20%, rgba(255,215,154,.05), transparent 60%),
         var(--bg);
-      color:var(--text);
+      color: var(--text);
     }
-    .container{width:min(1100px,92%);margin:0 auto}
-    
-  </style>
+
+    /* --- CONTENEDOR MAESTRO (EXPANDIDO) --- */
+    .container {
+      width: 100%;            /* Ocupar todo el ancho */
+      max-width: 1600px;      /* Tope máximo para pantallas gigantes */
+      margin: 0 auto;         /* Centrado */
+      padding-left: 6%;       /* Aire a la izquierda */
+      padding-right: 320px;   /* <--- PROTECCIÓN: Hueco para tu panel derecho */
+    }
+
+
+    /* --- HERO (Portada) --- */
+    .hero-wrap { 
+      padding: 60px 0; 
+      border-bottom: 1px solid var(--border-subtle); 
+      margin-bottom: 40px; /* Espacio antes del contenido */
+    }
+    /* Busca esto en tu index.html y actualízalo */
+.hero { 
+  width: 100%; 
+  max-width: 1600px;
+  margin: 0 auto; 
+  
+  /* CAMBIO CLAVE: Quitamos el padding del brazo y centramos todo */
+  padding-left: 20px;
+  padding-right: 20px;
+  
+  /* Forzamos la alineación al centro */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Esto centra el bloque del Glitch */
+}
+
+/* Asegura que el contenedor del texto glitch no se vaya de lado */
+.hero-wrap {
+    padding-right: 0 !important; /* Anulamos cualquier padding externo */
+}
+    .lead { 
+      margin: 20px 0 0; color: #cfd8e6; max-width: 70ch; 
+      line-height: 1.6; font-size: 1.1rem; 
+    }
+
+    /* --- TÍTULOS DE SECCIÓN GLOBALES --- */
+    .section-title {
+      color: var(--accent); 
+      margin: 0 0 20px; 
+      font-weight: 700; font-size: 1.8rem;
+      letter-spacing: -0.5px;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      padding: 40px 0; 
+      color: var(--muted); 
+      text-align: center;
+      border-top: 1px solid var(--border-subtle); 
+      margin-top: 80px; 
+      font-size: 0.9rem;
+    }
+    /* =========================================================
+       PARCHE DE EMERGENCIA MÓVIL V3 (Centrado Profundo)
+       Pega esto al final de tu etiqueta <style> en index.html
+       ========================================================= */
+    @media screen and (max-width: 900px) {
+
+      /* 1. LIMPIEZA DE MENÚS */
+      .menu-left, #nav, .cyber-menu-wrapper, aside.sidebar { display: none !important; }
+      .topwrap { justify-content: center !important; }
+      .menu-right { display: none !important; }
+
+      /* 2. ARREGLAR LAS REJILLAS A 1 COLUMNA */
+      #spec-grid-pro, #tech-grid, .cyber-badges-grid, .steps-grid, .inv-top-grid, .contact-box, .cyber-profile-content {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 30px !important;
+      }
+
+      /* 3. --- CENTRADO MAESTRO (TEXTOS) --- */
+      body, p, h1, h2, h3, h4, .lead, .bio-text, .kicker, .spec-body, .tech-description {
+        text-align: center !important;
+      }
+
+      /* 4. CENTRADO DE TARJETAS (FLEXBOX PADRE) */
+      .spec-card-pro, .tech-card, .step-card, .inv-card, .card, .spec-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important; /* Centra hijos verticales */
+        text-align: center !important;
+        padding: 30px 20px !important;
+      }
+
+      /* 5. === EL FIX QUE FALTABA: CENTRAR CAJAS INTERNAS === */
+      /* Esto arregla los iconos y las etiquetas que se quedaban a la izquierda */
+      .tech-card-header, 
+      .tech-card-footer, 
+      .bio-header, 
+      .bio-actions,
+      .filter-nav {
+        display: flex !important;
+        justify-content: center !important; /* Fuerza el centro horizontal */
+        width: 100% !important;
+        flex-wrap: wrap !important;
+      }
+      
+      /* Centrar Iconos con margen automático por si acaso */
+      .spec-icon-box, .tech-icon-box, .inv-bg-icon, .step-header, .bio-role {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 15px !important; /* Un poco de aire extra */
+      }
+
+      /* 6. AJUSTES ESPECÍFICOS */
+      .hero-wrap { padding: 60px 0 40px !important; }
+      h1#heroTitle { font-size: 2.2rem !important; line-height: 1.1 !important; }
+      
+      /* Monitor de contacto full width */
+      .monitor-column, .cyber-monitor-screen { width: 100% !important; }
+      .container { width: 90% !important; }
+    }
+</style>
 </head>
 <body>
+
   <header class="topbar">
-    <div class="topwrap">
-      <a class="brand" href="./"><span class="brand-dot"></span><span>AO · Portafolio</span></a>
-      <nav class="menu-left" id="nav" aria-label="Navegación principal"></nav>
-      <nav class="menu-right"><a class="nav-link" href="./">Inicio</a></nav>
-    </div>
-  </header>
+  <div class="topwrap">
+    <a class="brand" href="#home">
+      <span class="brand-dot"></span>
+      <span class="brand-text"><span class="accent">AOM</span>-Lab</span>
+    </a>
+    <nav id="nav" aria-label="Navegación principal"></nav>
+  </div>
+</header>
 
   <div class="hero-wrap" id="home">
     <div class="hero">
@@ -121,9 +259,11 @@
           <div class="monitor-body">
              <div class="hud-title">CONTACT_DATASET // V.3.5</div>
 
-             <div class="data-row static">
+            <div class="data-row interactive">
                <span class="label"><i class="fa-solid fa-location-dot"></i> LOCATION</span>
-               <span class="value">Molina de Segura, MUR</span>
+               <a href="https://www.google.com/maps/search/?api=1&query=Molina+de+Segura,+MUR" target="_blank" class="value link">
+                 Molina de Segura, MUR
+               </a>
              </div>
 
              <div class="data-row interactive">
@@ -141,6 +281,11 @@
                <div class="status-value online">
                  <span class="status-beacon"><span class="core"></span><span class="wave"></span></span> OPEN TO WORK
                </div>
+             </div>
+             <div class="cv-download-section">
+               <a href="ruta-a-tu-cv.pdf" target="_blank" class="btn-cv-monitor">
+                 <i class="fa-solid fa-download"></i> Descargar CV Completo
+               </a>
              </div>
           </div>
         </div>
@@ -402,89 +547,102 @@
         </div>
     </section>
 
+
     <section id="investigacion" class="reveal" data-reveal="fade-up">
+  
+  <div class="section-header">
+    <h2 class="section-title">Investigación y Metodología</h2>
+    <div class="header-meta">
+      <span class="section-tag">WORKFLOW_OPS_V2</span>
+    </div>
+  </div>
+
+  <div class="inv-context-grid">
+    
+    <div class="context-card problem">
+      <h3 class="card-title-sm text-red">El Problema Actual</h3>
+      <p class="context-text">
+        La investigación técnica a menudo se vuelve pobre, dependiendo de respuestas rápidas de IA o Google sin contexto. Esto crea una <strong>base de conocimiento frágil</strong> y propensa a errores operativos graves.
+      </p>
+      <div class="bg-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    </div>
+
+    <div class="context-card solution">
+      <h3 class="card-title-sm text-blue">Rigor y Verificación</h3>
+      <p class="context-text">
+        Mi enfoque exige <strong>contrastar fuentes oficiales</strong> (RFCs, Vendor Docs), analizar documentación técnica y, sobre todo, verificar hechos en laboratorio antes de implementar.
+      </p>
+      <div class="bg-icon"><i class="fa-solid fa-shield-halved"></i></div>
+    </div>
+
+  </div>
+
+  <div class="pipeline-section">
+    <span class="pipeline-label">// PIPELINE DE EJECUCIÓN</span>
+    
+    <div class="pipeline-grid">
       
-      <div class="section-header">
-        <h2 class="section-title">Investigación y Metodología</h2>
-        <span class="section-tag">WORKFLOW_OPS_V2</span>
+      <div class="pipe-card">
+        <span class="pipe-num">01</span>
+        <div class="pipe-header">
+          <i class="fa-solid fa-crosshairs"></i> <h4>Definición</h4>
+        </div>
+        <p>Entender la raíz del problema, no solo el síntoma visible. Delimitar el alcance real.</p>
       </div>
 
-      <div class="inv-top-grid">
-        <div class="inv-card alert">
-          <i class="fa-solid fa-triangle-exclamation inv-bg-icon"></i>
-          <h3>El Problema Actual</h3>
-          <p class="inv-text">
-            La investigación técnica a menudo se vuelve pobre, dependiendo de respuestas rápidas de IA o Google sin contexto. Esto crea una <strong>base de conocimiento frágil</strong> y propensa a errores operativos graves.
-          </p>
+      <div class="pipe-card">
+        <span class="pipe-num">02</span>
+        <div class="pipe-header">
+          <i class="fa-solid fa-book"></i> <h4>Fuentes Oficiales</h4>
         </div>
-        <div class="inv-card secure">
-          <i class="fa-solid fa-shield-halved inv-bg-icon"></i>
-          <h3>Rigor y Verificación</h3>
-          <p class="inv-text">
-            Mi enfoque exige <strong>contrastar fuentes oficiales</strong> (RFCs, Vendor Docs), analizar documentación técnica y, sobre todo, verificar hechos en laboratorio antes de implementar.
-          </p>
-        </div>
+        <p>Consulta prioritaria al fabricante y documentación técnica. Evitar foros no verificados.</p>
       </div>
 
-      <div class="pipeline-container">
-        <span class="pipeline-label">// PIPELINE DE EJECUCIÓN</span>
-        <div class="steps-grid">
-          <div class="step-card">
-            <span class="step-watermark">01</span>
-            <div class="step-content">
-              <div class="step-header"><i class="fa-solid fa-crosshairs step-icon"></i> <h4 class="step-title">Definición</h4></div>
-              <p class="step-desc">Entender la raíz del problema, no solo el síntoma visible. Delimitar el alcance real.</p>
-            </div>
-          </div>
-          <div class="step-card">
-            <span class="step-watermark">02</span>
-            <div class="step-content">
-              <div class="step-header"><i class="fa-solid fa-book step-icon"></i> <h4 class="step-title">Fuentes Oficiales</h4></div>
-              <p class="step-desc">Consulta prioritaria al fabricante y documentación técnica. Evitar foros no verificados.</p>
-            </div>
-          </div>
-          <div class="step-card">
-            <span class="step-watermark">03</span>
-            <div class="step-content">
-              <div class="step-header"><i class="fa-brands fa-github step-icon"></i> <h4 class="step-title">Comunidad</h4></div>
-              <p class="step-desc">Análisis de Issues y Changelogs para identificar patrones o bugs conocidos.</p>
-            </div>
-          </div>
-          <div class="step-card">
-            <span class="step-watermark">04</span>
-            <div class="step-content">
-              <div class="step-header"><i class="fa-solid fa-flask step-icon"></i> <h4 class="step-title">Sandbox</h4></div>
-              <p class="step-desc">Reproducción en entorno aislado. <strong>Nunca probar en producción</strong> sin validar.</p>
-            </div>
-          </div>
-          <div class="step-card">
-            <span class="step-watermark">05</span>
-            <div class="step-content">
-              <div class="step-header"><i class="fa-solid fa-microscope step-icon"></i> <h4 class="step-title">Evidencia</h4></div>
-              <p class="step-desc">Revisión de logs y trazas para confirmar la hipótesis con datos objetivos.</p>
-            </div>
-          </div>
-          <div class="step-card">
-            <span class="step-watermark">06</span>
-            <div class="step-content">
-              <div class="step-header"><i class="fa-solid fa-file-signature step-icon"></i> <h4 class="step-title">Informe</h4></div>
-              <p class="step-desc">Documentación accionable con la solución y pasos para evitar recurrencia.</p>
-            </div>
-          </div>
+      <div class="pipe-card">
+        <span class="pipe-num">03</span>
+        <div class="pipe-header">
+          <i class="fa-brands fa-github"></i> <h4>Comunidad</h4>
         </div>
+        <p>Análisis de Issues y Changelogs para identificar patrones o bugs conocidos.</p>
       </div>
 
-      <div class="inv-footer">
-        <div class="footer-highlight">
-          <i class="fa-solid fa-circle-info"></i> CASO REAL
+      <div class="pipe-card">
+        <span class="pipe-num">04</span>
+        <div class="pipe-header">
+          <i class="fa-solid fa-flask"></i> <h4>Sandbox</h4>
         </div>
-        <p class="footer-text">
-          El rigor no es un lujo. Fallos no verificados (como el caso <strong>CrowdStrike</strong>) detienen infraestructuras críticas. Trabajo adaptando marcos como <strong>NIST</strong> u <strong>OWASP</strong>, pero con la agilidad necesaria para responder a crisis.
-        </p>
+        <p>Reproducción en entorno aislado. <strong>Nunca probar en producción</strong> sin validar.</p>
       </div>
 
-    </section>
-    <section id="site-graph" class="custom-section">
+      <div class="pipe-card">
+        <span class="pipe-num">05</span>
+        <div class="pipe-header">
+          <i class="fa-solid fa-magnifying-glass-chart"></i> <h4>Evidencia</h4>
+        </div>
+        <p>Revisión de logs y trazas para confirmar la hipótesis con datos objetivos.</p>
+      </div>
+
+      <div class="pipe-card">
+        <span class="pipe-num">06</span>
+        <div class="pipe-header">
+          <i class="fa-solid fa-file-contract"></i> <h4>Informe</h4>
+        </div>
+        <p>Documentación accionable con la solución y pasos para evitar recurrencia.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="case-study-bar">
+    <div class="case-icon"><i class="fa-solid fa-circle-info"></i> CASO REAL</div>
+    <p>
+      El rigor no es un lujo. Fallos no verificados (como el caso <strong>CrowdStrike</strong>) detienen infraestructuras críticas. Trabajo adaptando marcos como <strong>NIST</strong> u <strong>OWASP</strong>, pero con la agilidad necesaria para responder a crisis.
+    </p>
+  </div>
+
+</section>
+
+  <section id="site-graph" class="custom-section">
       <h2 class="section-title">Base de Conocimiento</h2>
       <p class="kicker">Explora mi repositorio de documentación técnica organizado por áreas de especialización.</p>
       
@@ -493,10 +651,6 @@
         <div class="vault-header">
           <div class="vault-header-left">
             <div class="vault-stats">
-              <div class="stat-item">
-                <i class="fa-solid fa-layer-group"></i>
-                <span><span class="stat-value" id="statTotal">0</span> recursos</span>
-              </div>
               <div class="stat-item">
                 <i class="fa-solid fa-folder"></i>
                 <span><span class="stat-value" id="statFolders">0</span> categorías</span>
@@ -579,29 +733,39 @@
             </div>
           </div>
           
-        </div>
-        
-      </div>
-    </section>
+        </div> </div> </section>
+
     
-    <section id="articulos" class="reveal" data-reveal="fade-up">
-      <h2 class="section-title">Publicaciones y Notas</h2>
+        <section id="articulos" class="reveal" data-reveal="fade-up">
+      <div class="section-header-group">
+        <h2 class="section-title">Registro de Actividad</h2>
+        <p class="section-subtitle">Investigaciones, despliegues y análisis técnicos documentados.</p>
+      </div>
       
       <div class="art-header">
         
         <div class="art-filters">
-          <button class="art-filter-btn active" data-filter="all">Todo</button>
-          <button class="art-filter-btn" data-filter="portafolio">Portafolio</button>
-          <button class="art-filter-btn" data-filter="teoria">Teoría</button>
+          <button class="art-filter-btn active" data-filter="all">ALL_LOGS</button>
+          <button class="art-filter-btn" data-filter="security">SECURITY</button>
+          <button class="art-filter-btn" data-filter="sysadmin">SYSADMIN</button>
+          <button class="art-filter-btn" data-filter="devops">DEVOPS</button>
         </div>
 
-        <div class="art-nav-controls">
-          <button class="art-nav-btn" id="art-prev" aria-label="Anterior">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <button class="art-nav-btn" id="art-next" aria-label="Siguiente">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
+        <div class="art-tools">
+          
+          <div class="art-search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="artSearch" placeholder="busqueda en articulos" autocomplete="off">
+          </div>
+
+          <div class="art-nav-controls">
+            <button class="art-nav-btn" id="art-prev" aria-label="Anterior">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="art-nav-btn" id="art-next" aria-label="Siguiente">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
         </div>
 
       </div>
@@ -610,27 +774,56 @@
         <div class="art-track" id="art-track">
           </div>
       </div>
-
     </section>
 
-    <section id="contact" class="reveal" data-reveal="fade-up" aria-labelledby="contact-title">
-      <h2 id="contact-title" class="section-title">Contacto</h2>
-      <div class="contact-box">
-        <div class="card">
-          <p>¿Tienes un proyecto o una consulta técnica? Escríbeme y te respondo.</p>
-          <p><strong>Email:</strong> <a href="mailto:alex@tu-dominio.com">alex@tu-dominio.com</a></p>
-          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tuusuario" target="_blank" rel="noopener">linkedin.com/in/tuusuario</a></p>
-        </div>
-        <div class="card">
-          <form method="post" action="mailto:alex@tu-dominio.com" enctype="text/plain">
-            <label>Nombre<br><input name="nombre" required></label>
-            <label>Email<br><input type="email" name="email" required></label>
-            <label>Mensaje<br><textarea name="mensaje" required></textarea></label>
-            <button type="submit" style="background:var(--accent);color:#111;padding:10px 16px;border-radius:10px;border:0;font-weight:700">Enviar</button>
-          </form>
-        </div>
+
+    <section id="contacto">
+  <div class="contact-wrapper">
+    
+    <div class="contact-info">
+      <div class="section-header">
+        <h2 class="section-title">Contacto & Feedback</h2>
+        <div class="title-bar"></div>
       </div>
-    </section>
+      
+      <p class="contact-desc">
+        La infraestructura y la seguridad son disciplinas vivas. Si has revisado mi 
+        <span class="highlight">Base de Conocimiento</span> y quieres debatir sobre una implementación específica, 
+        o has detectado una errata en algún artículo, este es el canal directo.
+      </p>
+      
+      <ul class="contact-reasons">
+        <li><i class="fas fa-bug"></i> Reporte de bugs o erratas</li>
+        <li><i class="fas fa-code-branch"></i> Sugerencias de refactorización</li>
+        <li><i class="fas fa-handshake"></i> Propuestas profesionales</li>
+      </ul>
+    </div>
+
+    <div class="contact-form-box">
+      <form class="tech-form">
+        <div class="input-row">
+            <input type="text" placeholder="ID / Nombre" required>
+        </div>
+        <div class="input-row">
+            <input type="email" placeholder="email@dominio.com" required>
+        </div>
+        <div class="input-row">
+            <textarea placeholder="Init message sequence... (Comentarios sobre artículos, feedback técnico o propuestas)" rows="5"></textarea>
+        </div>
+        
+        <div class="btn-container">
+            <button type="submit" class="submit-btn">
+              <span>INIT_TRANSMISSION</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+
   </main>
 
   <footer>© <span id="y"></span> Alejandro Orcajada Meseguer — Administrador de Sistemas y Ciberseguridad</footer>
