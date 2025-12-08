@@ -1,46 +1,50 @@
 /* ===============================
    TABLA DE CONTENIDO (KNOWLEDGE VAULT)
-   Diseño exacto de las capturas
+   Diseño: Terminal Pro / Dark Mode
    =============================== */
 
-/* VARIABLES */
+/* --- 1. VARIABLES (ACTUALIZADAS A TEMA OSCURO) --- */
 .knowledge-vault {
-  --vault-bg: #111a2d;
-  --vault-bg-light: #1a2540;
-  --vault-border: rgba(255, 255, 255, 0.06);
+  /* Fondo más oscuro y profesional */
+  --vault-bg: #0b1022;        
+  --vault-bg-light: #151e32;  
+  
+  --vault-border: rgba(255, 255, 255, 0.08);
   --vault-accent: #ff9f1a;
   --vault-accent-soft: #ffd79a;
   --vault-text: #e9eef6;
-  --vault-muted: #a8b2c2;
+  --vault-muted: #94a3b8;
   --vault-radius: 14px;
   
-  /* Colores de Categorías */
-  --cat-teoria: #8b5cf6;
-  --cat-ciber: #ef4444;
-  --cat-programacion: #22c55e;
-  --cat-sistemas: #3b82f6;
-  --cat-fundamentos: #f59e0b;
-  --cat-proyectos: #ec4899;
-  --cat-laboratorio: #06b6d4;
+  /* COLORES DE CATEGORÍAS (Reasignados a los 4 pilares) */
+  --cat-teoria: #8b5cf6;      /* Morado */
+  --cat-portafolio: #3b82f6;  /* Azul */
+  --cat-laboratorio: #06b6d4; /* Cian */
+  --cat-casos: #f59e0b;       /* Naranja */
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* --- 2. CONTENEDOR PRINCIPAL --- */
 .knowledge-vault {
+  /* Degradado sutil oscuro */
   background: linear-gradient(180deg, var(--vault-bg-light) 0%, var(--vault-bg) 100%);
   border: 1px solid var(--vault-border);
   border-radius: var(--vault-radius);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3); /* Sombra profunda */
   overflow: hidden;
   margin-top: 20px;
 }
 
-/* HEADER */
+/* --- 3. HEADER --- */
 .vault-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  background: linear-gradient(180deg, rgba(255, 159, 26, 0.04) 0%, transparent 100%);
+  
+  /* Fondo casi opaco para el header */
+  background: rgba(11, 16, 34, 0.95); 
   border-bottom: 1px solid var(--vault-border);
+  
   gap: 16px;
   flex-wrap: wrap;
 }
@@ -49,8 +53,8 @@
   display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
 }
 
-.vault-stats { display: flex; align-items: center; gap: 20px; }
-.stat-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--vault-muted); }
+.vault-stats { display: flex; align-items: center; gap: 12px; }
+.stat-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--vault-muted); }
 .stat-item i { color: var(--vault-accent); font-size: 14px; }
 .stat-value { font-weight: 600; color: var(--vault-text); }
 
@@ -129,14 +133,12 @@
 .tree-children { list-style: none; padding: 0 0 0 20px; margin: 0; display: none; }
 .tree-item.expanded > .tree-children { display: block; }
 
-/* Colores Sidebar */
+/* COLORES EN EL SIDEBAR (Iconos pequeños) */
 .tree-item[data-category="teoria"] > .tree-item-header .tree-icon { color: var(--cat-teoria); }
-.tree-item[data-category="ciberseguridad"] > .tree-item-header .tree-icon { color: var(--cat-ciber); }
-.tree-item[data-category="programacion"] > .tree-item-header .tree-icon { color: var(--cat-programacion); }
-.tree-item[data-category="sistemas"] > .tree-item-header .tree-icon { color: var(--cat-sistemas); }
-.tree-item[data-category="fundamentos"] > .tree-item-header .tree-icon { color: var(--cat-fundamentos); }
-.tree-item[data-category="proyectos"] > .tree-item-header .tree-icon { color: var(--cat-proyectos); }
+.tree-item[data-category="portafolio"] > .tree-item-header .tree-icon { color: var(--cat-portafolio); }
 .tree-item[data-category="laboratorio"] > .tree-item-header .tree-icon { color: var(--cat-laboratorio); }
+.tree-item[data-category="casos"] > .tree-item-header .tree-icon { color: var(--cat-casos); }
+
 
 /* MAIN CONTENT */
 .vault-main { display: flex; flex-direction: column; overflow: hidden; }
@@ -187,37 +189,58 @@
 .vault-card:nth-child(2) { animation-delay: 0.05s; }
 .vault-card:nth-child(3) { animation-delay: 0.1s; }
 
-/* Colores Cards */
-.vault-card[data-category="teoria"] { --card-color: var(--cat-teoria); }
-.vault-card[data-category="ciberseguridad"] { --card-color: var(--cat-ciber); }
-.vault-card[data-category="programacion"] { --card-color: var(--cat-programacion); }
-.vault-card[data-category="sistemas"] { --card-color: var(--cat-sistemas); }
-.vault-card[data-category="fundamentos"] { --card-color: var(--cat-fundamentos); }
-.vault-card[data-category="proyectos"] { --card-color: var(--cat-proyectos); }
-.vault-card[data-category="laboratorio"] { --card-color: var(--cat-laboratorio); }
 
+/* --- ESTILO ICONO TARJETA (Actualizado con Color) --- */
 .card-icon {
   width: 44px; height: 44px;
-  background: rgba(255, 159, 26, 0.08);
-  border: 1px solid rgba(255, 159, 26, 0.15);
+  /* Fondo sutil */
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 12px; font-size: 20px;
+  
+  /* COLOR DINÁMICO (Vuelve el color según categoría) */
   color: var(--card-color, var(--vault-accent));
+  
   transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-.vault-card:hover .card-icon { transform: scale(1.05); }
+
+.vault-card:hover .card-icon { 
+  transform: scale(1.05); 
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--card-color);
+}
 
 .card-title {
   font-size: 14px; font-weight: 600; color: var(--vault-text);
-  margin-bottom: 4px; line-height: 1.3;
+  margin-bottom: 8px; 
+  line-height: 1.4;
 }
+
 .card-meta {
-  display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--vault-muted);
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; /* Separa texto (izq) y contador (der) */
+  font-size: 11px; 
+  color: var(--vault-muted);
+  margin-top: auto;
 }
+
+/* Fix para que texto e icono pequeño no se monten */
+.card-type {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio vital */
+  font-weight: 500;
+}
+.card-type i { font-size: 12px; opacity: 0.8; }
+
 .card-count {
-  margin-left: auto; background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.06);
   padding: 2px 8px; border-radius: 8px;
+  font-weight: 600;
 }
 
 /* Card "Volver" */
@@ -233,9 +256,220 @@
 .vault-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; color: var(--vault-muted); }
 .vault-empty i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
 
+
+/* --- ASIGNACIÓN DE COLORES A LAS 4 CATEGORÍAS NUEVAS --- */
+.vault-card[data-category="teoria"] { --card-color: var(--cat-teoria); }
+.vault-card[data-category="portafolio"] { --card-color: var(--cat-portafolio); }
+.vault-card[data-category="laboratorio"] { --card-color: var(--cat-laboratorio); }
+.vault-card[data-category="casos"] { --card-color: var(--cat-casos); }
+
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .vault-layout { grid-template-columns: 1fr; }
   .vault-sidebar { display: none; }
   .content-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+/* --- SCROLLBARS PERSONALIZADAS (Estilo Cyber) --- */
+.vault-sidebar::-webkit-scrollbar,
+.vault-content::-webkit-scrollbar {
+  width: 6px; /* Muy finas */
+}
+
+.vault-sidebar::-webkit-scrollbar-track,
+.vault-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2); 
+}
+
+.vault-sidebar::-webkit-scrollbar-thumb,
+.vault-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1); /* Gris muy sutil */
+  border-radius: 10px;
+}
+
+.vault-sidebar::-webkit-scrollbar-thumb:hover,
+.vault-content::-webkit-scrollbar-thumb:hover {
+  background: var(--vault-accent); /* Se ilumina naranja al tocarla */
+}
+/* BARRA DE ESTADO INFERIOR */
+.vault-statusbar {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid var(--vault-border);
+  padding: 4px 12px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  color: var(--vault-muted);
+}
+
+.status-item {
+  display: flex; align-items: center; gap: 6px; opacity: 0.7;
+}
+.status-item i { color: var(--vault-accent); }
+.status-item.right { margin-left: auto; }
+/* =========================================================
+   MOBILE OPS V.1.0 (RESPONSIVE FULL PRO)
+   Pega esto al final de tu CSS para activar el modo móvil
+   ========================================================= */
+
+@media screen and (max-width: 900px) {
+
+  /* --- 1. AJUSTES GENERALES --- */
+  .container {
+    width: 90% !important; /* Más aire en los bordes */
+    padding: 0 10px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem !important; /* Títulos un poco más pequeños */
+    text-align: center;
+  }
+  
+  .kicker, .section-subtitle {
+    text-align: center;
+  }
+
+  /* --- 2. HEADER Y NAVEGACIÓN --- */
+  .topwrap {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .menu-left, .menu-right {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9rem;
+  }
+
+  /* --- 3. HERO (PORTADA) --- */
+  .hero-wrap {
+    padding: 80px 0 40px !important;
+    text-align: center;
+  }
+  
+  h1#heroTitle {
+    font-size: 2rem !important; /* Ajuste para que no rompa la pantalla */
+    line-height: 1.2;
+  }
+  
+  .hero h2 { font-size: 1.2rem !important; }
+
+  /* --- 4. SOBRE MÍ (Perfil + Monitor) --- */
+  .cyber-profile-content {
+    flex-direction: column !important;
+    gap: 40px;
+  }
+  
+  .monitor-column {
+    width: 100% !important;
+    order: -1; /* Ponemos el monitor PRIMERO en móvil (queda muy chulo) */
+  }
+  
+  .cyber-monitor-screen {
+    min-height: auto; /* Que se adapte al contenido */
+  }
+
+  /* --- 5. HERRAMIENTAS Y STACK (Grid + Lista) --- */
+  /* Forzamos la clase .tech-layout del JS a columna */
+  #tools-pro .tech-layout {
+    flex-direction: column !important;
+    gap: 30px !important;
+  }
+  
+  /* El panel izquierdo (buscador + grid) */
+  #tools-pro .left-panel {
+    width: 100% !important;
+  }
+  
+  /* La rejilla de herramientas: 2 columnas en vez de 4 */
+  #tools-pro .tools-grid {
+    grid-template-columns: repeat(2, 1fr) !important; 
+    grid-template-rows: auto !important; /* Altura automática */
+  }
+  
+  /* El panel derecho (Lenguajes) */
+  #tools-pro .right-panel {
+    width: 100% !important;
+  }
+
+  /* --- 6. INVESTIGACIÓN (Metodología) --- */
+  .inv-context-grid {
+    grid-template-columns: 1fr !important; /* Una debajo de otra */
+  }
+  
+  .pipeline-grid {
+    grid-template-columns: 1fr !important; /* Pasos uno debajo de otro */
+  }
+  
+  .pipe-card {
+    text-align: center; /* Centramos el texto de los pasos */
+  }
+  
+  .pipe-header {
+    justify-content: center; /* Centramos icono y título */
+  }
+
+  /* --- 7. BASE DE CONOCIMIENTO (VAULT) --- */
+  
+  /* Header del Vault: Stackear estadísticas y buscador */
+  .vault-header {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 15px;
+  }
+  
+  .vault-header-left {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .vault-stats {
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .vault-search {
+    max-width: 100% !important; /* Buscador ancho completo */
+  }
+
+  /* EL CAMBIO CLAVE: Layout del explorador */
+  .vault-layout {
+    grid-template-columns: 1fr !important; /* Una sola columna */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ocultamos la barra lateral (árbol) en móvil porque es incómoda */
+  .vault-sidebar {
+    display: none !important;
+  }
+  
+  /* El contenido ocupa todo */
+  .vault-main {
+    width: 100%;
+    height: 500px; /* Altura fija para hacer scroll dentro */
+  }
+  
+  /* Tarjetas del explorador: 2 columnas para aprovechar espacio */
+  .content-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  
+  /* Mapa Visual: Ajuste de altura */
+  .vault-network {
+    height: 400px !important;
+  }
+  
+  .network-legend {
+    display: none; /* Ocultamos la leyenda en móvil para ver el mapa */
+  }
+
+  /* --- 8. CONTACTO --- */
+  .contact-box {
+    grid-template-columns: 1fr !important;
+  }
 }
