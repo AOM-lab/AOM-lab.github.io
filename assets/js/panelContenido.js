@@ -1,5 +1,6 @@
 /* ===============================
-   LÓGICA DEL EXPLORADOR (TABLA DE CONTENIDO)
+   LÓGICA DEL EXPLORADOR PRO
+   (Gestión de Estado: Max 2 Accordions FIFO + Toggle Cerrar)
    =============================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,166 +19,108 @@ document.addEventListener('DOMContentLoaded', () => {
     const statsFolders = document.getElementById('statFolders');
     const statsFiles = document.getElementById('statFiles');
 
-    /* --- DATOS (Estructura del Vault) --- */
-    // Definimos como global para que el mapa pueda usarlo
+    // ESTADO DE NAVEGACIÓN
+    let currentPath = ['root'];
+    let searchQuery = '';
+    let allItems = [];
+    
+    // COLA DE CARPETAS ABIERTAS (FIFO - Max 2)
+    let expandedQueue = []; 
+
+    /* --- DATOS (Estructura del Vault - 4 Pilares) --- */
     window.vaultData = {
         id: 'root',
         name: 'Knowledge Vault',
         type: 'folder',
         children: [
+          // 1. TEORÍA
           {
             id: 'teoria', name: 'Teoría y Conceptos', type: 'folder', category: 'teoria',
             children: [
-              { id: 'teoria-redes', name: 'Redes y Comunicaciones', type: 'folder', category: 'teoria',
+              { id: 'area-ciber', name: 'Área Ciberseguridad', type: 'folder', category: 'teoria',
                 children: [
-                  { id: 't-r-1', name: 'Modelo OSI', type: 'file', fileType: 'doc', category: 'teoria' },
-                  { id: 't-r-2', name: 'Protocolos TCP/IP', type: 'file', fileType: 'doc', category: 'teoria' },
-                  { id: 't-r-3', name: 'Subnetting y VLSM', type: 'file', fileType: 'doc', category: 'teoria' },
-                  { id: 't-r-4', name: 'DNS y DHCP', type: 'file', fileType: 'doc', category: 'teoria' },
+                    { id: 'c-h-1', name: 'Hardening CIS', type: 'file', fileType: 'pdf', category: 'teoria' },
+                    { id: 'c-p-1', name: 'Metodología OWASP', type: 'file', fileType: 'pdf', category: 'teoria' },
+                    { id: 'c-n-1', name: 'Normativa ENS/ISO', type: 'file', fileType: 'pdf', category: 'teoria' }
                 ]},
-              { id: 'teoria-so', name: 'Sistemas Operativos', type: 'folder', category: 'teoria',
+              { id: 'area-sys', name: 'Área Sistemas', type: 'folder', category: 'teoria',
                 children: [
-                  { id: 't-so-1', name: 'Gestión de Procesos', type: 'file', fileType: 'doc', category: 'teoria' },
-                  { id: 't-so-2', name: 'Sistemas de Archivos', type: 'file', fileType: 'doc', category: 'teoria' },
-                  { id: 't-so-3', name: 'Memoria Virtual', type: 'file', fileType: 'doc', category: 'teoria' },
+                    { id: 's-l-1', name: 'Admin Linux RHEL', type: 'file', fileType: 'doc', category: 'teoria' },
+                    { id: 's-w-1', name: 'Windows Server & AD', type: 'file', fileType: 'doc', category: 'teoria' },
+                    { id: 's-c-1', name: 'Arquitectura Cloud', type: 'file', fileType: 'doc', category: 'teoria' }
                 ]},
-              { id: 'teoria-bd', name: 'Bases de Datos', type: 'folder', category: 'teoria',
+              { id: 'area-dev', name: 'Área Programación', type: 'folder', category: 'teoria',
                 children: [
-                  { id: 't-bd-1', name: 'Modelo Relacional', type: 'file', fileType: 'doc', category: 'teoria' },
-                  { id: 't-bd-2', name: 'Normalización', type: 'file', fileType: 'doc', category: 'teoria' },
-                  { id: 't-bd-3', name: 'SQL Avanzado', type: 'file', fileType: 'doc', category: 'teoria' },
+                    { id: 'p-py-1', name: 'Python for Security', type: 'file', fileType: 'code', category: 'teoria' },
+                    { id: 'p-b-1', name: 'Bash Scripting', type: 'file', fileType: 'code', category: 'teoria' }
                 ]}
             ]
           },
+
+          // 2. PORTAFOLIO
           {
-            id: 'ciberseguridad', name: 'Ciberseguridad', type: 'folder', category: 'ciberseguridad',
+            id: 'portafolio', name: 'Portafolio', type: 'folder', category: 'portafolio',
             children: [
-              { id: 'ciber-hardening', name: 'Hardening', type: 'folder', category: 'ciberseguridad',
+              // Subcarpeta Placeholder 1
+              { id: 'port-ph-1', name: 'Placeholder', type: 'folder', category: 'portafolio',
                 children: [
-                  { id: 'c-h-1', name: 'CIS Linux', type: 'file', fileType: 'pdf', category: 'ciberseguridad' },
-                  { id: 'c-h-2', name: 'CIS Windows', type: 'file', fileType: 'pdf', category: 'ciberseguridad' },
-                  { id: 'c-h-3', name: 'Bastionado Servidores', type: 'file', fileType: 'doc', category: 'ciberseguridad' },
-                  { id: 'c-h-4', name: 'Configuración SSH', type: 'file', fileType: 'doc', category: 'ciberseguridad' },
-                ]},
-              { id: 'ciber-incidentes', name: 'Respuesta Incidentes', type: 'folder', category: 'ciberseguridad',
+                    { id: 'pp-1-1', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'portafolio' },
+                    { id: 'pp-1-2', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'portafolio' },
+                    { id: 'pp-1-3', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'portafolio' }
+                ]
+              },
+              // Subcarpeta Placeholder 2
+              { id: 'port-ph-2', name: 'Placeholder', type: 'folder', category: 'portafolio',
                 children: [
-                  { id: 'c-i-1', name: 'Playbook Ransomware', type: 'file', fileType: 'doc', category: 'ciberseguridad' },
-                  { id: 'c-i-2', name: 'Análisis de Malware', type: 'file', fileType: 'doc', category: 'ciberseguridad' },
-                  { id: 'c-i-3', name: 'Forensia Digital', type: 'file', fileType: 'pdf', category: 'ciberseguridad' },
-                ]},
-              { id: 'ciber-pentest', name: 'Pentesting', type: 'folder', category: 'ciberseguridad',
-                children: [
-                  { id: 'c-p-1', name: 'Metodología OWASP', type: 'file', fileType: 'pdf', category: 'ciberseguridad' },
-                  { id: 'c-p-2', name: 'Reconocimiento', type: 'file', fileType: 'doc', category: 'ciberseguridad' },
-                  { id: 'c-p-3', name: 'Explotación Web', type: 'file', fileType: 'doc', category: 'ciberseguridad' },
-                ]},
-              { id: 'ciber-normativas', name: 'Normativas', type: 'folder', category: 'ciberseguridad',
-                children: [
-                  { id: 'c-n-1', name: 'ENS', type: 'file', fileType: 'pdf', category: 'ciberseguridad' },
-                  { id: 'c-n-2', name: 'ISO 27001', type: 'file', fileType: 'pdf', category: 'ciberseguridad' },
-                  { id: 'c-n-3', name: 'GDPR / LOPD', type: 'file', fileType: 'doc', category: 'ciberseguridad' },
-                ]}
+                    { id: 'pp-2-1', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'portafolio' },
+                    { id: 'pp-2-2', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'portafolio' },
+                    { id: 'pp-2-3', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'portafolio' }
+                ]
+              }
             ]
           },
-          {
-            id: 'programacion', name: 'Programación', type: 'folder', category: 'programacion',
-            children: [
-              { id: 'prog-python', name: 'Python', type: 'folder', category: 'programacion',
-                children: [
-                  { id: 'p-py-1', name: 'Fundamentos', type: 'file', fileType: 'doc', category: 'programacion' },
-                  { id: 'p-py-2', name: 'Automatización', type: 'file', fileType: 'code', category: 'programacion' },
-                  { id: 'p-py-3', name: 'APIs y Requests', type: 'file', fileType: 'doc', category: 'programacion' },
-                ]},
-              { id: 'prog-bash', name: 'Bash Scripting', type: 'folder', category: 'programacion',
-                children: [
-                  { id: 'p-b-1', name: 'Comandos', type: 'file', fileType: 'doc', category: 'programacion' },
-                  { id: 'p-b-2', name: 'Scripts Backup', type: 'file', fileType: 'code', category: 'programacion' },
-                  { id: 'p-b-3', name: 'Cron Jobs', type: 'file', fileType: 'doc', category: 'programacion' },
-                ]},
-              { id: 'prog-sql', name: 'SQL', type: 'folder', category: 'programacion',
-                children: [
-                  { id: 'p-sql-1', name: 'Queries', type: 'file', fileType: 'code', category: 'programacion' },
-                  { id: 'p-sql-2', name: 'Procedimientos', type: 'file', fileType: 'doc', category: 'programacion' },
-                ]}
-            ]
-          },
-          {
-            id: 'sistemas', name: 'Administración Sistemas', type: 'folder', category: 'sistemas',
-            children: [
-              { id: 'sys-linux', name: 'Linux', type: 'folder', category: 'sistemas',
-                children: [
-                  { id: 's-l-1', name: 'RHEL/Debian', type: 'file', fileType: 'doc', category: 'sistemas' },
-                  { id: 's-l-2', name: 'Systemd', type: 'file', fileType: 'doc', category: 'sistemas' },
-                  { id: 's-l-3', name: 'LVM y RAID', type: 'file', fileType: 'doc', category: 'sistemas' },
-                  { id: 's-l-4', name: 'SELinux', type: 'file', fileType: 'doc', category: 'sistemas' },
-                ]},
-              { id: 'sys-windows', name: 'Windows Server', type: 'folder', category: 'sistemas',
-                children: [
-                  { id: 's-w-1', name: 'Active Directory', type: 'file', fileType: 'doc', category: 'sistemas' },
-                  { id: 's-w-2', name: 'GPOs', type: 'file', fileType: 'doc', category: 'sistemas' },
-                  { id: 's-w-3', name: 'PowerShell', type: 'file', fileType: 'code', category: 'sistemas' },
-                ]},
-              { id: 'sys-cloud', name: 'Cloud', type: 'folder', category: 'sistemas',
-                children: [
-                  { id: 's-c-1', name: 'AWS', type: 'file', fileType: 'doc', category: 'sistemas' },
-                  { id: 's-c-2', name: 'Docker', type: 'file', fileType: 'doc', category: 'sistemas' },
-                  { id: 's-c-3', name: 'Kubernetes', type: 'file', fileType: 'doc', category: 'sistemas' },
-                ]}
-            ]
-          },
-          {
-            id: 'fundamentos', name: 'Fundamentos', type: 'folder', category: 'fundamentos',
-            children: [
-              { id: 'fund-hardware', name: 'Hardware', type: 'folder', category: 'fundamentos',
-                children: [
-                  { id: 'f-h-1', name: 'Arquitectura', type: 'file', fileType: 'doc', category: 'fundamentos' },
-                  { id: 'f-h-2', name: 'Componentes', type: 'file', fileType: 'doc', category: 'fundamentos' },
-                ]},
-              { id: 'fund-software', name: 'Software', type: 'folder', category: 'fundamentos',
-                children: [
-                  { id: 'f-s-1', name: 'Ciclo de Vida', type: 'file', fileType: 'doc', category: 'fundamentos' },
-                  { id: 'f-s-2', name: 'Metodologías', type: 'file', fileType: 'doc', category: 'fundamentos' },
-                ]}
-            ]
-          },
-          {
-            id: 'proyectos', name: 'Proyectos', type: 'folder', category: 'proyectos',
-            children: [
-              { id: 'proy-personal', name: 'Personales', type: 'folder', category: 'proyectos',
-                children: [
-                  { id: 'pp-1', name: 'Homelab', type: 'file', fileType: 'doc', category: 'proyectos' },
-                  { id: 'pp-2', name: 'Portfolio', type: 'file', fileType: 'doc', category: 'proyectos' },
-                  { id: 'pp-3', name: 'Scripts', type: 'file', fileType: 'code', category: 'proyectos' },
-                ]},
-              { id: 'proy-academico', name: 'Académicos', type: 'folder', category: 'proyectos',
-                children: [
-                  { id: 'pa-1', name: 'TFM Ciberseguridad', type: 'file', fileType: 'pdf', category: 'proyectos' },
-                  { id: 'pa-2', name: 'Proyecto ASIR', type: 'file', fileType: 'pdf', category: 'proyectos' },
-                ]}
-            ]
-          },
+
+          // 3. LABORATORIO
           {
             id: 'laboratorio', name: 'Laboratorio', type: 'folder', category: 'laboratorio',
             children: [
-              { id: 'lab-ctf', name: 'CTF y Retos', type: 'folder', category: 'laboratorio',
+              { id: 'lab-ctf', name: 'Writeups CTF', type: 'folder', category: 'laboratorio',
                 children: [
-                  { id: 'l-c-1', name: 'HackTheBox', type: 'file', fileType: 'doc', category: 'laboratorio' },
-                  { id: 'l-c-2', name: 'TryHackMe', type: 'file', fileType: 'doc', category: 'laboratorio' },
-                  { id: 'l-c-3', name: 'VulnHub', type: 'file', fileType: 'doc', category: 'laboratorio' },
+                    { id: 'l-htb', name: 'HackTheBox Reports', type: 'file', fileType: 'doc', category: 'laboratorio' },
+                    { id: 'l-thm', name: 'TryHackMe Path', type: 'file', fileType: 'doc', category: 'laboratorio' }
                 ]},
-              { id: 'lab-sandbox', name: 'Sandbox', type: 'folder', category: 'laboratorio',
+              { id: 'lab-pentest', name: 'Pentesting Activo', type: 'folder', category: 'laboratorio',
                 children: [
-                  { id: 'l-s-1', name: 'AD Vulnerable', type: 'file', fileType: 'doc', category: 'laboratorio' },
-                  { id: 'l-s-2', name: 'DVWA', type: 'file', fileType: 'doc', category: 'laboratorio' },
+                    { id: 'l-p-1', name: 'Auditoría Wifi', type: 'file', fileType: 'doc', category: 'laboratorio' },
+                    { id: 'l-p-2', name: 'Análisis Vulnerabilidades', type: 'file', fileType: 'pdf', category: 'laboratorio' }
                 ]}
+            ]
+          },
+
+          // 4. CASOS REALES
+          {
+            id: 'casos-reales', name: 'Casos Reales', type: 'folder', category: 'casos',
+            children: [
+               // Subcarpeta Placeholder 1
+               { id: 'casos-ph-1', name: 'Placeholder', type: 'folder', category: 'casos',
+                children: [
+                    { id: 'cp-1-1', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'casos' },
+                    { id: 'cp-1-2', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'casos' },
+                    { id: 'cp-1-3', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'casos' }
+                ]
+              },
+              // Subcarpeta Placeholder 2
+              { id: 'casos-ph-2', name: 'Placeholder', type: 'folder', category: 'casos',
+                children: [
+                    { id: 'cp-2-1', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'casos' },
+                    { id: 'cp-2-2', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'casos' },
+                    { id: 'cp-2-3', name: 'Placeholder', type: 'file', fileType: 'doc', category: 'casos' }
+                ]
+              }
             ]
           }
         ]
       };
-
-    let currentPath = ['root'];
-    let searchQuery = '';
-    let allItems = [];
 
     // ===== UTILIDADES =====
     function flattenData(node, path = []) {
@@ -254,6 +197,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ===== GESTIÓN DE LA COLA DE EXPANSIÓN (FIFO - MAX 2) =====
+    function updateExpandedQueue(folderId) {
+        // 1. Si ya está en la cola, no hacemos nada
+        if (expandedQueue.includes(folderId)) return;
+
+        // 2. Agregamos el nuevo folder
+        expandedQueue.push(folderId);
+
+        // 3. Si superamos el límite de 2, sacamos el más antiguo (FIFO)
+        if (expandedQueue.length > 2) {
+            expandedQueue.shift(); 
+        }
+    }
+    
+    function isNodeExpanded(nodeId) {
+        return expandedQueue.includes(nodeId) || currentPath.includes(nodeId);
+    }
+
     // ===== RENDERIZADO =====
     function renderStats() {
         const counts = countItems(window.vaultData);
@@ -300,14 +261,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const icon = getIcon(item);
             const typeName = getTypeName(item);
             const isFolder = item.type === 'folder';
-            const childCount = isFolder ? (item.children?.length || 0) : null;
+            const childCount = isFolder ? (countItems(item).total) : null;
             
             html += `<div class="vault-card ${isFolder ? 'is-folder' : 'is-file'}" data-id="${item.id}" data-category="${item.category || ''}">
                 <div class="card-icon"><i class="${icon}"></i></div>
                 <div class="card-title">${item.name}</div>
                 <div class="card-meta">
                     <span class="card-type"><i class="${icon}"></i>${typeName}</span>
-                    ${childCount !== null ? `<span class="card-count">${childCount}</span>` : ''}
+                    ${childCount !== null && childCount > 0 ? `<span class="card-count">${childCount}</span>` : ''}
                 </div>
             </div>`;
         });
@@ -315,13 +276,22 @@ document.addEventListener('DOMContentLoaded', () => {
         html += '</div>';
         vaultContent.innerHTML = html;
         
+        // --- MANEJADOR DE CLICS ---
         vaultContent.querySelectorAll('.vault-card').forEach(card => {
             card.addEventListener('click', () => {
-                if (card.dataset.action === 'back') goBack();
-                else {
+                if (card.dataset.action === 'back') {
+                    goBack();
+                } else {
                     const item = findNodeById(window.vaultData, card.dataset.id);
-                    if (item?.type === 'folder') navigateTo([...currentPath, card.dataset.id]);
-                    // Aquí puedes añadir el else para manejar clicks en archivos (ej. abrir modal)
+                    
+                    if (item?.type === 'folder') {
+                        // SI ES CARPETA: NAVEGAMOS
+                        if (window.vaultData.children.some(c => c.id === item.id)) {
+                             updateExpandedQueue(item.id);
+                        }
+                        navigateTo([...currentPath, card.dataset.id]);
+                    }
+                    // SI ES ARCHIVO: NO HACEMOS NADA
                 }
             });
         });
@@ -356,33 +326,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 const path = card.dataset.path?.split(',');
                 if (path) {
                     const item = findNodeById(window.vaultData, card.dataset.id);
-                    navigateTo(item?.type === 'folder' ? path : path.slice(0, -1));
+                    // Solo navegamos si es carpeta
+                    if (item?.type === 'folder') {
+                        navigateTo(path);
+                    }
                     clearSearch();
                 }
             });
         });
     }
 
+    // --- RENDERIZADO DEL ÁRBOL LATERAL ---
     function renderTree() {
         if (!vaultTree) return;
         
         function renderNode(node) {
-            const hasChildren = node.children?.some(c => c.type === 'folder');
-            const isInPath = currentPath.includes(node.id);
+            const hasChildren = node.children?.some(c => c.type === 'folder' || c.type === 'file');
+            const shouldBeExpanded = isNodeExpanded(node.id);
             const isActive = currentPath[currentPath.length - 1] === node.id;
-            const childCount = node.children?.length || 0;
             
-            let html = `<li class="tree-item ${hasChildren ? 'has-children' : ''} ${isInPath ? 'expanded' : ''}" data-id="${node.id}" data-category="${node.category || ''}">
+            // Usamos countItems para mostrar el total (archivos + carpetas)
+            const counts = countItems(node);
+            const displayCount = counts.total;
+            
+            let html = `<li class="tree-item ${hasChildren ? 'has-children' : ''} ${shouldBeExpanded ? 'expanded' : ''}" data-id="${node.id}" data-category="${node.category || ''}">
                 <div class="tree-item-header ${isActive ? 'active' : ''}">
                     <span class="tree-toggle"><i class="fa-solid fa-chevron-right"></i></span>
                     <span class="tree-icon"><i class="${getIcon(node)}"></i></span>
                     <span class="tree-label">${node.name}</span>
-                    ${childCount > 0 ? `<span class="tree-count">${childCount}</span>` : ''}
+                    ${displayCount > 0 ? `<span class="tree-count">${displayCount}</span>` : ''}
                 </div>`;
             
             if (hasChildren) {
                 html += '<ul class="tree-children">';
-                node.children.filter(c => c.type === 'folder').forEach(child => html += renderNode(child));
+                // Mostramos todo (Carpetas y Archivos) en el árbol
+                node.children.forEach(child => html += renderNode(child));
                 html += '</ul>';
             }
             return html + '</li>';
@@ -393,15 +371,38 @@ document.addEventListener('DOMContentLoaded', () => {
         html += '</ul>';
         vaultTree.innerHTML = html;
         
+        // EVENTOS DEL ÁRBOL (CORREGIDO TOGGLE)
         vaultTree.querySelectorAll('.tree-item-header').forEach(header => {
-            header.addEventListener('click', () => {
+            header.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const item = header.closest('.tree-item');
-                // Si tiene hijos, expandir/contraer visualmente
-                if (item.classList.contains('has-children')) {
-                    item.classList.toggle('expanded');
+                const nodeId = item.dataset.id;
+                const nodeData = findNodeById(window.vaultData, nodeId);
+
+                // Si es un archivo, no hacemos nada
+                if (nodeData && nodeData.type !== 'folder') {
+                    return;
                 }
-                // Navegar a la carpeta
-                navigateTo(buildPathToNode(item.dataset.id));
+
+                // --- LÓGICA DE TOGGLE Y FIFO ---
+                const isTopLevel = window.vaultData.children.some(c => c.id === nodeId);
+                
+                if (isTopLevel) {
+                    if (expandedQueue.includes(nodeId)) {
+                        // SI YA ESTÁ ABIERTO -> LO CERRAMOS
+                        // 1. Lo quitamos de la cola
+                        expandedQueue = expandedQueue.filter(id => id !== nodeId);
+                        // 2. Navegamos al 'root' para simular que se ha cerrado la vista
+                        navigateTo(['root']);
+                        return; // IMPORTANTE: Paramos aquí para no volver a entrar
+                    } else {
+                        // SI ESTÁ CERRADO -> LO ABRIMOS
+                        updateExpandedQueue(nodeId);
+                    }
+                }
+                
+                // Navegación estándar (para abrir)
+                navigateTo(buildPathToNode(nodeId));
             });
         });
     }
@@ -423,6 +424,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function navigateTo(path) {
         currentPath = path;
+        
+        // Sincronizar navegación por breadcrumbs/cards con la cola
+        if (path.length > 1) {
+            const topLevelId = path[1];
+            if (window.vaultData.children.some(c => c.id === topLevelId)) {
+                // Solo añadir si no está ya (para no alterar el orden FIFO innecesariamente)
+                 updateExpandedQueue(topLevelId);
+            }
+        }
+
         searchQuery = '';
         if (searchInput) searchInput.value = '';
         render();
@@ -431,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function goBack() {
         if (currentPath.length > 1) {
             currentPath = currentPath.slice(0, -1);
-            render();
+            navigateTo(currentPath);
         }
     }
 
@@ -463,7 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
         explorerView?.classList.toggle('active', view === 'explorer');
         networkView?.classList.toggle('active', view === 'network');
 
-        // Evento personalizado para avisar a mapa.js que renderice el canvas si es necesario
         if (view === 'network') {
             window.dispatchEvent(new CustomEvent('initNetworkMap'));
         }
@@ -473,6 +483,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function init() {
         allItems = flattenData(window.vaultData);
         renderStats();
+        
+        if (currentPath.length > 1) {
+            updateExpandedQueue(currentPath[1]);
+        }
+
         render();
         
         let searchTimeout;
@@ -486,7 +501,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btnNetwork.addEventListener('click', () => switchView('network'));
         }
         
-        // Asegurarnos de empezar en explorador
         switchView('explorer');
     }
 
